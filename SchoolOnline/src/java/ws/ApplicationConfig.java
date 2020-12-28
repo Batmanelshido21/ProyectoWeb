@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.ActividadWS.class);
         resources.add(ws.CuentaWS.class);
+        resources.add(ws.PlantelEducativoWS.class);
     }
     
 }

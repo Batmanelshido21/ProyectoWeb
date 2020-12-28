@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtdmybatis-3-mapper.dtd">
+
+<mapper namespace="Plantel">
+    
+ <insert id="registrarPlantel" parameterType="pojos.PlantelEducativo">
+        INSERT INTO planteleducativo (clave,sector,nivelEscolar,zona,direccion)
+        VALUES(#{clave},#{sector},#{nivelEscolar},#{zona},#{direccion})        
+ </insert>
+</mapper>
