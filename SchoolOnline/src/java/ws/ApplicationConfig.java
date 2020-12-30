@@ -30,7 +30,10 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.ActividadWS.class);
+        resources.add(ws.BitacoraWS.class);
         resources.add(ws.CuentaWS.class);
+        resources.add(ws.ForoWS.class);
+        resources.add(ws.GrupoWS.class);
         resources.add(ws.PlantelEducativoWS.class);
     }
     

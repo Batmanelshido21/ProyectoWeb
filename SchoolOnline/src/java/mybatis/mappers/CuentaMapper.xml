@@ -49,5 +49,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         docente.Genero_idGenero
         FROM docente WHERE docente.Cuenta_idCuenta = #{Cuenta_idCuenta}
     </select>
+    
+    <update id="modificarDocente" parameterType="pojos.Docente">
+        UPDATE docente SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, gradoAcademico = #{gradoAcademico}, telefono = #{telefono}
+        WHERE clave = #{clave}
+    </update>
+    
+     <select id="recuperarContraseña" resultType="pojos.Cuenta" parameterType="pojos.Cuenta">
+        SELECT
+        cuenta.correo,
+        cuenta.contrasena
+        FROM cuenta WHERE correo = #{correo}
+    </select> 
   
 </mapper>

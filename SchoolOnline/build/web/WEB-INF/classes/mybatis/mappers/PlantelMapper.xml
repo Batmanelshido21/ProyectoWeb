@@ -9,4 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO planteleducativo (clave,sector,nivelEscolar,zona,direccion)
         VALUES(#{clave},#{sector},#{nivelEscolar},#{zona},#{direccion})        
  </insert>
+ 
+ <update id="modificarPlantel" parameterType="pojos.PlantelEducativo">
+        UPDATE planteleducativo SET sector = #{sector}, nivelEscolar = #{nivelEscolar}, zona = #{zona}, direccion = #{direccion}
+        WHERE clave = #{clave}
+ </update>
+    
 </mapper>

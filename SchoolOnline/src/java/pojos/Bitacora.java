@@ -18,14 +18,14 @@ public class Bitacora {
     
     private Date fecha;
     
-    private File archivo;
+    private byte[] archivo;
     
     private String Docente_clave;
 
     public Bitacora() {
     }
 
-    public Bitacora(Integer idBitacora, Date fecha, File archivo, String Docente_clave) {
+    public Bitacora(Integer idBitacora, Date fecha, byte[] archivo, String Docente_clave) {
         this.idBitacora = idBitacora;
         this.fecha = fecha;
         this.archivo = archivo;
@@ -48,11 +48,11 @@ public class Bitacora {
         this.fecha = fecha;
     }
 
-    public File getArchivo() {
+    public byte[] getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(File archivo) {
+    public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
     }
 
@@ -62,5 +62,7 @@ public class Bitacora {
 
     public void setDocente_clave(String Docente_clave) {
         this.Docente_clave = Docente_clave;
-    } 
+    }
+
+    
 }

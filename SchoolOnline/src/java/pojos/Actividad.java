@@ -21,20 +21,23 @@ public class Actividad {
     
     private Date fechaCreada;
     
-    private Date fechaEnrega;
+    private Date fechaEntrega;
     
     private Integer calificacion;
+    
+    private Integer Grupo_idGrupo;
 
     public Actividad() {
     }
 
-    public Actividad(Integer idActividad, String nombre, String descripcion, Date fechaCreada, Date fechaEnrega, Integer calificacion) {
+    public Actividad(Integer idActividad, String nombre, String descripcion, Date fechaCreada, Date fechaEntrega, Integer calificacion, Integer Grupo_idGrupo) {
         this.idActividad = idActividad;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaCreada = fechaCreada;
-        this.fechaEnrega = fechaEnrega;
+        this.fechaEntrega = fechaEntrega;
         this.calificacion = calificacion;
+        this.Grupo_idGrupo = Grupo_idGrupo;
     }
 
     public Integer getIdActividad() {
@@ -69,12 +72,12 @@ public class Actividad {
         this.fechaCreada = fechaCreada;
     }
 
-    public Date getFechaEnrega() {
-        return fechaEnrega;
+    public Date getFechaEntrega() {
+        return fechaEntrega;
     }
 
-    public void setFechaEnrega(Date fechaEnrega) {
-        this.fechaEnrega = fechaEnrega;
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public Integer getCalificacion() {
@@ -85,4 +88,13 @@ public class Actividad {
         this.calificacion = calificacion;
     }
 
+    public Integer getGrupo_idGrupo() {
+        return Grupo_idGrupo;
+    }
+
+    public void setGrupo_idGrupo(Integer Grupo_idGrupo) {
+        this.Grupo_idGrupo = Grupo_idGrupo;
+    }
+
+    
 }

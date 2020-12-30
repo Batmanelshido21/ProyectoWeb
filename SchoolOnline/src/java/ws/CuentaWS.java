@@ -39,14 +39,6 @@ public class CuentaWS {
     public CuentaWS() {
     }
     
-    @Path("prueba")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getCuenta(){
-        
-        return "Hola";
-    }
-    
     @Path("LoginAlumno")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,6 +63,29 @@ public class CuentaWS {
             }
         }      
         return alumno;
+    }
+    
+    @Path("recuperarContraseña")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Cuenta recuperarContraseña(
+            @FormParam("correo") String correo){
+        Cuenta cuenta = new Cuenta();
+        cuenta.setCorreo(correo);
+        
+        SqlSession conexion = MyBatisUtil.getSession();
+        if(conexion != null){
+            try{
+                cuenta = conexion.selectOne("Cuenta.recuperarContraseña",cuenta);
+                conexion.commit();
+                return cuenta;
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }      
+        return cuenta;
+        
     }
     
     
@@ -144,6 +159,40 @@ public class CuentaWS {
         return "no se pudo";
         
     }
+    
+    @Path("modificarDocente")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public String modificarDocente(
+            @FormParam("clave") String clave,
+            @FormParam("nombre") String nombre,
+            @FormParam("apellidoPaterno") String apellidoPaterno,
+            @FormParam("apellidoMaterno") String apellidoMaterno,
+            @FormParam("gradoAcademico") String gradoAcademico,
+            @FormParam("telefono") String telefono){
+        
+        Docente docente = new Docente();
+        docente.setClave(clave);
+        docente.setNombre(nombre);
+        docente.setApellidoPaterno(apellidoPaterno);
+        docente.setApellidoMaterno(apellidoMaterno);
+        docente.setGradoAcademico(gradoAcademico);
+        docente.setTelefono(telefono);
+         SqlSession conn = MyBatisUtil.getSession();
+        
+         try {
+            conn.update("Cuenta.modificarDocente", docente);
+            conn.commit();
+            return "Si se pudo";
+        } catch (Exception ex) {
+            
+        } finally {
+            conn.close();
+        }
+        
+        return "no se pudo";
+    }
+    
     
     
     @Path("RegistrarDocente")

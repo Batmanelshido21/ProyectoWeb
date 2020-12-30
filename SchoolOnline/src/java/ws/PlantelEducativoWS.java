@@ -38,6 +38,38 @@ public class PlantelEducativoWS {
     public PlantelEducativoWS() {
     }
     
+    @Path("modificarPlantel")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public String modificarPlantel(
+            @FormParam("clave") String clave,
+            @FormParam("sector") String sector,
+            @FormParam("nivelEscolar") String nivelEscolar,
+            @FormParam("zona") String zona,
+            @FormParam("direccion") String direccion){
+        PlantelEducativo plantel = new PlantelEducativo();
+        plantel.setClave(clave);
+        plantel.setSector(sector);
+        plantel.setNivelEscolar(nivelEscolar);
+        plantel.setZona(zona);
+        plantel.setDireccion(direccion);
+         SqlSession conn = MyBatisUtil.getSession();
+        
+         try {
+            conn.update("Plantel.modificarPlantel", plantel);
+            conn.commit();
+            return "Si se pudo";
+        } catch (Exception ex) {
+            
+        } finally {
+            conn.close();
+        }
+        
+        return "no se pudo";
+    }
+    
+    
+    
     @Path("RegistrarPlantel")
     @POST
     @Produces(MediaType.APPLICATION_JSON)

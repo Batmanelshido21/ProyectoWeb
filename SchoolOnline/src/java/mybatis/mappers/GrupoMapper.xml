@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtdmybatis-3-mapper.dtd">
+
+<mapper namespace="Grupo">
+    
+ <insert id="registrarGrupo" parameterType="pojos.Grupo">
+        INSERT INTO grupo (nombre,CicloEscolar_idCicloEscolar,Foro_idForo,Docente_clave)
+        VALUES(#{nombre},#{CicloEscolar_idCicloEscolar},#{Foro_idForo},#{Docente_clave})        
+ </insert>
+ 
+ <insert id="registrarForo" parameterType="pojos.Foro">
+        INSERT INTO foro (nombre)
+        VALUES(#{nombre})        
+ </insert>
+ 
+ <update id="modificarGrupo" parameterType="pojos.Grupo">
+        UPDATE grupo SET nombre = #{nombre}
+        WHERE idGrupo = #{idGrupo}
+ </update>
+ 
+<select id="getGruposD" resultType="pojos.Grupo" parameterType="String">
+   SELECT
+   grupo.nombre,
+   grupo.idGrupo
+   FROM grupo WHERE grupo.Docente_clave = #{clave}
+</select>
+
+ 
+</mapper>

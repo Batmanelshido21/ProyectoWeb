@@ -3,8 +3,21 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtdmybatis-3-mapper.dtd">
 
-<mapper namespace="Cuenta">
+<mapper namespace="Actividad">
     
+<insert id="registrarActividad" parameterType="pojos.Actividad">
+        INSERT INTO actividad (nombre,descripcion,fechaCreada,fechaEntrega,Grupo_idGrupo)
+        VALUES(#{nombre},#{descripcion},#{fechaCreada},#{fechaEntrega},#{Grupo_idGrupo})        
+</insert>
 
+<update id="calificarActividad" parameterType="pojos.Actividad">
+        UPDATE actividad SET calificacion = #{calificacion}
+        WHERE idActividad = #{idActividad}
+</update>
+
+<update id="modificarActividad" parameterType="pojos.Actividad">
+        UPDATE actividad SET nombre = #{nombre}, descripcion = #{descripcion}, fechaCreada = #{fechaCreada}, fechaEntrega = #{fechaEntrega}
+        WHERE idActividad = #{idActividad}
+</update>
     
 </mapper>

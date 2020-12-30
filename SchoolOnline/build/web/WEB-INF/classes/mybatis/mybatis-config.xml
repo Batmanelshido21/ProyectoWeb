@@ -18,5 +18,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <mappers>
         <mapper resource="mybatis/mappers/CuentaMapper.xml"/>
         <mapper resource="mybatis/mappers/PlantelMapper.xml"/>
+        <mapper resource="mybatis/mappers/GrupoMapper.xml"/>
+        <mapper resource="mybatis/mappers/ActividadMapper.xml"/>
+        <mapper resource="mybatis/mappers/BitacoraMapper.xml"/>
+        <mapper resource="mybatis/mappers/ForoMapper.xml"/>
     </mappers>
 </configuration>
