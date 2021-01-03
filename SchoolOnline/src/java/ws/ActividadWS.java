@@ -6,19 +6,22 @@
 package ws;
 
 import java.sql.Date;
+import java.util.Base64;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Actividad;
+import pojos.Archivo;
 
 /**
  * REST Web Service
@@ -36,11 +39,51 @@ public class ActividadWS {
      */
     public ActividadWS() {
     }
+    
+    @Path("actividadesGrupo/{Grupo_idGrupo}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Actividad> obtenerActividadesGrupo(
+            @PathParam("Grupo_idGrupo") Integer Grupo_idGrupo){
+        List<Actividad> list = null;
+        SqlSession conexion = MyBatisUtil.getSession();
+        
+         if(conexion != null){
+            try{
+                list = conexion.selectList("Actividad.getActividadesdGrupo",Grupo_idGrupo);
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return list;
+        
+    }
+    
+    @Path("actividadesAlumno/{Alumno_clave}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Actividad> obtenerActividadesGrupo(
+            @PathParam("Alumno_clave") String Alumno_clave){
+        List<Actividad> list = null;
+        SqlSession conexion = MyBatisUtil.getSession();
+        
+         if(conexion != null){
+            try{
+                list = conexion.selectList("Actividad.getActividadesAlumno",Alumno_clave);
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return list;
+        
+    }
 
     @Path("calificarActividad")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String calificarActividad(
+    public boolean calificarActividad(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("calificacion") Integer calificacion){
         Actividad actividad = new Actividad();
@@ -52,20 +95,20 @@ public class ActividadWS {
             try{
                 conexion.update("Actividad.calificarActividad",actividad);
                 conexion.commit();
-                return "si se pudo";
+                return true;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return "no se pudo";
+        return false;
         
     }
     
     @Path("modificarActividad")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String modificarActividad(
+    public boolean modificarActividad(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
@@ -84,33 +127,73 @@ public class ActividadWS {
             try{
                 conexion.update("Actividad.modificarActividad",actividad);
                 conexion.commit();
-                return "si se pudo";
+                return true;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return "no se pudo";
+        return false;
         
     }
-      
     
-    @Path("registroActividad")
-    @POST
+    @Path("modificarActividadArchivo")
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String registrarActividad(
+    public boolean modificarActividadArchivo(
+            @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
             @FormParam("fechaCreada") Date fechaCreada,
             @FormParam("fechaEntrega") Date fechaEntrega,
-            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo){
+            @FormParam("archivo") String archivo){
+        byte[] archivo1 = Base64.getDecoder().decode(archivo);
         Actividad actividad = new Actividad();
         actividad.setNombre(nombre);
         actividad.setDescripcion(descripcion);
         actividad.setFechaCreada(fechaCreada);
         actividad.setFechaEntrega(fechaEntrega);
-        actividad.setGrupo_idGrupo(Grupo_idGrupo);
+        actividad.setIdActividad(idActividad);
+        Archivo archivoO = new Archivo();
+        archivoO.setActividad_idActividad(idActividad);
+        archivoO.setArchivo(archivo1);
         
+       SqlSession conexion = MyBatisUtil.getSession();
+        
+        if(conexion != null){
+            try{
+                conexion.update("Actividad.modificarActividad",actividad);
+                conexion.update("Actividad.modificarArchivo",archivo);
+                conexion.commit();
+                return true;
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }      
+        return false;
+        
+    }
+      
+    @Path("registroActividad")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean registrarActividad(
+            @FormParam("idActividad") Integer idActividad,
+            @FormParam("nombre") String nombre,
+            @FormParam("descripcion") String descripcion,
+            @FormParam("fechaCreada") Date fechaCreada,
+            @FormParam("fechaEntrega") Date fechaEntrega,
+            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo,
+            @FormParam("Alumno_clave") String Alumno_clave){
+        Actividad actividad = new Actividad();
+        actividad.setIdActividad(idActividad);
+        actividad.setNombre(nombre);
+        actividad.setDescripcion(descripcion);
+        actividad.setFechaCreada(fechaCreada);
+        actividad.setFechaEntrega(fechaEntrega);
+        actividad.setGrupo_idGrupo(Grupo_idGrupo);
+        actividad.setAlumno_clave(Alumno_clave);
         
        SqlSession conexion = MyBatisUtil.getSession();
         
@@ -118,14 +201,56 @@ public class ActividadWS {
             try{
                 conexion.insert("Actividad.registrarActividad",actividad);
                 conexion.commit();
-                return "si se pudo";
+                return true;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return "no se pudo";
+        return false;
         
     }
     
+    @Path("registroActividadArchivo")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean registrarActividadArchivo(
+            @FormParam("idActividad") Integer idActividad,
+            @FormParam("nombre") String nombre,
+            @FormParam("descripcion") String descripcion,
+            @FormParam("fechaCreada") Date fechaCreada,
+            @FormParam("fechaEntrega") Date fechaEntrega,
+            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo,
+            @FormParam("Alumno_clave") String Alumno_clave,
+            @FormParam("archivo") String archivo){
+        byte[] archivo1 = Base64.getDecoder().decode(archivo);
+        Actividad actividad = new Actividad();
+        actividad.setIdActividad(idActividad);
+        actividad.setNombre(nombre);
+        actividad.setDescripcion(descripcion);
+        actividad.setFechaCreada(fechaCreada);
+        actividad.setFechaEntrega(fechaEntrega);
+        actividad.setGrupo_idGrupo(Grupo_idGrupo);
+        actividad.setAlumno_clave(Alumno_clave);
+        Archivo archivoO = new Archivo();
+        archivoO.setActividad_idActividad(idActividad);
+        archivoO.setArchivo(archivo1);
+        
+       SqlSession conexion = MyBatisUtil.getSession();
+        
+        if(conexion != null){
+            try{
+                conexion.insert("Actividad.registrarActividad",actividad);
+                conexion.insert("Actividad.registrarActividadArchivo",archivo);
+                conexion.commit();
+                return true;
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }      
+        return false;
+        
+    }
+        
 }

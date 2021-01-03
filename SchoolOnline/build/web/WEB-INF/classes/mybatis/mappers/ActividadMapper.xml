@@ -6,8 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Actividad">
     
 <insert id="registrarActividad" parameterType="pojos.Actividad">
-        INSERT INTO actividad (nombre,descripcion,fechaCreada,fechaEntrega,Grupo_idGrupo)
-        VALUES(#{nombre},#{descripcion},#{fechaCreada},#{fechaEntrega},#{Grupo_idGrupo})        
+        INSERT INTO actividad (idActividad,nombre,descripcion,fechaCreada,fechaEntrega,Grupo_idGrupo,Alumno_clave)
+        VALUES(#{idActividad},#{nombre},#{descripcion},#{fechaCreada},#{fechaEntrega},#{Grupo_idGrupo},#{Alumno_clave})        
+</insert>
+
+<insert id="registrarActividadArchivo" parameterType="pojos.Archivo">
+        INSERT INTO archivo (archivo,Actividad_idActividad)
+        VALUES(#{archivo},#{Actividad_idActividad})        
 </insert>
 
 <update id="calificarActividad" parameterType="pojos.Actividad">
@@ -19,5 +24,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE actividad SET nombre = #{nombre}, descripcion = #{descripcion}, fechaCreada = #{fechaCreada}, fechaEntrega = #{fechaEntrega}
         WHERE idActividad = #{idActividad}
 </update>
+
+<update id="modificarArchivo" parameterType="pojos.Archivo">
+        UPDATE archivo SET archivo = #{archivo}
+        WHERE Actividad_idActividad = #{Actividad_idActividad}
+</update>
+
+<select id="getActividadesdGrupo" resultType = "pojos.Actividad" parameterType="int">
+    SELECT
+    actividad.idActividad,
+    actividad.nombre,
+    actividad.descripcion,
+    actividad.fechaCreada,
+    actividad.fechaEntrega,
+    actividad.calificacion,
+    actividad.Grupo_idGrupo,
+    actividad.Alumno_clave
+    FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo} ORDER BY actividad.fechaCreada DESC
+</select>
+
+<select id="getActividadesAlumno" resultType = "pojos.Actividad" parameterType="int">
+    SELECT
+    actividad.idActividad,
+    actividad.nombre,
+    actividad.descripcion,
+    actividad.fechaCreada,
+    actividad.fechaEntrega,
+    actividad.calificacion,
+    actividad.Grupo_idGrupo,
+    actividad.Alumno_clave
+    FROM actividad WHERE actividad.Alumno_clave = #{Alumno_clave} ORDER BY actividad.fechaCreada DESC
+</select>
     
 </mapper>

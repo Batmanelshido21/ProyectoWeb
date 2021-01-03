@@ -6,8 +6,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Bitacora">
     
 <insert id="registrarBitacora" parameterType="pojos.Bitacora">
-        INSERT INTO bitacora (idBitacora,fecha,archivo,Docente_clave)
-        VALUES(#{idBitacora},#{fecha},#{archivo},#{Docente_clave})        
+        INSERT INTO bitacora (fecha,archivo,Docente_clave)
+        VALUES(#{fecha},#{archivo},#{Docente_clave})        
  </insert>
+ 
+ <update id="modificarBitacora" parameterType="pojos.Bitacora">
+        UPDATE bitacora SET fecha = #{fecha}, archivo = #{archivo}, Docente_clave = #{Docente_clave}
+        WHERE idBitacora = #{idBitacora}
+ </update>
+ 
+ <select id="getBitacoraDocente" resultType = "pojos.Bitacora" parameterType="int">
+    SELECT
+    bitacora.idBitacora,
+    bitacora.fecha,
+    bitacora.archivo
+    FROM bitacora WHERE bitacora.Docente_clave = #{Docente_clave} ORDER BY bitacora.fecha DESC
+</select>
   
 </mapper>

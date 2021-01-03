@@ -9,7 +9,6 @@ import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -63,7 +62,7 @@ public class GrupoWS {
     @Path("modificarGrupo")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String modificarGrupo(
+    public boolean modificarGrupo(
             @FormParam("idGrupo") Integer idGrupo,
             @FormParam("nombre") String nombre){
         Grupo grupo = new Grupo();
@@ -74,20 +73,20 @@ public class GrupoWS {
          try {
             conn.update("Grupo.modificarGrupo",grupo);
             conn.commit();
-            return "Si se pudo";
+            return true;
         } catch (Exception ex) {
             
         } finally {
             conn.close();
         }
         
-        return "no se pudo";  
+        return false;  
     }
 
     @Path("RegistrarGrupo")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String crearGrupo(
+    public boolean crearGrupo(
             @FormParam("Foro_idForo") Integer Foro_idForo,
             @FormParam("nombreF") String nombreF,
             @FormParam("nombre") String nombre,
@@ -109,13 +108,13 @@ public class GrupoWS {
                 conexion.insert("Grupo.registrarForo",foro);
                 conexion.insert("Grupo.registrarGrupo",grupo);
                 conexion.commit();
-                return "si se pudo";
+                return true;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return "no se pudo";
+        return false;
     }
     
 }

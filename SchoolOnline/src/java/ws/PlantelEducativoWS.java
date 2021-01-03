@@ -8,17 +8,13 @@ package ws;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
-import pojos.Alumno;
-import pojos.Cuenta;
 import pojos.PlantelEducativo;
 
 /**
@@ -41,7 +37,7 @@ public class PlantelEducativoWS {
     @Path("modificarPlantel")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String modificarPlantel(
+    public boolean modificarPlantel(
             @FormParam("clave") String clave,
             @FormParam("sector") String sector,
             @FormParam("nivelEscolar") String nivelEscolar,
@@ -58,14 +54,14 @@ public class PlantelEducativoWS {
          try {
             conn.update("Plantel.modificarPlantel", plantel);
             conn.commit();
-            return "Si se pudo";
+            return true;
         } catch (Exception ex) {
             
         } finally {
             conn.close();
         }
         
-        return "no se pudo";
+        return false;
     }
     
     
@@ -73,7 +69,7 @@ public class PlantelEducativoWS {
     @Path("RegistrarPlantel")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String registroPlantel(
+    public boolean registroPlantel(
             @FormParam("clave") String clave,
             @FormParam("sector") String sector,
             @FormParam("nivelEscolar") String nivelEscolar,
@@ -93,13 +89,13 @@ public class PlantelEducativoWS {
             try{
                 conexion.insert("Plantel.registrarPlantel",plantel);
                 conexion.commit();
-                return "si se pudo";
+                return true;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return "no se pudo";
+        return false;
         
     }
 

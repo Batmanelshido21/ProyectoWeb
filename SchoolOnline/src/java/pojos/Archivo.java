@@ -15,19 +15,16 @@ public class Archivo {
     
     private Integer idArchivo;
     
-    private File archivo;
-    
-    private Integer MaterialApoyo_idMaterialApoyo;
+    private byte[] archivo;
     
     private Integer Actividad_idActividad;
 
     public Archivo() {
     }
 
-    public Archivo(Integer idArchivo, File archivo, Integer MaterialApoyo_idMaterialApoyo, Integer Actividad_idActividad) {
+    public Archivo(Integer idArchivo, byte[] archivo, Integer Actividad_idActividad) {
         this.idArchivo = idArchivo;
         this.archivo = archivo;
-        this.MaterialApoyo_idMaterialApoyo = MaterialApoyo_idMaterialApoyo;
         this.Actividad_idActividad = Actividad_idActividad;
     }
 
@@ -39,20 +36,12 @@ public class Archivo {
         this.idArchivo = idArchivo;
     }
 
-    public File getArchivo() {
+    public byte[] getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(File archivo) {
+    public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
-    }
-
-    public Integer getMaterialApoyo_idMaterialApoyo() {
-        return MaterialApoyo_idMaterialApoyo;
-    }
-
-    public void setMaterialApoyo_idMaterialApoyo(Integer MaterialApoyo_idMaterialApoyo) {
-        this.MaterialApoyo_idMaterialApoyo = MaterialApoyo_idMaterialApoyo;
     }
 
     public Integer getActividad_idActividad() {
@@ -62,4 +51,6 @@ public class Archivo {
     public void setActividad_idActividad(Integer Actividad_idActividad) {
         this.Actividad_idActividad = Actividad_idActividad;
     }
+
+   
 }

@@ -26,11 +26,13 @@ public class Actividad {
     private Integer calificacion;
     
     private Integer Grupo_idGrupo;
+    
+    private String Alumno_clave;
 
     public Actividad() {
     }
 
-    public Actividad(Integer idActividad, String nombre, String descripcion, Date fechaCreada, Date fechaEntrega, Integer calificacion, Integer Grupo_idGrupo) {
+    public Actividad(Integer idActividad, String nombre, String descripcion, Date fechaCreada, Date fechaEntrega, Integer calificacion, Integer Grupo_idGrupo, String Alumno_clave) {
         this.idActividad = idActividad;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -38,6 +40,7 @@ public class Actividad {
         this.fechaEntrega = fechaEntrega;
         this.calificacion = calificacion;
         this.Grupo_idGrupo = Grupo_idGrupo;
+        this.Alumno_clave = Alumno_clave;
     }
 
     public Integer getIdActividad() {
@@ -96,5 +99,13 @@ public class Actividad {
         this.Grupo_idGrupo = Grupo_idGrupo;
     }
 
-    
+    public String getAlumno_clave() {
+        return Alumno_clave;
+    }
+
+    public void setAlumno_clave(String Alumno_clave) {
+        this.Alumno_clave = Alumno_clave;
+    }
+
+   
 }
