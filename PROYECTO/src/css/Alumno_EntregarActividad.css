@@ -1,0 +1,72 @@
+.CentrarContenido{
+    text-align: center;
+    font-family: Roboto;
+}
+
+.div{
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    padding: 1em;
+  }
+
+  .div2{
+    border: solid;
+    border-color: black;
+    border-width: thin;
+    padding: 1em;
+    border-top: none;
+  }
+
+  .div3{
+    border: solid;
+    border-color: black;
+    border-width: thin;
+    border-top: none;
+    height: 250px; 
+    padding: 1em;
+  }
+
+  .div4{
+    border: solid;
+    border-color: black;
+    border-width: thin;
+    height: 250px; 
+    padding: 1em;
+  }
+
+  .txt{
+      border: none;
+  }
+
+  .Contenido{
+    margin-top: 5%;
+    margin-left: 65%;
+    width: 470px;
+    height: 200;
+    display: flex;
+    justify-content: space-between;
+}
+
+.botonCancelar{
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  border-radius: 20px;
+  border-color: rgb(175, 23, 23);
+  height: 45px;
+  font-family: Roboto;
+  width: 200px;
+}
+
+.botonAceptar{
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  border-radius: 20px;
+  border-color: rgb(31, 201, 25);
+  height: 45px;
+  font-family: Roboto;
+  width: 200px;
+}
+  

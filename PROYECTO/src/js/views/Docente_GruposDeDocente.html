@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Actividades</title>
+        <script type="text/javascript" src="../viewModels/ActividadesDeAlumno.js"></script>
+        <link rel="stylesheet" href="../../css/ActividadesAlumno.css" type="text/css" />
+    </head>
+    <body>
+        <header class="CentrarContenido">
+            <h1>Grupos de docente</h1>
+        </header>
+        <br>
+        <br>
+        <div class="CentrarContenido">
+            <label>Grupos a su cargo</label>
+        </div>
+        <div id="tablaWrapper" style="width: 1px; min-width: 100%;">
+            <oj-table id='tabla' aria-label='Tabla de prueba' data='[[dataprovider]]' scroll-policy='loadMoreOnScroll'
+              scroll-policy-options='{"fetchSize": 10}' columns='[{"headerText": "Nombre de actividad", 
+                                                       "field": "descripcion"},
+                                                      {"headerText": "Fecha de habilitación", 
+                                                       "field": "fechaInicio"},
+                                                       {"headerText": "Fecha de entrega", 
+                                                       "field": "fechaTermino"}]' style='width: 100%; height: 100px;'>
+            </oj-table>
+          </div>
+          <div class="Contenido">
+            <button class="botonCancelar">CANCELAR</button>
+            <button class="botonAceptar">ACEPTAR</button>
+          </div>
+        </body>
+</html>
