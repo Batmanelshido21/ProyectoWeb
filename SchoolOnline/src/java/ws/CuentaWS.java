@@ -5,6 +5,7 @@
  */
 package ws;
 
+import DAO.CuentaDAO;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -18,6 +19,7 @@ import org.apache.ibatis.session.SqlSession;
 import pojos.Alumno;
 import pojos.Cuenta;
 import pojos.Docente;
+import pojos.MensajeR;
 
 /**
  * REST Web Service
@@ -45,21 +47,15 @@ public class CuentaWS {
        Cuenta cuenta = new Cuenta();
        cuenta.setCorreo(correo);
        cuenta.setContrasena(contrasena);
+       CuentaDAO cuentaD = new CuentaDAO();
        Alumno alumno = new Alumno();
-       int idCuenta;
-       SqlSession conexion = MyBatisUtil.getSession();
-        if(conexion != null){
-            try{
-                idCuenta = conexion.selectOne("Cuenta.login",cuenta);
-                alumno = conexion.selectOne("Cuenta.getAlumno",idCuenta);
-                conexion.commit();
-                return alumno;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return alumno;
+       
+       try{
+           alumno = cuentaD.loginAlumno(cuenta);
+       }catch(Exception e){
+           
+       }
+       return alumno;
     }
     
     @Path("recuperarContraseña")
@@ -96,27 +92,21 @@ public class CuentaWS {
        cuenta.setCorreo(correo);
        cuenta.setContrasena(contrasena);
        Docente docente = new Docente();
-       int idCuenta;
-       SqlSession conexion = MyBatisUtil.getSession();
-        if(conexion != null){
-            try{
-                idCuenta = conexion.selectOne("Cuenta.login",cuenta);
-                docente = conexion.selectOne("Cuenta.getDocente",idCuenta);
-                conexion.commit();
-                return docente;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return docente;
+       CuentaDAO cuentaD = new CuentaDAO();
+       
+       try{
+           docente = cuentaD.loginDocente(cuenta);
+       }catch(Exception e){
+           
+       }
+       return docente;
     }
     
     
     @Path("RegistrarAlumno")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registroUSuario(
+    public MensajeR registroUSuario(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena,
             @FormParam("clave") String clave,
@@ -126,7 +116,7 @@ public class CuentaWS {
             @FormParam("idCuenta") Integer idCuenta,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
             @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave){
-        
+        MensajeR mensajeR;
         Cuenta cuenta = new Cuenta();
         Alumno alumno = new Alumno();
         cuenta.setIdCuenta(idCuenta);
@@ -140,27 +130,20 @@ public class CuentaWS {
         alumno.setGenero_idGenero(Genero_idGenero);
         alumno.setCuenta_idCuenta(idCuenta);
     
-        SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.insert("Cuenta.registrarCuenta",cuenta);
-                conexion.insert("Cuenta.registrarAlumno",alumno);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        CuentaDAO cuentaD = new CuentaDAO();
+        try{
+            cuentaD.registrarAlumno(cuenta, alumno);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+             mensajeR = new MensajeR(true);
+        }
+        return mensajeR;
     }
     
     @Path("modificarDocente")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarDocente(
+    public MensajeR modificarDocente(
             @FormParam("clave") String clave,
             @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno,
@@ -175,19 +158,17 @@ public class CuentaWS {
         docente.setApellidoMaterno(apellidoMaterno);
         docente.setGradoAcademico(gradoAcademico);
         docente.setTelefono(telefono);
-         SqlSession conn = MyBatisUtil.getSession();
-        
-         try {
-            conn.update("Cuenta.modificarDocente", docente);
-            conn.commit();
-            return true;
-        } catch (Exception ex) {
-            
-        } finally {
-            conn.close();
+        MensajeR mensajeR;
+         
+        CuentaDAO cuentaD = new CuentaDAO();
+        try{
+            cuentaD.modificarDocente(docente);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
         }
         
-        return false;
+        return mensajeR;
     }
     
     
@@ -195,7 +176,7 @@ public class CuentaWS {
     @Path("RegistrarDocente")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registrarDocente(
+    public MensajeR registrarDocente(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena,
             @FormParam("clave") String clave,
@@ -222,20 +203,15 @@ public class CuentaWS {
         docente.setTelefono(telefono);
         docente.setCuenta_idCuenta(Cuenta_idCuenta);
         docente.setGenero_idGenero(Genero_idGenero);
-        SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.insert("Cuenta.registrarCuenta",cuenta);
-                conexion.insert("Cuenta.registrarDocente",docente);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
+        MensajeR mensajeR;
+        CuentaDAO cuentaD = new CuentaDAO();
+        try{
+            cuentaD.registrarDocente(cuenta, docente);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
     }
     
 }

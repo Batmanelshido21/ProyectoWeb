@@ -5,6 +5,7 @@
  */
 package ws;
 
+import DAO.ActividadDAO;
 import java.sql.Date;
 import java.util.Base64;
 import java.util.List;
@@ -22,6 +23,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Actividad;
 import pojos.Archivo;
+import pojos.MensajeR;
 
 /**
  * REST Web Service
@@ -46,16 +48,13 @@ public class ActividadWS {
     public List<Actividad> obtenerActividadesGrupo(
             @PathParam("Grupo_idGrupo") Integer Grupo_idGrupo){
         List<Actividad> list = null;
-        SqlSession conexion = MyBatisUtil.getSession();
+        ActividadDAO actividadD = new ActividadDAO();
         
-         if(conexion != null){
-            try{
-                list = conexion.selectList("Actividad.getActividadesdGrupo",Grupo_idGrupo);
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }
+       try{
+        list = actividadD.obtenerActividadesGrupo(Grupo_idGrupo);
+       }catch(Exception e){
+           
+       }
         return list;
         
     }
@@ -66,15 +65,12 @@ public class ActividadWS {
     public List<Actividad> obtenerActividadesGrupo(
             @PathParam("Alumno_clave") String Alumno_clave){
         List<Actividad> list = null;
-        SqlSession conexion = MyBatisUtil.getSession();
+        ActividadDAO actividadD = new ActividadDAO();
         
-         if(conexion != null){
-            try{
-                list = conexion.selectList("Actividad.getActividadesAlumno",Alumno_clave);
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
+        try{
+            list = actividadD.obtenerActividadesAlumno(Alumno_clave);
+        }catch(Exception e){
+            
         }
         return list;
         
@@ -83,32 +79,28 @@ public class ActividadWS {
     @Path("calificarActividad")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean calificarActividad(
+    public MensajeR calificarActividad(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("calificacion") Integer calificacion){
         Actividad actividad = new Actividad();
         actividad.setIdActividad(idActividad);
         actividad.setCalificacion(calificacion);
-        SqlSession conexion = MyBatisUtil.getSession();
+        MensajeR mensajeR;
+        ActividadDAO actividadD = new ActividadDAO();
         
-        if(conexion != null){
-            try{
-                conexion.update("Actividad.calificarActividad",actividad);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        try{
+            actividadD.calificarActividad(actividad);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
     }
     
     @Path("modificarActividad")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarActividad(
+    public MensajeR modificarActividad(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
@@ -120,27 +112,22 @@ public class ActividadWS {
         actividad.setFechaCreada(fechaCreada);
         actividad.setFechaEntrega(fechaEntrega);
         actividad.setIdActividad(idActividad);
+        MensajeR mensajeR;
+        ActividadDAO actividadD = new ActividadDAO();
         
-       SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.update("Actividad.modificarActividad",actividad);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        try{
+            actividadD.modificarActividad(actividad);
+             mensajeR = new MensajeR(true);
+        }catch(Exception e){
+             mensajeR = new MensajeR(false);
+        }
+       return mensajeR;
     }
     
     @Path("modificarActividadArchivo")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarActividadArchivo(
+    public MensajeR modificarActividadArchivo(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
@@ -157,28 +144,23 @@ public class ActividadWS {
         Archivo archivoO = new Archivo();
         archivoO.setActividad_idActividad(idActividad);
         archivoO.setArchivo(archivo1);
+        MensajeR mensajeR;
+        ActividadDAO actividadD = new ActividadDAO();
         
-       SqlSession conexion = MyBatisUtil.getSession();
+        try{
+            actividadD.modificarActividadArchivo(actividad, archivoO);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
         
-        if(conexion != null){
-            try{
-                conexion.update("Actividad.modificarActividad",actividad);
-                conexion.update("Actividad.modificarArchivo",archivo);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        return mensajeR;
     }
       
     @Path("registroActividad")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registrarActividad(
+    public MensajeR registrarActividad(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
@@ -194,27 +176,23 @@ public class ActividadWS {
         actividad.setFechaEntrega(fechaEntrega);
         actividad.setGrupo_idGrupo(Grupo_idGrupo);
         actividad.setAlumno_clave(Alumno_clave);
+        MensajeR mensajeR;
+        ActividadDAO actividadD = new ActividadDAO();
         
-       SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.insert("Actividad.registrarActividad",actividad);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        try{
+            actividadD.registrarActividad(actividad);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+       
+        return mensajeR;
     }
     
     @Path("registroActividadArchivo")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registrarActividadArchivo(
+    public MensajeR registrarActividadArchivo(
             @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
@@ -236,21 +214,16 @@ public class ActividadWS {
         archivoO.setActividad_idActividad(idActividad);
         archivoO.setArchivo(archivo1);
         
-       SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.insert("Actividad.registrarActividad",actividad);
-                conexion.insert("Actividad.registrarActividadArchivo",archivo);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+       MensajeR mensajeR;
+       ActividadDAO actividadD = new ActividadDAO();
+       
+       try{
+           actividadD.registrarActividadArchivo(actividad, archivoO);
+           mensajeR = new MensajeR(true);
+       }catch(Exception e){
+           mensajeR = new MensajeR(false);
+       }
+        return mensajeR;
     }
         
 }

@@ -5,6 +5,7 @@
  */
 package ws;
 
+import DAO.GrupoDAO;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -20,6 +21,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Foro;
 import pojos.Grupo;
+import pojos.MensajeR;
 
 /**
  * REST Web Service
@@ -43,50 +45,41 @@ public class GrupoWS {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Grupo> getGruposDocente(
             @PathParam("clave") String clave){
-        
        List<Grupo> list = null;
-       SqlSession conexion = MyBatisUtil.getSession();
-       
-       if(conexion != null){
-            try{
-                list = conexion.selectList("Grupo.getGruposD",clave);
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }
+       GrupoDAO grupoD = new GrupoDAO();
+       try{
+           list = grupoD.obtenerGrupodID(clave);
+       }catch(Exception e){
+           
+       }
         return list;
-        
     }
     
     @Path("modificarGrupo")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarGrupo(
+    public MensajeR modificarGrupo(
             @FormParam("idGrupo") Integer idGrupo,
             @FormParam("nombre") String nombre){
         Grupo grupo = new Grupo();
         grupo.setIdGrupo(idGrupo);
         grupo.setNombre(nombre);
-        SqlSession conn = MyBatisUtil.getSession();
+        MensajeR mensajeR;
+        GrupoDAO grupoD = new GrupoDAO();
         
-         try {
-            conn.update("Grupo.modificarGrupo",grupo);
-            conn.commit();
-            return true;
-        } catch (Exception ex) {
-            
-        } finally {
-            conn.close();
+        try{
+            grupoD.modificarGrupo(grupo);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
         }
-        
-        return false;  
+        return mensajeR;
     }
 
     @Path("RegistrarGrupo")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean crearGrupo(
+    public MensajeR crearGrupo(
             @FormParam("Foro_idForo") Integer Foro_idForo,
             @FormParam("nombreF") String nombreF,
             @FormParam("nombre") String nombre,
@@ -101,20 +94,16 @@ public class GrupoWS {
         Foro  foro = new Foro();
         foro.setIdForo(Foro_idForo);
         foro.setNombre(nombreF);
-        SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.insert("Grupo.registrarForo",foro);
-                conexion.insert("Grupo.registrarGrupo",grupo);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
+       
+        MensajeR mensajeR;
+        GrupoDAO grupoD = new GrupoDAO();
+        try{
+            grupoD.crearGrupo(foro, grupo);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
     }
     
 }

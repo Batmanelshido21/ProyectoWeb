@@ -5,6 +5,7 @@
  */
 package ws;
 
+import DAO.BitacoraDAO;
 import java.sql.Date;
 import java.util.Base64;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Bitacora;
+import pojos.MensajeR;
 
 /**
  * REST Web Service
@@ -45,53 +47,43 @@ public class BitacoraWS {
     public List<Bitacora> getBitacoras(
             @PathParam("clave") String clave){
         List<Bitacora> list = null;
-       SqlSession conexion = MyBatisUtil.getSession();
-       
-       if(conexion != null){
-            try{
-                list = conexion.selectList("Bitacora.getBitacoraDocente",clave);
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
+        BitacoraDAO bitacoraD = new BitacoraDAO();
+        try{
+            list = bitacoraD.getBitacoras(clave);
+        }catch(Exception e){
+            
         }
-        return list;
-        
+        return list; 
     }
     
     @Path("modificarBitacora")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarBitacora(
+    public MensajeR modificarBitacora(
             @FormParam("fecha") Date fecha,
             @FormParam("archivo") String archivo){
         Bitacora bitacora = new Bitacora();
         bitacora.setFecha(fecha);
         byte[] archivo1 = Base64.getDecoder().decode(archivo);
         bitacora.setArchivo(archivo1);
+        MensajeR mensajeR;
+        BitacoraDAO bitacoraD = new BitacoraDAO();
         
-         SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.update("Bitacora.modificarBitacora",bitacora);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        
-        return false;
-        
+        try{
+            bitacoraD.modificarBitacora(bitacora);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+         
+        return mensajeR;
     }
     
     
     @Path("registrarBitacora")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registrarBitacora(
+    public MensajeR registrarBitacora(
             @FormParam("Docente_clave") String Docente_clave,
             @FormParam("fecha") Date fecha,
             @FormParam("archivo") String archivo){
@@ -100,19 +92,16 @@ public class BitacoraWS {
         bitacora.setDocente_clave(Docente_clave);
         byte[] archivo1 = Base64.getDecoder().decode(archivo);
         bitacora.setArchivo(archivo1);
-        SqlSession conexion = MyBatisUtil.getSession();
+        MensajeR mensajeR;
+        BitacoraDAO bitacoraD = new BitacoraDAO();
         
-        if(conexion != null){
-            try{
-                conexion.update("Bitacora.registrarBitacora",bitacora);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
+        try{
+            bitacoraD.registrarBitacora(bitacora);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
     }
 
   

@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo} ORDER BY actividad.fechaCreada DESC
 </select>
 
-<select id="getActividadesAlumno" resultType = "pojos.Actividad" parameterType="int">
+<select id="getActividadesAlumno" resultType = "pojos.Actividad" parameterType="String">
     SELECT
     actividad.idActividad,
     actividad.nombre,
