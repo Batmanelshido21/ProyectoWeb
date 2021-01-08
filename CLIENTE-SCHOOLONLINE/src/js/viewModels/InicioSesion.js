@@ -6,11 +6,12 @@
  * @ignore
  */
 /*
- * Your dashboard ViewModel code goes here
+ * Your about ViewModel code goes here
  */
-define(['knockout', 'ojs/ojknockout','accUtils', 'ojs/ojformlayout', 'ojs/ojinputtext', 'ojs/ojlabel','ojs/ojbutton'],
- function(accUtils) {
-    function DashboardViewModel(ko) {
+define(['knockout', 'ojs/ojmodule-element-utils', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-adapter', 'ojs/ojknockoutrouteradapter', 'ojs/ojurlparamadapter', 'ojs/ojarraydataprovider', 'ojs/ojknockouttemplateutils', 'ojs/ojmodule-element', 'ojs/ojknockout',
+        'ojs/ojbutton', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojformlayout'],
+  function(ko, moduleUtils, ResponsiveUtils, ResponsiveKnockoutUtils, CoreRouter, ModuleRouterAdapter, KnockoutRouterAdapter, UrlParamAdapter, ArrayDataProvider, KnockoutTemplateUtils) {
+    function dashboardViewModel() {
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
 
@@ -23,12 +24,14 @@ define(['knockout', 'ojs/ojknockout','accUtils', 'ojs/ojformlayout', 'ojs/ojinpu
        * after being disconnected.
        */
 
-      this.connected = () => {
-        accUtils.announce('Dashboard page loaded.');
-        document.title = "Dashboard";
-        // Implement further logic if needed
+      clicAceptar = function () {
+        window.location.href = '../js/views/about.html'
       };
 
+      this.connected = () => {
+        accUtils.announce('About page loaded.');
+        document.title = "About";
+      };
       /**
        * Optional ViewModel method invoked after the View is disconnected from the DOM.
        */
@@ -50,6 +53,7 @@ define(['knockout', 'ojs/ojknockout','accUtils', 'ojs/ojformlayout', 'ojs/ojinpu
      * return a constructor for the ViewModel so that the ViewModel is constructed
      * each time the view is displayed.
      */
-    return DashboardViewModel;
+
+    return  dashboardViewModel();
   }
 );

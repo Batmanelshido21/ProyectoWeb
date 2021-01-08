@@ -9,9 +9,12 @@
  * Your application specific code will go here
  */
 define(['knockout', 'ojs/ojmodule-element-utils', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcorerouter', 'ojs/ojmodulerouter-adapter', 'ojs/ojknockoutrouteradapter', 'ojs/ojurlparamadapter', 'ojs/ojarraydataprovider', 'ojs/ojknockouttemplateutils', 'ojs/ojmodule-element', 'ojs/ojknockout',
-        'ojs/ojbutton'],
+        'ojs/ojbutton', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojformlayout'],
   function(ko, moduleUtils, ResponsiveUtils, ResponsiveKnockoutUtils, CoreRouter, ModuleRouterAdapter, KnockoutRouterAdapter, UrlParamAdapter, ArrayDataProvider, KnockoutTemplateUtils) {
      function ControllerViewModel() {
+
+      this.var_nombre = ko.observable();
+      this.var_correo2 =  ko.observable();
 
       var self = this;
 
@@ -33,8 +36,8 @@ define(['knockout', 'ojs/ojmodule-element-utils', 'ojs/ojresponsiveutils', 'ojs/
       this.smScreen = ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
 
       let navData = [
-        { path: '', redirect: 'Docente_Inicio' },
-        { path: 'Docente_Inicio', detail: { label: 'Página principal'} }
+        { path: '', redirect: 'InicioSesion' },
+        { path: 'InicioSesion', detail: { label: 'Inicio de Sesion'} }
       ];
 
       // Router setup
@@ -55,12 +58,6 @@ define(['knockout', 'ojs/ojmodule-element-utils', 'ojs/ojresponsiveutils', 'ojs/
       /*self.clicAceptar = function () {
         window.location.href = 'js/views/dashboard.html'
       };*/
-
-      // Header
-      // Application Name used in Branding Area
-      this.appName = ko.observable("App Name");
-      // User Info used in Global Navigation area
-      this.userLogin = ko.observable("john.hancock@oracle.com");
 
       // Footer
       this.footerLinks = [
