@@ -16,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Cuenta;
 import pojos.MensajeR;
 import pojos.PlantelEducativo;
 
@@ -73,7 +74,9 @@ public class PlantelEducativoWS {
             @FormParam("sector") String sector,
             @FormParam("nivelEscolar") String nivelEscolar,
             @FormParam("zona") String zona,
-            @FormParam("direccion") String direccion){
+            @FormParam("direccion") String direccion,
+            @FormParam("correo") String correo,
+            @FormParam("contrasena") String contrasena){
         
         PlantelEducativo plantel = new PlantelEducativo();
         plantel.setClave(clave);
@@ -81,11 +84,15 @@ public class PlantelEducativoWS {
         plantel.setNivelEscolar(nivelEscolar);
         plantel.setZona(zona);
         plantel.setDireccion(direccion);
+        Cuenta cuenta = new Cuenta();
+        cuenta.setCorreo(correo);
+        cuenta.setContrasena(contrasena);
+        cuenta.setPlantelEducativo_clave(clave);
         MensajeR mensajeR;
         PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
         
         try{
-            plantelD.registrarPlantelEducativo(plantel);
+            plantelD.registrarPlantelEducativo(plantel,cuenta);
             mensajeR = new MensajeR(true);
         }catch(Exception e){
             mensajeR = new MensajeR(false);

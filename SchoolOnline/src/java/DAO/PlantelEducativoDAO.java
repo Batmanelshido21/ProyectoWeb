@@ -7,6 +7,7 @@ package DAO;
 
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Cuenta;
 import pojos.PlantelEducativo;
 
 /**
@@ -18,12 +19,13 @@ public class PlantelEducativoDAO {
     public PlantelEducativoDAO() {
     }
     
-    public boolean registrarPlantelEducativo(PlantelEducativo plantel){
+    public boolean registrarPlantelEducativo(PlantelEducativo plantel,Cuenta cuenta){
         SqlSession conexion = MyBatisUtil.getSession();
         
         if(conexion != null){
             try{
                 conexion.insert("Plantel.registrarPlantel",plantel);
+                conexion.insert("Plantel.registrarCuenta",cuenta);
                 conexion.commit();
                 return true;
             }finally{

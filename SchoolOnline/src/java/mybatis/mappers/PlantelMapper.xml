@@ -14,5 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE planteleducativo SET sector = #{sector}, nivelEscolar = #{nivelEscolar}, zona = #{zona}, direccion = #{direccion}
         WHERE clave = #{clave}
  </update>
+ 
+ <insert id="registrarCuenta" parameterType="pojos.Cuenta">
+        INSERT INTO cuenta (idCuenta,correo,contrasena,PlantelEducativo_clave)
+        VALUES(#{idCuenta},#{correo},#{contrasena},#{PlantelEducativo_clave})        
+ </insert>
     
 </mapper>
