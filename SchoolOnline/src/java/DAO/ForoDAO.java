@@ -19,12 +19,12 @@ public class ForoDAO {
     public ForoDAO() {
     }
     
-    public boolean enviarMensajeDocente(Mensaje mensajeO){
+    public boolean enviarMensaje(Mensaje mensajeO){
          SqlSession conexion = MyBatisUtil.getSession();
         
         if(conexion != null){
             try{
-                conexion.update("Foro.enviarMensajeDocente",mensajeO);
+                conexion.update("Foro.enviarMensaje",mensajeO);
                 conexion.commit();
                 return true;
             }finally{
@@ -35,22 +35,7 @@ public class ForoDAO {
         return false;
     }
     
-    public boolean enviarMensajeAlumno(Mensaje mensajeO){
-        SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.update("Foro.enviarMensajeAlumno",mensajeO);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-    }
-    
+   
     public List<Mensaje> obtenerMensajes(Integer foro_idForo){
          List<Mensaje> list = null;
        SqlSession conexion = MyBatisUtil.getSession();

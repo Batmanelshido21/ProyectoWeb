@@ -15,14 +15,14 @@ public class Archivo {
     
     private Integer idArchivo;
     
-    private byte[] archivo;
+    private String archivo;
     
     private Integer Actividad_idActividad;
 
     public Archivo() {
     }
 
-    public Archivo(Integer idArchivo, byte[] archivo, Integer Actividad_idActividad) {
+    public Archivo(Integer idArchivo, String archivo, Integer Actividad_idActividad) {
         this.idArchivo = idArchivo;
         this.archivo = archivo;
         this.Actividad_idActividad = Actividad_idActividad;
@@ -36,11 +36,11 @@ public class Archivo {
         this.idArchivo = idArchivo;
     }
 
-    public byte[] getArchivo() {
+    public String getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(byte[] archivo) {
+    public void setArchivo(String archivo) {
         this.archivo = archivo;
     }
 
@@ -52,5 +52,5 @@ public class Archivo {
         this.Actividad_idActividad = Actividad_idActividad;
     }
 
-   
+    
 }

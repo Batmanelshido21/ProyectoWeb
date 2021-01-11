@@ -20,13 +20,13 @@ public class GrupoDAO {
     public GrupoDAO() {
     }
     
-    public List<Grupo> obtenerGrupodID(String clave){
+    public List<Grupo> obtenerGrupodID(Integer Docente_idDocente){
          List<Grupo> list = null;
         SqlSession conexion = MyBatisUtil.getSession();
        
        if(conexion != null){
             try{
-                list = conexion.selectList("Grupo.getGruposD",clave);
+                list = conexion.selectList("Grupo.getGruposD",Docente_idDocente);
             }finally{
                 String j = conexion.toString();
                 conexion.close();
@@ -60,6 +60,9 @@ public class GrupoDAO {
                 conexion.insert("Grupo.registrarGrupo",grupo);
                 conexion.commit();
                 return true;
+            }
+            catch(Exception e){
+                System.out.println(e);
             }finally{
                 String j = conexion.toString();
                 conexion.close();

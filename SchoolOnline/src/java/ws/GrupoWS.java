@@ -40,15 +40,15 @@ public class GrupoWS {
     public GrupoWS() {
     }
     
-    @Path("getGrupoDocente/{clave}")
+    @Path("getGrupoDocente/{Docente_idDocente}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Grupo> getGruposDocente(
-            @PathParam("clave") String clave){
+            @PathParam("Docente_idDocente") Integer Docente_idDocente){
        List<Grupo> list = null;
        GrupoDAO grupoD = new GrupoDAO();
        try{
-           list = grupoD.obtenerGrupodID(clave);
+           list = grupoD.obtenerGrupodID(Docente_idDocente);
        }catch(Exception e){
            
        }
@@ -84,13 +84,13 @@ public class GrupoWS {
             @FormParam("nombreF") String nombreF,
             @FormParam("nombre") String nombre,
             @FormParam("CicloEscolar_idCicloEscolar") Integer CicloEscolar_idCicloEscolar,
-            @FormParam("Docente_clave") String Docente_clave){
+            @FormParam("Docente_idDocente") Integer Docente_idDocente){
         
         Grupo grupo = new Grupo();
         grupo.setNombre(nombre);
         grupo.setCicloEscolar_idCicloEscolar(CicloEscolar_idCicloEscolar);
         grupo.setForo_idForo(Foro_idForo);
-        grupo.setDocente_clave(Docente_clave);
+        
         Foro  foro = new Foro();
         foro.setIdForo(Foro_idForo);
         foro.setNombre(nombreF);

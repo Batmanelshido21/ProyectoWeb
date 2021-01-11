@@ -6,53 +6,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Cuenta">
     
  <insert id="registrarCuenta" parameterType="pojos.Cuenta">
-        INSERT INTO cuenta (idCuenta,correo,contrasena,PlantelEducativo_clave)
-        VALUES(#{idCuenta},#{correo},#{contrasena},#{PlantelEducativo_clave})        
+        INSERT INTO cuenta (correo,contrasena,PlantelEducativo_clave,nombreUsuario)
+        VALUES(#{correo},#{contrasena},#{PlantelEducativo_clave},#{nombreUsuario})        
  </insert>
  
   <insert id="registrarAlumno" parameterType="pojos.Alumno">
-        INSERT INTO alumno (clave,nombre,apellidoPaterno,apellidoMaterno,Cuenta_idCuenta,Genero_idGenero)
-        VALUES(#{clave},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{Cuenta_idCuenta},#{Genero_idGenero})        
+        INSERT INTO alumno (idAlumno,nombre,apellidoPaterno,apellidoMaterno,Cuenta_nombreUsuario,Genero_idGenero)
+        VALUES(#{idAlumno},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{Cuenta_nombreUsuario},#{Genero_idGenero})        
   </insert>
   
   <insert id="registrarDocente" parameterType="pojos.Docente">
-        INSERT INTO docente (clave,nombre,apellidoPaterno,apellidoMaterno,gradoAcademico,telefono,Cuenta_idCuenta,Genero_idGenero)
-        VALUES(#{clave},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{gradoAcademico},#{telefono},#{Cuenta_idCuenta},#{Genero_idGenero})        
+        INSERT INTO docente (idDocente,nombre,apellidoPaterno,apellidoMaterno,gradoAcademico,telefono,Cuenta_nombreUsuario,Genero_idGenero)
+        VALUES(#{idDocente},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{gradoAcademico},#{telefono},#{Cuenta_nombreUsuario},#{Genero_idGenero})        
   </insert>
   
-    <select id="login" resultType="int" parameterType="pojos.Cuenta">
+    <select id="login" resultType="String" parameterType="pojos.Cuenta">
         SELECT
-        cuenta.idCuenta
+        cuenta.nombreUsuario
         FROM cuenta WHERE cuenta.correo = #{correo} and cuenta.contrasena = #{contrasena}
     </select> 
     
-    <select id="getAlumno" resultType="pojos.Alumno" parameterType="int">
+    <select id="getAlumno" resultType="pojos.Alumno" parameterType="String">
         SELECT
-        alumno.clave,
+        alumno.idAlumno,
         alumno.nombre,
         alumno.apellidoPaterno,
         alumno.apellidoMaterno,
-        alumno.Cuenta_idCuenta,
+        alumno.Cuenta_nombreUsuario,
         alumno.Genero_idGenero
-        FROM alumno WHERE alumno.Cuenta_idCuenta = #{Cuenta_idCuenta}
+        FROM alumno WHERE alumno.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
     </select>
     
-    <select id="getDocente" resultType="pojos.Docente" parameterType="int">
+    <select id="getDocente" resultType="pojos.Docente" parameterType="String">
         SELECT
-        docente.clave,
+        docente.idDocente,
         docente.nombre,
         docente.apellidoPaterno,
         docente.apellidoMaterno,
         docente.gradoAcademico,
         docente.telefono,
-        docente.Cuenta_idCuenta,
+        docente.Cuenta_nombreUsuario,
         docente.Genero_idGenero
-        FROM docente WHERE docente.Cuenta_idCuenta = #{Cuenta_idCuenta}
+        FROM docente WHERE docente.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
     </select>
     
     <update id="modificarDocente" parameterType="pojos.Docente">
         UPDATE docente SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, gradoAcademico = #{gradoAcademico}, telefono = #{telefono}
-        WHERE clave = #{clave}
+        WHERE idDocente = #{idDocente}
     </update>
     
      <select id="recuperarContraseña" resultType="pojos.Cuenta" parameterType="pojos.Cuenta">

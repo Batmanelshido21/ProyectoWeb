@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Actividad;
+import pojos.ActividadEntrega;
 import pojos.Archivo;
 import pojos.MensajeR;
 
@@ -42,16 +43,16 @@ public class ActividadWS {
     public ActividadWS() {
     }
     
-    @Path("actividadesGrupo/{Grupo_idGrupo}")
+    @Path("actividadesActividad/{Actividad_idActividad}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Actividad> obtenerActividadesGrupo(
-            @PathParam("Grupo_idGrupo") Integer Grupo_idGrupo){
-        List<Actividad> list = null;
+    public List<ActividadEntrega> obtenerActividadesGrupo(
+            @PathParam("Actividad_idActividad") Integer Actividad_idActividad){
+        List<ActividadEntrega> list = null;
         ActividadDAO actividadD = new ActividadDAO();
         
        try{
-        list = actividadD.obtenerActividadesGrupo(Grupo_idGrupo);
+        list = actividadD.obtenerActividadesGrupo(Actividad_idActividad);
        }catch(Exception e){
            
        }
@@ -59,16 +60,16 @@ public class ActividadWS {
         
     }
     
-    @Path("actividadesAlumno/{Alumno_clave}")
+    @Path("actividadesAlumno/{idAlumno}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Actividad> obtenerActividadesGrupo(
-            @PathParam("Alumno_clave") String Alumno_clave){
-        List<Actividad> list = null;
+    public List<ActividadEntrega> obtenerActividadesAlumno(
+            @PathParam("idAlumno") Integer idAlumno){
+        List<ActividadEntrega> list = null;
         ActividadDAO actividadD = new ActividadDAO();
         
         try{
-            list = actividadD.obtenerActividadesAlumno(Alumno_clave);
+            list = actividadD.obtenerActividadesAlumno(idAlumno);
         }catch(Exception e){
             
         }
@@ -80,16 +81,16 @@ public class ActividadWS {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR calificarActividad(
-            @FormParam("idActividad") Integer idActividad,
+            @FormParam("idActividadEntrega") Integer idActividadEntrega,
             @FormParam("calificacion") Integer calificacion){
-        Actividad actividad = new Actividad();
-        actividad.setIdActividad(idActividad);
-        actividad.setCalificacion(calificacion);
+        ActividadEntrega actividadE = new ActividadEntrega();
+        actividadE.setIdActividadEntrega(idActividadEntrega);
+        actividadE.setCalificacion(calificacion);
         MensajeR mensajeR;
         ActividadDAO actividadD = new ActividadDAO();
         
         try{
-            actividadD.calificarActividad(actividad);
+            actividadD.calificarActividad(actividadE);
             mensajeR = new MensajeR(true);
         }catch(Exception e){
             mensajeR = new MensajeR(false);
@@ -134,7 +135,6 @@ public class ActividadWS {
             @FormParam("fechaCreada") Date fechaCreada,
             @FormParam("fechaEntrega") Date fechaEntrega,
             @FormParam("archivo") String archivo){
-        byte[] archivo1 = Base64.getDecoder().decode(archivo);
         Actividad actividad = new Actividad();
         actividad.setNombre(nombre);
         actividad.setDescripcion(descripcion);
@@ -143,7 +143,7 @@ public class ActividadWS {
         actividad.setIdActividad(idActividad);
         Archivo archivoO = new Archivo();
         archivoO.setActividad_idActividad(idActividad);
-        archivoO.setArchivo(archivo1);
+        archivoO.setArchivo(archivo);
         MensajeR mensajeR;
         ActividadDAO actividadD = new ActividadDAO();
         
@@ -156,26 +156,47 @@ public class ActividadWS {
         
         return mensajeR;
     }
+    
+    @Path("EntregarActividad")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public MensajeR entregarActividad(
+            @FormParam("archivo") String archivo,
+            @FormParam("nombre") String nombre,
+            @FormParam("Actividad_idActividad") Integer Actividad_idActividad,
+            @FormParam("Alumno_idAlumno") Integer Alumno_idAlumno){
+        ActividadEntrega actividadE = new ActividadEntrega();
+        actividadE.setArchivo(archivo);
+        actividadE.setNombre(nombre);
+        actividadE.setActividad_idActividad(Actividad_idActividad);
+        actividadE.setAlumno_idAlumno(Alumno_idAlumno);
+         ActividadDAO actividadD = new ActividadDAO();
+         MensajeR mensajeR;
+         try{
+             actividadD.entregarActividad(actividadE);
+             mensajeR = new MensajeR(true);
+         }catch(Exception e){
+             mensajeR = new MensajeR(false);
+         }
+        
+        return mensajeR;
+    }
       
     @Path("registroActividad")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR registrarActividad(
-            @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
             @FormParam("fechaCreada") Date fechaCreada,
             @FormParam("fechaEntrega") Date fechaEntrega,
-            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo,
-            @FormParam("Alumno_clave") String Alumno_clave){
+            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo){
         Actividad actividad = new Actividad();
-        actividad.setIdActividad(idActividad);
         actividad.setNombre(nombre);
         actividad.setDescripcion(descripcion);
         actividad.setFechaCreada(fechaCreada);
         actividad.setFechaEntrega(fechaEntrega);
         actividad.setGrupo_idGrupo(Grupo_idGrupo);
-        actividad.setAlumno_clave(Alumno_clave);
         MensajeR mensajeR;
         ActividadDAO actividadD = new ActividadDAO();
         
@@ -193,15 +214,13 @@ public class ActividadWS {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR registrarActividadArchivo(
-            @FormParam("idActividad") Integer idActividad,
             @FormParam("nombre") String nombre,
             @FormParam("descripcion") String descripcion,
             @FormParam("fechaCreada") Date fechaCreada,
             @FormParam("fechaEntrega") Date fechaEntrega,
             @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo,
-            @FormParam("Alumno_clave") String Alumno_clave,
-            @FormParam("archivo") String archivo){
-        byte[] archivo1 = Base64.getDecoder().decode(archivo);
+            @FormParam("archivo") String archivo,
+            @FormParam("idActividad") Integer idActividad){
         Actividad actividad = new Actividad();
         actividad.setIdActividad(idActividad);
         actividad.setNombre(nombre);
@@ -209,10 +228,10 @@ public class ActividadWS {
         actividad.setFechaCreada(fechaCreada);
         actividad.setFechaEntrega(fechaEntrega);
         actividad.setGrupo_idGrupo(Grupo_idGrupo);
-        actividad.setAlumno_clave(Alumno_clave);
+        
         Archivo archivoO = new Archivo();
         archivoO.setActividad_idActividad(idActividad);
-        archivoO.setArchivo(archivo1);
+        archivoO.setArchivo(archivo);
         
        MensajeR mensajeR;
        ActividadDAO actividadD = new ActividadDAO();

@@ -5,9 +5,11 @@
  */
 package DAO;
 
+import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Cuenta;
+import pojos.Docente;
 import pojos.PlantelEducativo;
 
 /**
@@ -50,6 +52,12 @@ public class PlantelEducativoDAO {
         }
         
         return false;
+    }
+    
+    public List<Docente> obtenerDocentes(String clave){
+        
+        
+        return null; 
     }
     
 }

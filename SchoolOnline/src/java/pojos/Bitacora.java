@@ -7,6 +7,7 @@ package pojos;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,18 +19,18 @@ public class Bitacora {
     
     private Date fecha;
     
-    private byte[] archivo;
+    private String archivo;
     
-    private String Docente_clave;
+    private Integer Docente_idDocente;
 
     public Bitacora() {
     }
 
-    public Bitacora(Integer idBitacora, Date fecha, byte[] archivo, String Docente_clave) {
+    public Bitacora(Integer idBitacora, Date fecha, String archivo, Integer Docente_idDocente) {
         this.idBitacora = idBitacora;
         this.fecha = fecha;
         this.archivo = archivo;
-        this.Docente_clave = Docente_clave;
+        this.Docente_idDocente = Docente_idDocente;
     }
 
     public Integer getIdBitacora() {
@@ -48,21 +49,21 @@ public class Bitacora {
         this.fecha = fecha;
     }
 
-    public byte[] getArchivo() {
+    public String getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(byte[] archivo) {
+    public void setArchivo(String archivo) {
         this.archivo = archivo;
     }
 
-    public String getDocente_clave() {
-        return Docente_clave;
+    public Integer getDocente_idDocente() {
+        return Docente_idDocente;
     }
 
-    public void setDocente_clave(String Docente_clave) {
-        this.Docente_clave = Docente_clave;
+    public void setDocente_idDocente(Integer Docente_idDocente) {
+        this.Docente_idDocente = Docente_idDocente;
     }
 
-    
+   
 }

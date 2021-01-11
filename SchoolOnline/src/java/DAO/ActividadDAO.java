@@ -9,6 +9,7 @@ import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Actividad;
+import pojos.ActividadEntrega;
 import pojos.Archivo;
 
 /**
@@ -36,6 +37,23 @@ public class ActividadDAO {
         return false;
     }
     
+    public boolean entregarActividad(ActividadEntrega actividadE){
+        SqlSession conexion = MyBatisUtil.getSession();
+        if(conexion != null){
+            try{
+                conexion.insert("Actividad.registrarActividadEntrega",actividadE);
+                conexion.commit();
+                return true;
+            }catch(Exception e){
+                 System.out.println(e);
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }   
+        return false;   
+    }
+    
     public boolean registrarActividadArchivo(Actividad actividad, Archivo archivo){
         SqlSession conexion = MyBatisUtil.getSession();
         
@@ -45,6 +63,8 @@ public class ActividadDAO {
                 conexion.insert("Actividad.registrarActividadArchivo",archivo);
                 conexion.commit();
                 return true;
+            }catch(Exception e){
+                 System.out.println(e);
             }finally{
                 String j = conexion.toString();
                 conexion.close();
@@ -87,14 +107,20 @@ public class ActividadDAO {
         return false;
     }
     
-    public boolean calificarActividad(Actividad actividad){
+    public boolean calificarActividad(ActividadEntrega actividad){
         SqlSession conexion = MyBatisUtil.getSession();
         
         if(conexion != null){
             try{
+                System.out.println("aqui");
+                System.out.println(actividad.getActividad_idActividad());
+                System.out.println(actividad.getCalificacion());
                 conexion.update("Actividad.calificarActividad",actividad);
+                System.out.println("aqui");
                 conexion.commit();
                 return true;
+            }catch(Exception e){
+            System.out.println(e);
             }finally{
                 String j = conexion.toString();
                 conexion.close();
@@ -103,13 +129,13 @@ public class ActividadDAO {
         return false;
     }
     
-    public List<Actividad> obtenerActividadesAlumno(String Alumno_clave){
-        List<Actividad> list = null;
+    public List<ActividadEntrega> obtenerActividadesAlumno(Integer idAlumno){
+        List<ActividadEntrega> list = null;
         SqlSession conexion = MyBatisUtil.getSession();
         
          if(conexion != null){
             try{
-                list = conexion.selectList("Actividad.getActividadesAlumno",Alumno_clave);
+                list = conexion.selectList("Actividad.getActividadesAlumno",idAlumno);
             }finally{
                 String j = conexion.toString();
                 conexion.close();
@@ -118,13 +144,13 @@ public class ActividadDAO {
         return list;
     }
     
-    public List<Actividad> obtenerActividadesGrupo (Integer Grupo_idGrupo){
-         List<Actividad> list = null;
+    public List<ActividadEntrega> obtenerActividadesGrupo (Integer Actividad_idActividad){
+         List<ActividadEntrega> list = null;
         SqlSession conexion = MyBatisUtil.getSession();
         
          if(conexion != null){
             try{
-                list = conexion.selectList("Actividad.getActividadesdGrupo",Grupo_idGrupo);
+                list = conexion.selectList("Actividad.getActividadesdGrupo",Actividad_idActividad);
             }finally{
                 String j = conexion.toString();
                 conexion.close();

@@ -109,26 +109,25 @@ public class CuentaWS {
     public MensajeR registroUSuario(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena,
-            @FormParam("clave") String clave,
+            @FormParam("nombreUsuario") String nombreUsuario,
             @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno,
-            @FormParam("idCuenta") Integer idCuenta,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
             @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave){
         MensajeR mensajeR;
         Cuenta cuenta = new Cuenta();
         Alumno alumno = new Alumno();
-        cuenta.setIdCuenta(idCuenta);
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setPlantelEducativo_clave(PlantelEducativo_clave);
-        alumno.setClave(clave);
+        cuenta.setNombreUsuario(nombreUsuario);
+        
         alumno.setNombre(nombre);
         alumno.setApellidoPaterno(apellidoPaterno);
         alumno.setApellidoMaterno(apellidoMaterno);
         alumno.setGenero_idGenero(Genero_idGenero);
-        alumno.setCuenta_idCuenta(idCuenta);
+        alumno.setCuenta_nombreUsuario(nombreUsuario);
     
         CuentaDAO cuentaD = new CuentaDAO();
         try{
@@ -144,7 +143,7 @@ public class CuentaWS {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR modificarDocente(
-            @FormParam("clave") String clave,
+            @FormParam("idDocente") Integer idDocente,
             @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno,
@@ -152,7 +151,7 @@ public class CuentaWS {
             @FormParam("telefono") String telefono){
         
         Docente docente = new Docente();
-        docente.setClave(clave);
+        docente.setIdDocente(idDocente);
         docente.setNombre(nombre);
         docente.setApellidoPaterno(apellidoPaterno);
         docente.setApellidoMaterno(apellidoMaterno);
@@ -179,30 +178,29 @@ public class CuentaWS {
     public MensajeR registrarDocente(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena,
-            @FormParam("clave") String clave,
+            @FormParam("nombreUsuario") String nombreUsuario,
             @FormParam("nombre") String nombre,
             @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno,
             @FormParam("gradoAcademico") String gradoAcademico,
             @FormParam("telefono") String telefono,
-            @FormParam("Cuenta_idCuenta") Integer Cuenta_idCuenta,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
             @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave){
         Cuenta cuenta = new Cuenta();
         Docente docente = new Docente();
         
         cuenta.setPlantelEducativo_clave(PlantelEducativo_clave);
-        cuenta.setIdCuenta(Cuenta_idCuenta);
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
-        docente.setClave(clave);
+        cuenta.setNombreUsuario(nombreUsuario);
+        
         docente.setNombre(nombre);
         docente.setApellidoPaterno(apellidoPaterno);
         docente.setApellidoMaterno(apellidoMaterno);
         docente.setGradoAcademico(gradoAcademico);
         docente.setTelefono(telefono);
-        docente.setCuenta_idCuenta(Cuenta_idCuenta);
         docente.setGenero_idGenero(Genero_idGenero);
+        docente.setCuenta_nombreUsuario(nombreUsuario);
         MensajeR mensajeR;
         CuentaDAO cuentaD = new CuentaDAO();
         try{

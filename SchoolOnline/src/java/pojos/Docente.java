@@ -11,7 +11,7 @@ package pojos;
  */
 public class Docente {
     
-    private String clave;
+    private Integer idDocente;
     
     private String nombre;
     
@@ -23,30 +23,30 @@ public class Docente {
     
     private String telefono;
     
-    private Integer Cuenta_idCuenta;
+    private String Cuenta_nombreUsuario;
     
     private Integer Genero_idGenero;
 
     public Docente() {
     }
 
-    public Docente(String clave, String nombre, String apellidoPaterno, String apellidoMaterno, String gradoAcademico, String telefono, Integer Cuenta_idCuenta, Integer Genero_idGenero) {
-        this.clave = clave;
+    public Docente(Integer idDocente, String nombre, String apellidoPaterno, String apellidoMaterno, String gradoAcademico, String telefono, String Cuenta_nombreUsuario, Integer Genero_idGenero) {
+        this.idDocente = idDocente;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.gradoAcademico = gradoAcademico;
         this.telefono = telefono;
-        this.Cuenta_idCuenta = Cuenta_idCuenta;
+        this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
         this.Genero_idGenero = Genero_idGenero;
     }
 
-    public String getClave() {
-        return clave;
+    public Integer getIdDocente() {
+        return idDocente;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setIdDocente(Integer idDocente) {
+        this.idDocente = idDocente;
     }
 
     public String getNombre() {
@@ -89,12 +89,12 @@ public class Docente {
         this.telefono = telefono;
     }
 
-    public Integer getCuenta_idCuenta() {
-        return Cuenta_idCuenta;
+    public String getCuenta_nombreUsuario() {
+        return Cuenta_nombreUsuario;
     }
 
-    public void setCuenta_idCuenta(Integer Cuenta_idCuenta) {
-        this.Cuenta_idCuenta = Cuenta_idCuenta;
+    public void setCuenta_nombreUsuario(String Cuenta_nombreUsuario) {
+        this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
     }
 
     public Integer getGenero_idGenero() {
@@ -104,4 +104,6 @@ public class Docente {
     public void setGenero_idGenero(Integer Genero_idGenero) {
         this.Genero_idGenero = Genero_idGenero;
     }
+
+   
 }

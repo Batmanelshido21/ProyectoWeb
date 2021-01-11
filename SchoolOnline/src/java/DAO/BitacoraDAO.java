@@ -24,7 +24,7 @@ public class BitacoraDAO {
         
         if(conexion != null){
             try{
-                conexion.update("Bitacora.registrarBitacora",bitacora);
+                conexion.insert("Bitacora.registrarBitacora",bitacora);
                 conexion.commit();
                 return true;
             }finally{
@@ -52,13 +52,13 @@ public class BitacoraDAO {
         return false;
     }
     
-    public List<Bitacora> getBitacoras(String clave){
+    public List<Bitacora> getBitacoras(Integer Docente_idDocente){
         List<Bitacora> list = null;
         SqlSession conexion = MyBatisUtil.getSession();
        
        if(conexion != null){
             try{
-                list = conexion.selectList("Bitacora.getBitacoraDocente",clave);
+                list = conexion.selectList("Bitacora.getBitacoraDocente",Docente_idDocente);
             }finally{
                 String j = conexion.toString();
                 conexion.close();

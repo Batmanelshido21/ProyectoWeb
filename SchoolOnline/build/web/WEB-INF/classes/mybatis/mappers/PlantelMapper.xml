@@ -16,8 +16,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  </update>
  
  <insert id="registrarCuenta" parameterType="pojos.Cuenta">
-        INSERT INTO cuenta (idCuenta,correo,contrasena,PlantelEducativo_clave)
-        VALUES(#{idCuenta},#{correo},#{contrasena},#{PlantelEducativo_clave})        
+        INSERT INTO cuenta (correo,contrasena,PlantelEducativo_clave,nombreUsuario)
+        VALUES(#{correo},#{contrasena},#{PlantelEducativo_clave},#{nombreUsuario})        
  </insert>
     
+    <select id="login" resultType="int" parameterType="pojos.Cuenta">
+        SELECT
+        cuenta.idCuenta
+        FROM cuenta WHERE cuenta.correo = #{correo} and cuenta.contrasena = #{contrasena}
+    </select> 
+      
 </mapper>

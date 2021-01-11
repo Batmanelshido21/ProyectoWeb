@@ -22,12 +22,12 @@ public class CuentaDAO {
     
     public Alumno loginAlumno(Cuenta cuenta){
         Alumno alumno = new Alumno();
-       int idCuenta;
+       String Cuenta_nombreUsuario;
        SqlSession conexion = MyBatisUtil.getSession();
         if(conexion != null){
             try{
-                idCuenta = conexion.selectOne("Cuenta.login",cuenta);
-                alumno = conexion.selectOne("Cuenta.getAlumno",idCuenta);
+                Cuenta_nombreUsuario = conexion.selectOne("Cuenta.login",cuenta);
+                alumno = conexion.selectOne("Cuenta.getAlumno",Cuenta_nombreUsuario);
                 conexion.commit();
                 return alumno;
             }finally{
@@ -40,12 +40,12 @@ public class CuentaDAO {
     
     public Docente loginDocente(Cuenta cuenta){
        Docente docente = new Docente();
-       int idCuenta;
+       String Cuenta_nombreUsuario;
        SqlSession conexion = MyBatisUtil.getSession();
         if(conexion != null){
             try{
-                idCuenta = conexion.selectOne("Cuenta.login",cuenta);
-                docente = conexion.selectOne("Cuenta.getDocente",idCuenta);
+                Cuenta_nombreUsuario = conexion.selectOne("Cuenta.login",cuenta);
+                docente = conexion.selectOne("Cuenta.getDocente",Cuenta_nombreUsuario);
                 conexion.commit();
                 return docente;
             }finally{
@@ -59,7 +59,6 @@ public class CuentaDAO {
     public boolean registrarAlumno(Cuenta cuenta,Alumno alumno){
         
        SqlSession conexion = MyBatisUtil.getSession();
-        
         if(conexion != null){
             try{
                 conexion.insert("Cuenta.registrarCuenta",cuenta);
@@ -76,7 +75,6 @@ public class CuentaDAO {
     
     public boolean registrarDocente(Cuenta cuenta, Docente docente){
         SqlSession conexion = MyBatisUtil.getSession();
-        
         if(conexion != null){
             try{
                 conexion.insert("Cuenta.registrarCuenta",cuenta);

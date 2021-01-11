@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Actividad">
     
 <insert id="registrarActividad" parameterType="pojos.Actividad">
-        INSERT INTO actividad (idActividad,nombre,descripcion,fechaCreada,fechaEntrega,Grupo_idGrupo,Alumno_clave)
-        VALUES(#{idActividad},#{nombre},#{descripcion},#{fechaCreada},#{fechaEntrega},#{Grupo_idGrupo},#{Alumno_clave})        
+        INSERT INTO actividad (idActividad,nombre,descripcion,fechaCreada,fechaEntrega,Grupo_idGrupo)
+        VALUES(#{idActividad},#{nombre},#{descripcion},#{fechaCreada},#{fechaEntrega},#{Grupo_idGrupo})        
 </insert>
 
 <insert id="registrarActividadArchivo" parameterType="pojos.Archivo">
@@ -15,9 +15,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES(#{archivo},#{Actividad_idActividad})        
 </insert>
 
-<update id="calificarActividad" parameterType="pojos.Actividad">
-        UPDATE actividad SET calificacion = #{calificacion}
-        WHERE idActividad = #{idActividad}
+<insert id="registrarActividadEntrega" parameterType="pojos.ActividadEntrega">
+        INSERT INTO actividadEntrega (archivo,nombre,Actividad_idActividad,Alumno_idAlumno)
+        VALUES(#{archivo},#{nombre},#{Actividad_idActividad},#{Alumno_idAlumno})        
+</insert>
+
+<update id="calificarActividad" parameterType="pojos.ActividadEntrega">
+        UPDATE actividadEntrega SET calificacion = #{calificacion}
+        WHERE idActividadEntrega = #{idActividadEntrega}
 </update>
 
 <update id="modificarActividad" parameterType="pojos.Actividad">
@@ -30,30 +35,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE Actividad_idActividad = #{Actividad_idActividad}
 </update>
 
-<select id="getActividadesdGrupo" resultType = "pojos.Actividad" parameterType="int">
+<select id="getActividadesdGrupo" resultType = "pojos.ActividadEntrega" parameterType="int">
     SELECT
-    actividad.idActividad,
-    actividad.nombre,
-    actividad.descripcion,
-    actividad.fechaCreada,
-    actividad.fechaEntrega,
-    actividad.calificacion,
-    actividad.Grupo_idGrupo,
-    actividad.Alumno_clave
-    FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo} ORDER BY actividad.fechaCreada DESC
+    actividadEntrega.idActividadEntrega,
+    actividadEntrega.archivo,
+    actividadEntrega.nombre
+    FROM actividadEntrega WHERE actividadEntrega.Actividad_idActividad = #{Actividad_idActividad}
 </select>
 
-<select id="getActividadesAlumno" resultType = "pojos.Actividad" parameterType="String">
+<select id="getActividadesAlumno" resultType = "pojos.ActividadEntrega" parameterType="int">
     SELECT
-    actividad.idActividad,
-    actividad.nombre,
-    actividad.descripcion,
-    actividad.fechaCreada,
-    actividad.fechaEntrega,
-    actividad.calificacion,
-    actividad.Grupo_idGrupo,
-    actividad.Alumno_clave
-    FROM actividad WHERE actividad.Alumno_clave = #{Alumno_clave} ORDER BY actividad.fechaCreada DESC
+    actividadEntrega.idActividadEntrega,
+    actividadEntrega.archivo,
+    actividadEntrega.nombre
+    FROM actividadEntrega WHERE actividadEntrega.Alumno_idAlumno = #{Alumno_idAlumno}
 </select>
     
 </mapper>

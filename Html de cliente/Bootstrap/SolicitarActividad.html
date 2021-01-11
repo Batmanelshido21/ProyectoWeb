@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Solicitar actividad</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/Formularios.css">
+        <script type="text/javascript" src="js/controllerActividad.js"></script>
+       
+    </head>
+
+    <body>
+        <legend class="text-center header">Solicitar actividad</legend>
+        <div class="container solicitar actividad">
+            <label for="nombre">Nombre de la actividad</label>
+            <br>
+            <input id="nombre" name="nombre" type="text">
+            <br>
+
+            <label for="fechaCreada">Fecha:</label>
+            <br>
+            <input type="date" id="fechaCreada" name="fechaCreada"
+             value="2020-01-01"
+             min="2018-01-01" max="2020-12-31">
+             <br>
+
+             <label for="fechaEntrega">Fecha:</label>
+             <br>
+             <input type="date" id="fechaEntrega" name="fechaEntrega"
+             value="2020-01-01"
+             min="2018-01-01" max="2020-12-31">
+             <br>
+             <div class="form-group">
+                <label for="descripcion">descripcion:</label>
+                <textarea class="form-control" rows="5" id="descripcion"></textarea>
+              </div>
+              <br>
+             <label for="archivo">Archivo:</label>
+             <br>
+             <input id="archivo" type="file" onchange="convertToBase64();"  accept="application/pdf"/>
+             <br>
+             <br>
+             <button type="submit" onclick="registrarActividad()" class="btn btn-primary btn-lg">Registrar</button>
+        </div>
+    </body>
+
+</html>

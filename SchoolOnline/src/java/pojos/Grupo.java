@@ -19,17 +19,17 @@ public class Grupo {
     
     private Integer Foro_idForo;
     
-    private String Docente_clave;
+    private Integer Docente_idDocente;
 
     public Grupo() {
     }
 
-    public Grupo(Integer idGrupo, String nombre, Integer CicloEscolar_idCicloEscolar, Integer Foro_idForo, String Docente_clave) {
+    public Grupo(Integer idGrupo, String nombre, Integer CicloEscolar_idCicloEscolar, Integer Foro_idForo, Integer Docente_idDocente) {
         this.idGrupo = idGrupo;
         this.nombre = nombre;
         this.CicloEscolar_idCicloEscolar = CicloEscolar_idCicloEscolar;
         this.Foro_idForo = Foro_idForo;
-        this.Docente_clave = Docente_clave;
+        this.Docente_idDocente = Docente_idDocente;
     }
 
     public Integer getIdGrupo() {
@@ -64,11 +64,13 @@ public class Grupo {
         this.Foro_idForo = Foro_idForo;
     }
 
-    public String getDocente_clave() {
-        return Docente_clave;
+    public Integer getDocente_idDocente() {
+        return Docente_idDocente;
     }
 
-    public void setDocente_clave(String Docente_clave) {
-        this.Docente_clave = Docente_clave;
+    public void setDocente_idDocente(Integer Docente_idDocente) {
+        this.Docente_idDocente = Docente_idDocente;
     }
+
+   
 }

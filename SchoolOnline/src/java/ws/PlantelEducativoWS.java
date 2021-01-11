@@ -6,17 +6,21 @@
 package ws;
 
 import DAO.PlantelEducativoDAO;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Cuenta;
+import pojos.Docente;
 import pojos.MensajeR;
 import pojos.PlantelEducativo;
 
@@ -35,6 +39,21 @@ public class PlantelEducativoWS {
      * Creates a new instance of PlantelEducativoWS
      */
     public PlantelEducativoWS() {
+    }
+    
+    @Path("getBitacoras/{clave}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Docente> getBitacoras(
+            @PathParam("clave") String clave){
+        List<Docente> list = null;
+        PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
+        try{
+            list = plantelD.obtenerDocentes(clave);
+        }catch(Exception e){
+            
+        }
+        return list; 
     }
     
     @Path("modificarPlantel")
@@ -76,7 +95,8 @@ public class PlantelEducativoWS {
             @FormParam("zona") String zona,
             @FormParam("direccion") String direccion,
             @FormParam("correo") String correo,
-            @FormParam("contrasena") String contrasena){
+            @FormParam("contrasena") String contrasena,
+            @FormParam("nombreUsuario") String nombreUsuario){
         
         PlantelEducativo plantel = new PlantelEducativo();
         plantel.setClave(clave);
@@ -88,6 +108,7 @@ public class PlantelEducativoWS {
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setPlantelEducativo_clave(clave);
+        cuenta.setNombreUsuario(nombreUsuario);
         MensajeR mensajeR;
         PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
         

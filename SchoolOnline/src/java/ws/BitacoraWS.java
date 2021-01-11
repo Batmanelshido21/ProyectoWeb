@@ -7,6 +7,7 @@ package ws;
 
 import DAO.BitacoraDAO;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -41,15 +42,15 @@ public class BitacoraWS {
     public BitacoraWS() {
     }
     
-    @Path("getBitacoras/{Docente_clave}")
+    @Path("getBitacoras/{Docente_idDocente}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Bitacora> getBitacoras(
-            @PathParam("clave") String clave){
+            @PathParam("Docente_idDocente") Integer Docente_idDocente){
         List<Bitacora> list = null;
         BitacoraDAO bitacoraD = new BitacoraDAO();
         try{
-            list = bitacoraD.getBitacoras(clave);
+            list = bitacoraD.getBitacoras(Docente_idDocente);
         }catch(Exception e){
             
         }
@@ -60,12 +61,13 @@ public class BitacoraWS {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR modificarBitacora(
+            @FormParam("idBitacora") Integer idBitacora,
             @FormParam("fecha") Date fecha,
             @FormParam("archivo") String archivo){
         Bitacora bitacora = new Bitacora();
+        bitacora.setIdBitacora(idBitacora);
         bitacora.setFecha(fecha);
-        byte[] archivo1 = Base64.getDecoder().decode(archivo);
-        bitacora.setArchivo(archivo1);
+        bitacora.setArchivo(archivo);
         MensajeR mensajeR;
         BitacoraDAO bitacoraD = new BitacoraDAO();
         
@@ -84,14 +86,13 @@ public class BitacoraWS {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR registrarBitacora(
-            @FormParam("Docente_clave") String Docente_clave,
+            @FormParam("Docente_idDocente") Integer Docente_idDocente,
             @FormParam("fecha") Date fecha,
             @FormParam("archivo") String archivo){
         Bitacora bitacora = new Bitacora();
         bitacora.setFecha(fecha);
-        bitacora.setDocente_clave(Docente_clave);
-        byte[] archivo1 = Base64.getDecoder().decode(archivo);
-        bitacora.setArchivo(archivo1);
+        bitacora.setDocente_idDocente(Docente_idDocente);
+        bitacora.setArchivo(archivo);
         MensajeR mensajeR;
         BitacoraDAO bitacoraD = new BitacoraDAO();
         

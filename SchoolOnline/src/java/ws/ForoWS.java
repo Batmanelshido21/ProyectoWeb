@@ -38,22 +38,22 @@ public class ForoWS {
     public ForoWS() {
     }
     
-    @Path("enviarMensajeDocente")
+    @Path("enviarMensaje")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR enviarMensajeDocente(
             @FormParam("mensaje") String mensaje,
             @FormParam("Foro_idForo") Integer Foro_idForo,
-            @FormParam("Docente_clave") String Docente_clave){
+            @FormParam("Cuenta_nombreUsuario") String Cuenta_nombreUsuario){
         Mensaje mensajeO = new Mensaje();
         mensajeO.setMensaje(mensaje);
         mensajeO.setForo_idForo(Foro_idForo);
-        mensajeO.setDocente_clave(Docente_clave);
+        mensajeO.setCuenta_nombreUsuario(Cuenta_nombreUsuario);
         MensajeR mensajeR;
         ForoDAO foroD = new ForoDAO();
         
         try{
-            foroD.enviarMensajeDocente(mensajeO);
+            foroD.enviarMensaje(mensajeO);
             mensajeR = new MensajeR(true);
         }catch(Exception e){
             mensajeR = new MensajeR(false);
@@ -61,29 +61,6 @@ public class ForoWS {
         return mensajeR;
     }
     
-    @Path("enviarMensajeAlumno")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public MensajeR enviarMensajeAlumno(
-            @FormParam("mensaje") String mensaje,
-            @FormParam("Foro_idForo") Integer Foro_idForo,
-            @FormParam("Alumno_clave") String Alumno_clave){
-        Mensaje mensajeO = new Mensaje();
-        mensajeO.setMensaje(mensaje);
-        mensajeO.setForo_idForo(Foro_idForo);
-        mensajeO.setAlumno_clave(Alumno_clave);
-        MensajeR mensajeR;
-        ForoDAO foroD = new ForoDAO();
-        
-        try{
-            foroD.enviarMensajeAlumno(mensajeO);
-            mensajeR = new MensajeR(true);
-        }catch(Exception e){
-            mensajeR = new MensajeR(false);
-        }
-        
-        return mensajeR;
-    }
     
     @Path("mensajeForo/{Foro_idForo}")
     @GET
