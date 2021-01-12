@@ -201,6 +201,7 @@ public class CuentaWS {
         docente.setTelefono(telefono);
         docente.setGenero_idGenero(Genero_idGenero);
         docente.setCuenta_nombreUsuario(nombreUsuario);
+        docente.setPlantelEducativo_clave(PlantelEducativo_clave);
         MensajeR mensajeR;
         CuentaDAO cuentaD = new CuentaDAO();
         try{

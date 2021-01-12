@@ -26,11 +26,13 @@ public class Docente {
     private String Cuenta_nombreUsuario;
     
     private Integer Genero_idGenero;
+    
+    private String PlantelEducativo_clave;
 
     public Docente() {
     }
 
-    public Docente(Integer idDocente, String nombre, String apellidoPaterno, String apellidoMaterno, String gradoAcademico, String telefono, String Cuenta_nombreUsuario, Integer Genero_idGenero) {
+    public Docente(Integer idDocente, String nombre, String apellidoPaterno, String apellidoMaterno, String gradoAcademico, String telefono, String Cuenta_nombreUsuario, Integer Genero_idGenero, String PlantelEducativo_clave) {
         this.idDocente = idDocente;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -39,6 +41,7 @@ public class Docente {
         this.telefono = telefono;
         this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
         this.Genero_idGenero = Genero_idGenero;
+        this.PlantelEducativo_clave = PlantelEducativo_clave;
     }
 
     public Integer getIdDocente() {
@@ -105,5 +108,13 @@ public class Docente {
         this.Genero_idGenero = Genero_idGenero;
     }
 
-   
+    public String getPlantelEducativo_clave() {
+        return PlantelEducativo_clave;
+    }
+
+    public void setPlantelEducativo_clave(String PlantelEducativo_clave) {
+        this.PlantelEducativo_clave = PlantelEducativo_clave;
+    }
+
+    
 }

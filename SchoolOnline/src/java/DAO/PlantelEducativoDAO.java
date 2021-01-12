@@ -22,17 +22,15 @@ public class PlantelEducativoDAO {
     }
     
     public List<Docente> obtenerDocentes(String clave){
-        List<Cuenta> listC = null;
+        List<Docente> docente = null;
         SqlSession conexion = MyBatisUtil.getSession();
        
        if(conexion != null){
             try{
                 System.out.println("aqui");
-                listC = conexion.selectList("Plantel.getCuentas",clave);
+                docente = conexion.selectList("Plantel.getDocente",clave);
                 System.out.println("aqui");
-                for(Cuenta cuenta: listC){
-                    System.out.println(cuenta.getNombreUsuario());
-                }
+               
             }catch(Exception e){
                 System.out.println(e);
             }finally{
@@ -40,7 +38,7 @@ public class PlantelEducativoDAO {
                 conexion.close();
             }
         }
-        return null; 
+        return docente; 
     }
     
     public PlantelEducativo loginPlantel(Cuenta cuenta){

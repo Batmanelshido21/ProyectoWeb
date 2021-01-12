@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
   
   <insert id="registrarDocente" parameterType="pojos.Docente">
-        INSERT INTO docente (idDocente,nombre,apellidoPaterno,apellidoMaterno,gradoAcademico,telefono,Cuenta_nombreUsuario,Genero_idGenero)
-        VALUES(#{idDocente},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{gradoAcademico},#{telefono},#{Cuenta_nombreUsuario},#{Genero_idGenero})        
+        INSERT INTO docente (idDocente,nombre,apellidoPaterno,apellidoMaterno,gradoAcademico,telefono,Cuenta_nombreUsuario,Genero_idGenero,PlantelEducativo_clave)
+        VALUES(#{idDocente},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{gradoAcademico},#{telefono},#{Cuenta_nombreUsuario},#{Genero_idGenero},#{PlantelEducativo_clave})        
   </insert>
   
     <select id="login" resultType="String" parameterType="pojos.Cuenta">
@@ -46,7 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         docente.gradoAcademico,
         docente.telefono,
         docente.Cuenta_nombreUsuario,
-        docente.Genero_idGenero
+        docente.Genero_idGenero,
+        docente.PlantelEducativo_clave
         FROM docente WHERE docente.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
     </select>
     
