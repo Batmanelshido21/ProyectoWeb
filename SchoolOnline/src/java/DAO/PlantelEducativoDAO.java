@@ -21,6 +21,47 @@ public class PlantelEducativoDAO {
     public PlantelEducativoDAO() {
     }
     
+    public List<Docente> obtenerDocentes(String clave){
+        List<Cuenta> listC = null;
+        SqlSession conexion = MyBatisUtil.getSession();
+       
+       if(conexion != null){
+            try{
+                System.out.println("aqui");
+                listC = conexion.selectList("Plantel.getCuentas",clave);
+                System.out.println("aqui");
+                for(Cuenta cuenta: listC){
+                    System.out.println(cuenta.getNombreUsuario());
+                }
+            }catch(Exception e){
+                System.out.println(e);
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return null; 
+    }
+    
+    public PlantelEducativo loginPlantel(Cuenta cuenta){
+       PlantelEducativo plantel = new PlantelEducativo();
+       String Cuenta_nombreUsuario;
+       SqlSession conexion = MyBatisUtil.getSession();
+        if(conexion != null){
+            try{
+                Cuenta_nombreUsuario = conexion.selectOne("Plantel.login",cuenta);
+                plantel = conexion.selectOne("Plantel.getPlantel",Cuenta_nombreUsuario);
+                conexion.commit();
+                return plantel;
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }      
+        return plantel;
+        
+    }
+    
     public boolean registrarPlantelEducativo(PlantelEducativo plantel,Cuenta cuenta){
         SqlSession conexion = MyBatisUtil.getSession();
         
@@ -54,10 +95,5 @@ public class PlantelEducativoDAO {
         return false;
     }
     
-    public List<Docente> obtenerDocentes(String clave){
-        
-        
-        return null; 
-    }
     
 }

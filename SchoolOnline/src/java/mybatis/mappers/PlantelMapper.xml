@@ -20,10 +20,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES(#{correo},#{contrasena},#{PlantelEducativo_clave},#{nombreUsuario})        
  </insert>
     
-    <select id="login" resultType="int" parameterType="pojos.Cuenta">
+    <select id="login" resultType="String" parameterType="pojos.Cuenta">
         SELECT
-        cuenta.idCuenta
+        cuenta.PlantelEducativo_clave
         FROM cuenta WHERE cuenta.correo = #{correo} and cuenta.contrasena = #{contrasena}
     </select> 
+    
+     <select id="getPlantel" resultType="pojos.PlantelEducativo" parameterType="String">
+        SELECT
+        planteleducativo.clave,
+        planteleducativo.sector,
+        planteleducativo.nivelEscolar,
+        planteleducativo.zona,
+        planteleducativo.direccion
+        FROM planteleducativo WHERE planteleducativo.clave = #{Cuenta_nombreUsuario}
+     </select>
+     
+     <select id="getCuentas" resultType="pojos.Cuenta" parameterType="String">
+        SELECT
+         cuenta.nombreUsuario
+        FROM cuenta WHERE cuenta.PlantelEducativo_clave = #{clave}
+     </select>
+     
       
 </mapper>

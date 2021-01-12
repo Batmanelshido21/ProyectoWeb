@@ -41,7 +41,7 @@ public class PlantelEducativoWS {
     public PlantelEducativoWS() {
     }
     
-    @Path("getBitacoras/{clave}")
+    @Path("getDocete/{clave}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Docente> getBitacoras(
@@ -55,6 +55,27 @@ public class PlantelEducativoWS {
         }
         return list; 
     }
+    
+    @Path("LoginPlantel")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public PlantelEducativo loginAlumno(
+            @FormParam("correo") String correo,
+            @FormParam("contrasena") String contrasena){
+       Cuenta cuenta = new Cuenta();
+       cuenta.setCorreo(correo);
+       cuenta.setContrasena(contrasena);
+       PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
+       PlantelEducativo plantel = new PlantelEducativo();
+       
+       try{
+           plantel = plantelD.loginPlantel(cuenta);
+       }catch(Exception e){
+           
+       }
+       return plantel;
+    }
+    
     
     @Path("modificarPlantel")
     @PUT

@@ -8,7 +8,11 @@ function registrarActividad(){
     var Grupo_idGrupo=2;
     var idActividad=34
 
-    var details = {
+
+    if(EmpName == 'undefined'){
+      console.log("Ingresa archivo")
+    }else{
+      var details = {
         nombre:nombre,
         descripcion:descripcion,
         fechaCreada:fechaCreada,
@@ -37,7 +41,7 @@ function registrarActividad(){
         .then(data => {
             console.log(data);
         })
-
+    }
 }
 
 function convertToBase64() { 
