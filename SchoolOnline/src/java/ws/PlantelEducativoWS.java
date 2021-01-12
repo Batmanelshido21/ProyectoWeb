@@ -5,16 +5,23 @@
  */
 package ws;
 
+import DAO.PlantelEducativoDAO;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Cuenta;
+import pojos.Docente;
+import pojos.MensajeR;
 import pojos.PlantelEducativo;
 
 /**
@@ -34,10 +41,46 @@ public class PlantelEducativoWS {
     public PlantelEducativoWS() {
     }
     
+    @Path("getDocete/{clave}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Docente> getBitacoras(
+            @PathParam("clave") String clave){
+        List<Docente> list = null;
+        PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
+        try{
+            list = plantelD.obtenerDocentes(clave);
+        }catch(Exception e){
+            
+        }
+        return list; 
+    }
+    
+    @Path("LoginPlantel")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public PlantelEducativo loginAlumno(
+            @FormParam("correo") String correo,
+            @FormParam("contrasena") String contrasena){
+       Cuenta cuenta = new Cuenta();
+       cuenta.setCorreo(correo);
+       cuenta.setContrasena(contrasena);
+       PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
+       PlantelEducativo plantel = new PlantelEducativo();
+       
+       try{
+           plantel = plantelD.loginPlantel(cuenta);
+       }catch(Exception e){
+           
+       }
+       return plantel;
+    }
+    
+    
     @Path("modificarPlantel")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarPlantel(
+    public MensajeR modificarPlantel(
             @FormParam("clave") String clave,
             @FormParam("sector") String sector,
             @FormParam("nivelEscolar") String nivelEscolar,
@@ -49,19 +92,16 @@ public class PlantelEducativoWS {
         plantel.setNivelEscolar(nivelEscolar);
         plantel.setZona(zona);
         plantel.setDireccion(direccion);
-         SqlSession conn = MyBatisUtil.getSession();
+        MensajeR mensajeR;
+        PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
         
-         try {
-            conn.update("Plantel.modificarPlantel", plantel);
-            conn.commit();
-            return true;
-        } catch (Exception ex) {
-            
-        } finally {
-            conn.close();
+        try{
+            plantelD.modificarPlantelEducativo(plantel);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
         }
-        
-        return false;
+        return mensajeR;
     }
     
     
@@ -69,12 +109,17 @@ public class PlantelEducativoWS {
     @Path("RegistrarPlantel")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registroPlantel(
+    public MensajeR registroPlantel(
             @FormParam("clave") String clave,
             @FormParam("sector") String sector,
             @FormParam("nivelEscolar") String nivelEscolar,
             @FormParam("zona") String zona,
-            @FormParam("direccion") String direccion){
+            @FormParam("direccion") String direccion,
+            @FormParam("correo") String correo,
+            @FormParam("contrasena") String contrasena,
+            @FormParam("nombreUsuario") String nombreUsuario){
+        
+        System.out.println("Entro al registro");
         
         PlantelEducativo plantel = new PlantelEducativo();
         plantel.setClave(clave);
@@ -82,21 +127,24 @@ public class PlantelEducativoWS {
         plantel.setNivelEscolar(nivelEscolar);
         plantel.setZona(zona);
         plantel.setDireccion(direccion);
+        Cuenta cuenta = new Cuenta();
+        cuenta.setCorreo(correo);
+        cuenta.setContrasena(contrasena);
+        cuenta.setPlantelEducativo_clave(clave);
+        cuenta.setNombreUsuario(nombreUsuario);
+        MensajeR mensajeR;
+        PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
         
-        SqlSession conexion = MyBatisUtil.getSession();
+        try{
+            plantelD.registrarPlantelEducativo(plantel,cuenta);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            mensajeR = new MensajeR(false);
+        }
         
-        if(conexion != null){
-            try{
-                conexion.insert("Plantel.registrarPlantel",plantel);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        return mensajeR;
     }
 
 }

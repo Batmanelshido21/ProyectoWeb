@@ -6,13 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Grupo">
     
  <insert id="registrarGrupo" parameterType="pojos.Grupo">
-        INSERT INTO grupo (nombre,CicloEscolar_idCicloEscolar,Foro_idForo,Docente_clave)
-        VALUES(#{nombre},#{CicloEscolar_idCicloEscolar},#{Foro_idForo},#{Docente_clave})        
+        INSERT INTO grupo (nombre,CicloEscolar_idCicloEscolar,Foro_idForo,Docente_idDocente)
+        VALUES(#{nombre},#{CicloEscolar_idCicloEscolar},#{Foro_idForo},#{Docente_idDocente})        
  </insert>
  
  <insert id="registrarForo" parameterType="pojos.Foro">
-        INSERT INTO foro (nombre)
-        VALUES(#{nombre})        
+        INSERT INTO foro (nombre,idForo)
+        VALUES(#{nombre},#{idForo})        
  </insert>
  
  <update id="modificarGrupo" parameterType="pojos.Grupo">
@@ -20,11 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idGrupo = #{idGrupo}
  </update>
  
-<select id="getGruposD" resultType="pojos.Grupo" parameterType="String">
+<select id="getGruposD" resultType="pojos.Grupo" parameterType="int">
    SELECT
    grupo.nombre,
    grupo.idGrupo
-   FROM grupo WHERE grupo.Docente_clave = #{clave}
+   FROM grupo WHERE grupo.Docente_idDocente = #{Docente_idDocente}
 </select>
 
  

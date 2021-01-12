@@ -5,7 +5,9 @@
  */
 package ws;
 
+import DAO.BitacoraDAO;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -21,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Bitacora;
+import pojos.MensajeR;
 
 /**
  * REST Web Service
@@ -39,80 +42,67 @@ public class BitacoraWS {
     public BitacoraWS() {
     }
     
-    @Path("getBitacoras/{Docente_clave}")
+    @Path("getBitacoras/{Docente_idDocente}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Bitacora> getBitacoras(
-            @PathParam("clave") String clave){
+            @PathParam("Docente_idDocente") Integer Docente_idDocente){
         List<Bitacora> list = null;
-       SqlSession conexion = MyBatisUtil.getSession();
-       
-       if(conexion != null){
-            try{
-                list = conexion.selectList("Bitacora.getBitacoraDocente",clave);
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
+        BitacoraDAO bitacoraD = new BitacoraDAO();
+        try{
+            list = bitacoraD.getBitacoras(Docente_idDocente);
+        }catch(Exception e){
+            
         }
-        return list;
-        
+        return list; 
     }
     
     @Path("modificarBitacora")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean modificarBitacora(
+    public MensajeR modificarBitacora(
+            @FormParam("idBitacora") Integer idBitacora,
             @FormParam("fecha") Date fecha,
             @FormParam("archivo") String archivo){
         Bitacora bitacora = new Bitacora();
+        bitacora.setIdBitacora(idBitacora);
         bitacora.setFecha(fecha);
-        byte[] archivo1 = Base64.getDecoder().decode(archivo);
-        bitacora.setArchivo(archivo1);
+        bitacora.setArchivo(archivo);
+        MensajeR mensajeR;
+        BitacoraDAO bitacoraD = new BitacoraDAO();
         
-         SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.update("Bitacora.modificarBitacora",bitacora);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        
-        return false;
-        
+        try{
+            bitacoraD.modificarBitacora(bitacora);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+         
+        return mensajeR;
     }
     
     
     @Path("registrarBitacora")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean registrarBitacora(
-            @FormParam("Docente_clave") String Docente_clave,
+    public MensajeR registrarBitacora(
+            @FormParam("Docente_idDocente") Integer Docente_idDocente,
             @FormParam("fecha") Date fecha,
             @FormParam("archivo") String archivo){
         Bitacora bitacora = new Bitacora();
         bitacora.setFecha(fecha);
-        bitacora.setDocente_clave(Docente_clave);
-        byte[] archivo1 = Base64.getDecoder().decode(archivo);
-        bitacora.setArchivo(archivo1);
-        SqlSession conexion = MyBatisUtil.getSession();
+        bitacora.setDocente_idDocente(Docente_idDocente);
+        bitacora.setArchivo(archivo);
+        MensajeR mensajeR;
+        BitacoraDAO bitacoraD = new BitacoraDAO();
         
-        if(conexion != null){
-            try{
-                conexion.update("Bitacora.registrarBitacora",bitacora);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
+        try{
+            bitacoraD.registrarBitacora(bitacora);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
     }
 
   

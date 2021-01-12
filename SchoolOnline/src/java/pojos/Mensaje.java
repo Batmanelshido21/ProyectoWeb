@@ -17,19 +17,16 @@ public class Mensaje {
     
     private Integer Foro_idForo;
     
-    private String Alumno_clave;
-    
-    private String Docente_clave;
+   private String Cuenta_nombreUsuario;
 
     public Mensaje() {
     }
 
-    public Mensaje(Integer idMensaje, String mensaje, Integer Foro_idForo, String Alumno_clave, String Docente_clave) {
+    public Mensaje(Integer idMensaje, String mensaje, Integer Foro_idForo, String Cuenta_nombreUsuario) {
         this.idMensaje = idMensaje;
         this.mensaje = mensaje;
         this.Foro_idForo = Foro_idForo;
-        this.Alumno_clave = Alumno_clave;
-        this.Docente_clave = Docente_clave;
+        this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
     }
 
     public Integer getIdMensaje() {
@@ -56,19 +53,13 @@ public class Mensaje {
         this.Foro_idForo = Foro_idForo;
     }
 
-    public String getAlumno_clave() {
-        return Alumno_clave;
+    public String getCuenta_nombreUsuario() {
+        return Cuenta_nombreUsuario;
     }
 
-    public void setAlumno_clave(String Alumno_clave) {
-        this.Alumno_clave = Alumno_clave;
+    public void setCuenta_nombreUsuario(String Cuenta_nombreUsuario) {
+        this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
     }
 
-    public String getDocente_clave() {
-        return Docente_clave;
-    }
-
-    public void setDocente_clave(String Docente_clave) {
-        this.Docente_clave = Docente_clave;
-    } 
+   
 }

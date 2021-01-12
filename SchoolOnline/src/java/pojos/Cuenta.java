@@ -11,7 +11,7 @@ package pojos;
  */
 public class Cuenta {
     
-    private Integer idCuenta;
+    private String nombreUsuario;
     
     private String correo;
     
@@ -22,19 +22,19 @@ public class Cuenta {
     public Cuenta() {
     }
 
-    public Cuenta(Integer idCuenta, String correo, String contrasena, String PlantelEducativo_clave) {
-        this.idCuenta = idCuenta;
+    public Cuenta(String nombreUsuario, String correo, String contrasena, String PlantelEducativo_clave) {
+        this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contrasena = contrasena;
         this.PlantelEducativo_clave = PlantelEducativo_clave;
     }
 
-    public Integer getIdCuenta() {
-        return idCuenta;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getCorreo() {
@@ -60,6 +60,4 @@ public class Cuenta {
     public void setPlantelEducativo_clave(String PlantelEducativo_clave) {
         this.PlantelEducativo_clave = PlantelEducativo_clave;
     }
-
-   
 }

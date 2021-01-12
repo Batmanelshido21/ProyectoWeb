@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro de plantel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/EstilosPersonalizados/Formularios.css">
+    <script type="text/javascript" src="../js/Controladores/controllerPlantel.js"></script>
+</head>
+
+<body>
+    <legend class="text-center header">Registro de plantel educativo</legend>
+    <br>
+    <br>
+    <form id="formReg" onsubmit="return ObtenerDatos(event)">
+        <div class="container login-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="clave" name="clave" type="text" placeholder="Clave de plantel educativo"
+                                class="form-control" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="sector" name="sector" type="text" placeholder="Sector de plantel"
+                                class="form-control" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i
+                                class="fa fa-envelope-o bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="nivelEscolar" name="nivelEscolar" type="text"
+                                placeholder="Nivel escolar de plantel" class="form-control" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i
+                                class="fa fa-phone-square bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="zona" name="zona" type="text" placeholder="Zona de plantel" class="form-control"
+                                required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i
+                                class="fa fa-phone-square bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="direccion" name="direccion" type="text" placeholder="Dirección de plantel"
+                                class="form-control" required>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-md-6 login-form-2">
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i
+                                class="fa fa-phone-square bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input type="email" id="correo" name="correo" type="text"
+                                placeholder="Correo de la institución" class="form-control" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i
+                                class="fa fa-phone-square bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="contrasena" name="contrasena" type="password"
+                                placeholder="Contraseña de institución" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="form-group">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Registrar</button>
+                <button type="button" onclick="DesplegarLogin()" class="btn btn-danger btn-lg">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -11,7 +11,7 @@ package pojos;
  */
 public class Alumno {
     
-    private String clave;
+    private Integer idAlumno;
     
     private String nombre;
     
@@ -19,28 +19,28 @@ public class Alumno {
     
     private String apellidoMaterno;
     
-    private Integer Cuenta_idCuenta;
+    private String Cuenta_nombreUsuario;
     
     private Integer Genero_idGenero;
 
     public Alumno() {
     }
 
-    public Alumno(String clave, String nombre, String apellidoPaterno, String apellidoMaterno, Integer Cuenta_idCuenta, Integer Genero_idGenero) {
-        this.clave = clave;
+    public Alumno(Integer idAlumno, String nombre, String apellidoPaterno, String apellidoMaterno, String Cuenta_nombreUsuario, Integer Genero_idGenero) {
+        this.idAlumno = idAlumno;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.Cuenta_idCuenta = Cuenta_idCuenta;
+        this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
         this.Genero_idGenero = Genero_idGenero;
     }
 
-    public String getClave() {
-        return clave;
+    public Integer getIdAlumno() {
+        return idAlumno;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setIdAlumno(Integer idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
     public String getNombre() {
@@ -67,12 +67,12 @@ public class Alumno {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public Integer getCuenta_idCuenta() {
-        return Cuenta_idCuenta;
+    public String getCuenta_nombreUsuario() {
+        return Cuenta_nombreUsuario;
     }
 
-    public void setCuenta_idCuenta(Integer Cuenta_idCuenta) {
-        this.Cuenta_idCuenta = Cuenta_idCuenta;
+    public void setCuenta_nombreUsuario(String Cuenta_nombreUsuario) {
+        this.Cuenta_nombreUsuario = Cuenta_nombreUsuario;
     }
 
     public Integer getGenero_idGenero() {
@@ -83,7 +83,5 @@ public class Alumno {
         this.Genero_idGenero = Genero_idGenero;
     }
 
-    
-    
-    
+   
 }

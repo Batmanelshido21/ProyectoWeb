@@ -5,6 +5,7 @@
  */
 package ws;
 
+import DAO.ForoDAO;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Mensaje;
+import pojos.MensajeR;
 
 /**
  * REST Web Service
@@ -36,61 +38,29 @@ public class ForoWS {
     public ForoWS() {
     }
     
-    @Path("enviarMensajeDocente")
+    @Path("enviarMensaje")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean enviarMensajeDocente(
+    public MensajeR enviarMensajeDocente(
             @FormParam("mensaje") String mensaje,
             @FormParam("Foro_idForo") Integer Foro_idForo,
-            @FormParam("Docente_clave") String Docente_clave){
+            @FormParam("Cuenta_nombreUsuario") String Cuenta_nombreUsuario){
         Mensaje mensajeO = new Mensaje();
         mensajeO.setMensaje(mensaje);
         mensajeO.setForo_idForo(Foro_idForo);
-        mensajeO.setDocente_clave(Docente_clave);
+        mensajeO.setCuenta_nombreUsuario(Cuenta_nombreUsuario);
+        MensajeR mensajeR;
+        ForoDAO foroD = new ForoDAO();
         
-        SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.update("Foro.enviarMensajeDocente",mensajeO);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
+        try{
+            foroD.enviarMensaje(mensajeO);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
     }
     
-    @Path("enviarMensajeAlumno")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public boolean enviarMensajeAlumno(
-            @FormParam("mensaje") String mensaje,
-            @FormParam("Foro_idForo") Integer Foro_idForo,
-            @FormParam("Alumno_clave") String Alumno_clave){
-        Mensaje mensajeO = new Mensaje();
-        mensajeO.setMensaje(mensaje);
-        mensajeO.setForo_idForo(Foro_idForo);
-        mensajeO.setDocente_clave(Alumno_clave);
-        
-        SqlSession conexion = MyBatisUtil.getSession();
-        
-        if(conexion != null){
-            try{
-                conexion.update("Foro.enviarMensajeAlumno",mensajeO);
-                conexion.commit();
-                return true;
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }      
-        return false;
-        
-    }
     
     @Path("mensajeForo/{Foro_idForo}")
     @GET
@@ -99,15 +69,14 @@ public class ForoWS {
             @PathParam("Foro_idForo") Integer Foro_idForo){
         List<Mensaje> list = null;
        SqlSession conexion = MyBatisUtil.getSession();
+       ForoDAO foroD = new ForoDAO();
        
-       if(conexion != null){
-            try{
-                list = conexion.selectList("Foro.getMensajesForo",Foro_idForo);
-            }finally{
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }
+       try{
+           list = foroD.obtenerMensajes(Foro_idForo);
+       }catch(Exception e){
+           
+       }
+       
         return list;
     }
 

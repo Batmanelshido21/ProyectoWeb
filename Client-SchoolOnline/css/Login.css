@@ -1,0 +1,9 @@
+.divPrincipal{
+    display: flex; 
+    padding: 1em;
+}
+
+.divForm {
+    width: 400px;
+    padding: 2em;
+  }
