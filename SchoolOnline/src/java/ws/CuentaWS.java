@@ -44,6 +44,10 @@ public class CuentaWS {
     public Alumno loginAlumno(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena){
+        
+        System.out.println("Correo: " + correo);
+        System.out.println("Contrasena: " + contrasena);
+        
        Cuenta cuenta = new Cuenta();
        cuenta.setCorreo(correo);
        cuenta.setContrasena(contrasena);
@@ -53,7 +57,7 @@ public class CuentaWS {
        try{
            alumno = cuentaD.loginAlumno(cuenta);
        }catch(Exception e){
-           
+           alumno.setIdAlumno(0);
        }
        return alumno;
     }
@@ -88,6 +92,10 @@ public class CuentaWS {
     public Docente loginDocente(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena){
+        
+        System.out.println("Correo: " + correo);
+        System.out.println("Contrasena: " + contrasena);
+        
        Cuenta cuenta = new Cuenta();
        cuenta.setCorreo(correo);
        cuenta.setContrasena(contrasena);
@@ -97,8 +105,9 @@ public class CuentaWS {
        try{
            docente = cuentaD.loginDocente(cuenta);
        }catch(Exception e){
-           
+           docente.setIdDocente(0);
        }
+       
        return docente;
     }
     

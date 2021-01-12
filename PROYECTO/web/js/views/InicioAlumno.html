@@ -1,0 +1,192 @@
+<!--<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Inicio Alumno</title>
+        <link rel="stylesheet" href="../../css/InicioAlumno.css" type="text/css"/>
+    </head>
+    <body>
+        <header class="CentrarContenido">
+            <h1>Inicio Alumno</h1>
+        </header>
+        <br>
+        <br>
+        <h2 class="CentrarContenido">¿Qué deseas hacer hoy?</h2>
+        <br>
+        <br>
+        <br>
+        <br>
+       <div class="DivImagenes">
+           <div class="div2">
+            <img src="../../css/images/Icono_block.png" width="200" height="200"/>
+            <div>
+                <br>
+                <br>
+                <a class="Link" href="js/views/InicioAlumno.HTML">ENTREGAR ACTIVIDAD</a>
+            </div>
+           </div>
+           <div class="div2">
+            <img src="../../css/images/ConsultaMat.png" width="200" height="200"/>
+            <div>
+                <br>
+                <br>
+                <a class="Link" href="js/views/InicioAlumno.HTML">CONSULTAR MATERIAL DE APOYO</a>
+            </div>
+           </div>
+           <div class="div2">
+            <img src="../../css/images/Cal.png" width="200" height="200"/>
+            <div>
+                <br>
+                <br>
+                <a class="Link" href="js/views/InicioAlumno.HTML">VER CALENDARIO DE ENTREGAS</a>
+            </div>
+           </div>
+           <div class="div2">
+            <img src="../../css/images/Foro.png" width="200" height="200"/>
+            <div>
+                <br>
+                <br>
+                <a class="Link" href="js/views/InicioAlumno.HTML">PARTICIPAR EN FORO</a>
+            </div>
+           </div>
+       </div>
+    </body>
+</html>-->
+
+<!DOCTYPE html>
+<!--
+ Copyright (c) 2014, 2020, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+
+<!-- ************************ IMPORTANT INFORMATION ************************************
+  This web basic template is provided as an example of how to configure
+  a JET web application.  It contains the Oracle JET framework and a default
+  requireJS configuration file to show how JET can be setup in a common application.
+  This project template can be used in conjunction with demo code from the JET
+  website to test JET component behavior and interactions.
+
+  Any CSS styling with the prefix "demo-" is for demonstration only and is not
+  provided as part of the JET framework.
+
+  Please see the demos under Cookbook/Patterns/App Shell: Web and the CSS documentation
+  under Support/API Docs/Non-Component Styling on the JET website for more information on how to use 
+  the best practice patterns shown in this template.
+
+  Aria Landmark role attributes are added to the different sections of the application
+  for accessibility compliance. If you change the type of content for a specific
+  section from what is defined, you should also change the role value for that
+  section to represent the appropriate content type.
+  ***************************** IMPORTANT INFORMATION ************************************ -->
+<html lang="en-us">
+
+<head>
+  <title>Oracle JET Starter Template - Web Basic</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+  <link rel="icon" href="css/images/favicon.ico" type="image/x-icon" />
+  <script type="text/javascript" src="../viewModels/Alumno_Inicio.js"></script>
+
+  <!-- This is the main css file for the default theme -->
+  <!-- injector:theme -->
+  <link rel="stylesheet" href="css/libs/oj/v9.2.0/redwood/oj-redwood-min.css" type="text/css" />
+  <!-- endinjector -->
+  <!-- This contains icon fonts used by the starter template -->
+  <link rel="stylesheet" href="css/demo-alta-site-min.css" type="text/css"/>
+  <link rel="stylesheet" id="uxiconFont" href="https://static.oracle.com/cdn/fnd/gallery/2010.0.0/images/iconfont/ojuxIconFont.min.css">
+
+  <!-- This is where you would add any app specific styling -->
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+</head>
+
+<body class="oj-web-applayout-body">
+  <div id="globalBody" class="oj-web-applayout-page">
+    <!--
+         ** Oracle JET V9.2.0 web application header pattern.
+         ** Please see the demos under Cookbook/Patterns/App Shell: Web
+         ** and the CSS documentation under Support/API Docs/Non-Component Styling
+         ** on the JET website for more information on how to use this pattern.
+      -->
+    <header role="banner" class="oj-web-applayout-header">
+      <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center">
+        <div class="oj-flex-bar-middle oj-sm-align-items-baseline">
+          <span role="img" class="oj-icon demo-oracle-icon" title="Oracle Logo" alt="Oracle Logo"></span>
+          <h1 class="oj-sm-only-hide oj-web-applayout-header-title" title="Application Name">
+            <oj-bind-text value="[[appName]]"></oj-bind-text>
+          </h1>
+        </div>
+        <div class="oj-flex-bar-end">
+          <!-- Responsive Toolbar -->
+          <oj-toolbar>
+            <oj-menu-button id="userMenu" display="[[smScreen() ? 'icons' : 'all']]" chroming="borderless">
+              <span>
+                <oj-bind-text value="[[userLogin]]"></oj-bind-text>
+              </span>
+              <span slot="endIcon"
+                :class="[[{'oj-icon demo-appheader-avatar': smScreen(), 'oj-component-icon oj-button-menu-dropdown-icon': !smScreen()}]]"></span>
+              <oj-menu id="menu1" slot="menu">
+                <oj-option id="pref" value="pref">Preferences</oj-option>
+                <oj-option id="help" value="help">Help</oj-option>
+                <oj-option id="about" value="about">About</oj-option>
+                <oj-option id="out" value="out">Sign Out</oj-option>
+              </oj-menu>
+            </oj-menu-button>
+          </oj-toolbar>
+        </div>
+      </div>
+    </header>
+    <div role="main" class="oj-web-applayout-max-width oj-web-applayout-content">
+      <oj-form-layout max-columns="{{statesColumns}}" direction="row">
+        <oj-input-text id= "bNombre" value="{{var_nombre}}" required="true" label-hint="Nombre"></oj-input-text>
+        <oj-input-text id= "bAp" value="{{var_Ap}}" required="true" label-hint="Apellido Paterno"></oj-input-text>
+        <oj-input-text id= "bAm" value="{{var_Am}}" required="true" label-hint="Apellido Materno"></oj-input-text>
+        <oj-input-date value="{{var_fecha}}" label-hint="Fecha de Nacimiento"></oj-input-date>
+        <oj-radioset value="{{var_genero}}" class='oj-choice-direction-row' label-hint="Genero">
+          <oj-option value="Masculino">Masculino</oj-option>
+          <oj-option value="Femenino">Femenino</oj-option>
+        </oj-radioset>
+        <oj-label for="combobox1">Carrera</oj-label>
+        <oj-combobox-one id="combobox1" value="{{value1}}">
+          <oj-option value="IS">Ingenieria de Softeware</oj-option>
+          <oj-option value="TC">Tecnplogias Computacionales</oj-option>
+          <oj-option value="RSC">Redes y Servicios de Computo</oj-option>
+        </oj-combobox-one>
+        <oj-input-number id="input-number-validator" required label-hint="Año de ingreso" label-edge='inside'>
+        </oj-input-number>
+        <oj-input-text required="true" value="{{var_correo}}" label-hint="Correo institucional"></oj-input-text>
+        <oj-input-password required="true" value="{{var_contra}}" label-hint="contraseña"></oj-input-password>
+        <oj-switch value="false" label-hint="Estudiante ectranjero"></oj-switch>
+        <oj-text-area label-hint="observaciones" value="{{var_obser}}"></oj-text-area>
+        <oj-button id="botonAceptar" on-oj-action="[[clicAceptar]]" chroming="callToAction">
+          Aceptar
+      </oj-button>
+      </oj-form-layout>
+    </div>
+    <footer class="oj-web-applayout-footer" role="contentinfo">
+      <div class="oj-web-applayout-footer-item oj-web-applayout-max-width">
+        <ul>
+          <oj-bind-for-each data="[[footerLinks]]">
+            <template>
+              <li>
+                <a :id="[[$current.data.linkId]]" :href="[[$current.data.linkTarget]]">
+                  <oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
+                </a>
+              </li>
+            </template>
+          </oj-bind-for-each>
+        </ul>
+      </div>
+      <div class="oj-web-applayout-footer-item oj-web-applayout-max-width oj-text-secondary-color oj-text-sm">
+        Copyright © 2014, 2020 Oracle and/or its affiliates All rights reserved.
+      </div>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="js/libs/require/require.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>

@@ -119,6 +119,8 @@ public class PlantelEducativoWS {
             @FormParam("contrasena") String contrasena,
             @FormParam("nombreUsuario") String nombreUsuario){
         
+        System.out.println("Entro al registro");
+        
         PlantelEducativo plantel = new PlantelEducativo();
         plantel.setClave(clave);
         plantel.setSector(sector);
@@ -137,6 +139,8 @@ public class PlantelEducativoWS {
             plantelD.registrarPlantelEducativo(plantel,cuenta);
             mensajeR = new MensajeR(true);
         }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             mensajeR = new MensajeR(false);
         }
         
