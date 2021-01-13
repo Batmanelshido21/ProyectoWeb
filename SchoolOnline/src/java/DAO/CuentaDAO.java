@@ -127,5 +127,18 @@ public class CuentaDAO {
 
         return false;
     }
+    
+     public void modificarContrasena(Cuenta cuenta) {
+            SqlSession conn = MyBatisUtil.getSession();
+        
+         try {
+            conn.update("Cuenta.modificarContrasena", cuenta);
+            conn.commit();
+        } catch (Exception ex) {
+            
+        } finally {
+            conn.close();
+        } 
+    }
 
 }

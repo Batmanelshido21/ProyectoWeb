@@ -63,4 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM cuenta WHERE correo = #{correo}
     </select> 
   
+    <update id="modificarContrasena" parameterType="pojos.Cuenta">
+        UPDATE cuenta SET contrasena = #{contrasena}
+        WHERE correo = #{correo}
+    </update>
 </mapper>

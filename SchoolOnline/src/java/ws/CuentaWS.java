@@ -72,6 +72,28 @@ public class CuentaWS {
        return alumno;
     }
     
+        @Path("modificarContrasena")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public MensajeR modificarContraseña(
+            @FormParam("correo") String correo,
+            @FormParam("contrasena") String contrasena){
+        MensajeR mensajeR;
+        CuentaDAO cuentaD = new CuentaDAO();
+        Cuenta cuenta = new Cuenta();
+        cuenta.setCorreo(correo);
+        cuenta.setContrasena(contrasena);
+        
+        try{
+            cuentaD.modificarContrasena(cuenta);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
+        
+    }
+    
  @Path("recuperarContraseña")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
