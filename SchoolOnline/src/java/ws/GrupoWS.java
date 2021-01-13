@@ -90,6 +90,7 @@ public class GrupoWS {
         grupo.setNombre(nombre);
         grupo.setCicloEscolar_idCicloEscolar(CicloEscolar_idCicloEscolar);
         grupo.setForo_idForo(Foro_idForo);
+        grupo.setDocente_idDocente(Docente_idDocente);
         
         Foro  foro = new Foro();
         foro.setIdForo(Foro_idForo);

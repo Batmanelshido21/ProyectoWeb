@@ -43,22 +43,6 @@ public class ActividadWS {
     public ActividadWS() {
     }
     
-    @Path("actividadesActividad/{Actividad_idActividad}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ActividadEntrega> obtenerActividadesGrupo(
-            @PathParam("Actividad_idActividad") Integer Actividad_idActividad){
-        List<ActividadEntrega> list = null;
-        ActividadDAO actividadD = new ActividadDAO();
-        
-       try{
-        list = actividadD.obtenerActividadesGrupo(Actividad_idActividad);
-       }catch(Exception e){
-           
-       }
-        return list;
-        
-    }
     
     @Path("actividadesAlumno/{idAlumno}")
     @GET
@@ -75,6 +59,36 @@ public class ActividadWS {
         }
         return list;
         
+    }
+    
+     @Path("obtenerActividadesEntrega/{Actividad_idActividad}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ActividadEntrega> obtenerActividadesEntrega(
+            @PathParam("Actividad_idActividad") Integer Actividad_idActividad){
+        List<ActividadEntrega> list = null;
+        ActividadDAO actividadD = new ActividadDAO();
+         try{
+            list = actividadD.getActividadesEntrega(Actividad_idActividad);
+        }catch(Exception e){
+            
+        }
+        return list; 
+    }
+    
+    @Path("obtenerActividadesGrupo/{idGrupo}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Actividad> obtenerActividadesGrupo(
+            @PathParam("idGrupo") Integer idGrupo){
+        List<Actividad> list = null;
+     ActividadDAO actividadD = new ActividadDAO();
+         try{
+            list = actividadD.getActividadesGrupo(idGrupo);
+        }catch(Exception e){
+            
+        }
+        return list; 
     }
 
     @Path("calificarActividad")

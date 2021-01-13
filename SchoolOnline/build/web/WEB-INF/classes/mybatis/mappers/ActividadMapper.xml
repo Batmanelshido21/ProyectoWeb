@@ -50,5 +50,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     actividadEntrega.nombre
     FROM actividadEntrega WHERE actividadEntrega.Alumno_idAlumno = #{Alumno_idAlumno}
 </select>
+
+<select id="getActividadesEntrega" resultType = "pojos.ActividadEntrega" parameterType="int">
+    SELECT
+    actividadEntrega.idActividadEntrega,
+    actividadEntrega.archivo,
+    actividadEntrega.nombre
+    FROM actividadEntrega WHERE actividadEntrega.Actividad_idActividad = #{Actividad_idActividad}
+</select>
     
+<select id="getActividadesGrupo" resultType = "pojos.Actividad" parameterType="int">
+    SELECT
+    actividad.idActividad,
+    actividad.nombre,
+    actividad.descripcion,
+    actividad.fechaCreada,
+    actividad.fechaEntrega,
+    actividad.Grupo_idGrupo
+    FROM actividad WHERE actividad.Grupo_idGrupo = #{idGrupo}
+</select>    
 </mapper>
