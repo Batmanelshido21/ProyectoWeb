@@ -68,5 +68,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     actividad.fechaEntrega,
     actividad.Grupo_idGrupo
     FROM actividad WHERE actividad.Grupo_idGrupo = #{idGrupo}
-</select>    
+</select>
+
+<select id="getActividad" resultType = "int" parameterType="String">
+    SELECT
+    actividad.idActividad
+    FROM actividad WHERE nombre = #{nombre}
+</select>
 </mapper>

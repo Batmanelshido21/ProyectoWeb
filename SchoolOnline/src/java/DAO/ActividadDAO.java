@@ -21,20 +21,25 @@ public class ActividadDAO {
     public ActividadDAO() {
     }
     
-    public boolean registrarActividad(Actividad actividad){
+    public int registrarActividad(Actividad actividad){
         SqlSession conexion = MyBatisUtil.getSession();
+        
+        int idActividad = 0;
         
         if(conexion != null){
             try{
                 conexion.insert("Actividad.registrarActividad",actividad);
                 conexion.commit();
-                return true;
+                
+                idActividad = conexion.selectOne("Actividad.getActividad", actividad.getNombre());
+                
+                return idActividad;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return false;
+        return 0;
     }
     
     public boolean entregarActividad(ActividadEntrega actividadE){
@@ -54,12 +59,11 @@ public class ActividadDAO {
         return false;   
     }
     
-    public boolean registrarActividadArchivo(Actividad actividad, Archivo archivo){
+    public boolean registrarActividadArchivo(Archivo archivo){
         SqlSession conexion = MyBatisUtil.getSession();
         
         if(conexion != null){
             try{
-                conexion.insert("Actividad.registrarActividad",actividad);
                 conexion.insert("Actividad.registrarActividadArchivo",archivo);
                 conexion.commit();
                 return true;
