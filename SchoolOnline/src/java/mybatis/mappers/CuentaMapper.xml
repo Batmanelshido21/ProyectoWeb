@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Cuenta">
     
  <insert id="registrarCuenta" parameterType="pojos.Cuenta">
-        INSERT INTO cuenta (correo,contrasena,PlantelEducativo_clave,nombreUsuario)
-        VALUES(#{correo},#{contrasena},#{PlantelEducativo_clave},#{nombreUsuario})        
+        INSERT INTO cuenta (correo,contrasena,PlantelEducativo_clave,nombreUsuario,rol)
+        VALUES(#{correo},#{contrasena},#{PlantelEducativo_clave},#{nombreUsuario},#{rol})        
  </insert>
  
   <insert id="registrarAlumno" parameterType="pojos.Alumno">
@@ -26,28 +26,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM cuenta WHERE cuenta.correo = #{correo} and cuenta.contrasena = #{contrasena}
     </select> 
     
-    <select id="getAlumno" resultType="pojos.Alumno" parameterType="String">
+    <select id="login2" resultType="String" parameterType="pojos.Cuenta">
         SELECT
-        alumno.idAlumno,
-        alumno.nombre,
-        alumno.apellidoPaterno,
-        alumno.apellidoMaterno,
-        alumno.Cuenta_nombreUsuario,
-        alumno.Genero_idGenero
+        cuenta.rol
+        FROM cuenta WHERE cuenta.correo = #{correo} and cuenta.contrasena = #{contrasena}
+    </select>
+    
+     <select id="login3" resultType="String" parameterType="pojos.Cuenta">
+        SELECT
+        cuenta.PlantelEducativo_clave
+        FROM cuenta WHERE cuenta.correo = #{correo} and cuenta.contrasena = #{contrasena}
+    </select>  
+    
+    <select id="getAlumnoId" resultType="int" parameterType="String">
+        SELECT
+        alumno.idAlumno
         FROM alumno WHERE alumno.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
     </select>
     
-    <select id="getDocente" resultType="pojos.Docente" parameterType="String">
+    <select id="getAlumnoNombre" resultType="string" parameterType="String">
         SELECT
-        docente.idDocente,
-        docente.nombre,
-        docente.apellidoPaterno,
-        docente.apellidoMaterno,
-        docente.gradoAcademico,
-        docente.telefono,
-        docente.Cuenta_nombreUsuario,
-        docente.Genero_idGenero,
-        docente.PlantelEducativo_clave
+        alumno.nombre
+        FROM alumno WHERE alumno.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
+    </select>
+    
+    <select id="getDocenteId" resultType="int" parameterType="String">
+        SELECT
+        docente.idDocente
+        FROM docente WHERE docente.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
+    </select>
+    
+     <select id="getDocenteNombre" resultType="string" parameterType="String">
+        SELECT
+        docente.nombre
         FROM docente WHERE docente.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
     </select>
     
@@ -62,9 +73,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         cuenta.contrasena
         FROM cuenta WHERE correo = #{correo}
     </select> 
-  
+    
     <update id="modificarContrasena" parameterType="pojos.Cuenta">
         UPDATE cuenta SET contrasena = #{contrasena}
         WHERE correo = #{correo}
     </update>
+  
 </mapper>

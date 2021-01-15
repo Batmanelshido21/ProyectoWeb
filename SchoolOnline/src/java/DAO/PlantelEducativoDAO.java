@@ -41,37 +41,6 @@ public class PlantelEducativoDAO {
         return docente;
     }
 
-    public PlantelEducativo loginPlantel(Cuenta cuenta) {
-        PlantelEducativo plantel = new PlantelEducativo();
-        String Cuenta_nombreUsuario;
-        SqlSession conexion = MyBatisUtil.getSession();
-        if (conexion != null) {
-            try {
-                Cuenta_nombreUsuario = conexion.selectOne("Plantel.login", cuenta);
-
-                if (Cuenta_nombreUsuario == null) {
-                    plantel.setClave("0");
-                    return plantel;
-                } else {
-                    plantel = conexion.selectOne("Plantel.getPlantel", Cuenta_nombreUsuario);
-
-                    if (plantel != null) {
-                        conexion.commit();
-                        return plantel;
-                    } else {
-                        plantel.setClave("0");
-                        return plantel;
-                    }
-                }
-            } finally {
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }
-        return plantel;
-
-    }
-
     public boolean registrarPlantelEducativo(PlantelEducativo plantel, Cuenta cuenta) {
         SqlSession conexion = MyBatisUtil.getSession();
 
