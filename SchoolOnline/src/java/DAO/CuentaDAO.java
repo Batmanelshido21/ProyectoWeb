@@ -9,6 +9,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Alumno;
 import pojos.Cuenta;
+import pojos.CuentaGrupo;
 import pojos.Docente;
 import pojos.ObjetoRetorno;
 
@@ -19,6 +20,26 @@ import pojos.ObjetoRetorno;
 public class CuentaDAO {
 
     public CuentaDAO() {
+    }
+    
+        public boolean registrarAlumno(Cuenta cuenta, Alumno alumno, Integer Grupo_idGrupo) {
+         SqlSession conexion = MyBatisUtil.getSession();
+         CuentaGrupo cuentaG = new CuentaGrupo();
+         cuentaG.setGrupo_idGrupo(Grupo_idGrupo);
+        if(conexion != null){
+            try{
+                conexion.insert("Cuenta.registrarCuenta",cuenta);
+                conexion.insert("Cuenta.registrarAlumno",alumno);
+                cuentaG.setAlumno_idAlumno(conexion.selectOne("Cuenta.getAlumnoId",cuenta.getNombreUsuario()));
+                conexion.insert("Cuenta.registrarAlumnoGrupo",cuentaG);
+                conexion.commit();
+                return true;
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }      
+        return false;
     }
         
     public boolean registrarAlumno(Cuenta cuenta,Alumno alumno){

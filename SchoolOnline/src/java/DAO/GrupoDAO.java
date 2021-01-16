@@ -8,6 +8,7 @@ package DAO;
 import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Actividad;
 import pojos.Foro;
 import pojos.Grupo;
 
@@ -69,6 +70,22 @@ public class GrupoDAO {
             }
         }      
         return false;
+    }
+
+    public List<Actividad> getActividadesAlumno(Integer Alumno_idAlumno) {
+        SqlSession conexion = MyBatisUtil.getSession();
+        Integer Grupo_idGrupo;
+        List<Actividad> list = null;
+        try{
+            System.out.println("Antes de entrar al método");
+            Grupo_idGrupo = conexion.selectOne("Grupo.getGrupoAlumno",Alumno_idAlumno);
+            System.out.println(Grupo_idGrupo);
+            list = conexion.selectList("Grupo.getActividadesGrupo",Grupo_idGrupo);
+            System.out.println("Despues de entrar al método");
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return list;
     }
     
 }

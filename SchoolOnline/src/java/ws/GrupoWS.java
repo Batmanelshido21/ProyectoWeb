@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Actividad;
 import pojos.Foro;
 import pojos.Grupo;
 import pojos.MensajeR;
@@ -53,6 +54,22 @@ public class GrupoWS {
            
        }
         return list;
+    }
+    
+    @Path("getActividadesAlumnoId/{Alumno_idAlumno}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Actividad> obtenerGruposAlumnoId(
+            @PathParam("Alumno_idAlumno")Integer Alumno_idAlumno){
+        List <Actividad> list= null;
+        GrupoDAO grupoD = new GrupoDAO();
+        try{
+            list = grupoD.getActividadesAlumno(Alumno_idAlumno);
+        }catch(Exception e){
+            
+        }
+        
+        return list;   
     }
     
     @Path("modificarGrupo")

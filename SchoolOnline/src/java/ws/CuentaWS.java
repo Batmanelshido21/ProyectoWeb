@@ -28,6 +28,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Alumno;
 import pojos.Cuenta;
+import pojos.CuentaGrupo;
 import pojos.Docente;
 import pojos.MensajeR;
 import pojos.ObjetoRetorno;
@@ -169,7 +170,8 @@ public class CuentaWS {
             @FormParam("apellidoMaterno") String apellidoMaterno,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
             @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave,
-            @FormParam("rol") String rol){
+            @FormParam("rol") String rol,
+            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo){
         MensajeR mensajeR;
         Cuenta cuenta = new Cuenta();
         Alumno alumno = new Alumno();
@@ -184,13 +186,15 @@ public class CuentaWS {
         alumno.setApellidoMaterno(apellidoMaterno);
         alumno.setGenero_idGenero(Genero_idGenero);
         alumno.setCuenta_nombreUsuario(nombreUsuario);
+        CuentaGrupo cuentaG = new CuentaGrupo();
+        
     
         CuentaDAO cuentaD = new CuentaDAO();
         try{
-            cuentaD.registrarAlumno(cuenta, alumno);
+            cuentaD.registrarAlumno(cuenta, alumno,Grupo_idGrupo);
             mensajeR = new MensajeR(true);
         }catch(Exception e){
-             mensajeR = new MensajeR(true);
+             mensajeR = new MensajeR(false);
         }
         return mensajeR;
     }

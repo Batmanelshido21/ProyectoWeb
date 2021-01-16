@@ -10,6 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES(#{correo},#{contrasena},#{PlantelEducativo_clave},#{nombreUsuario},#{rol})        
  </insert>
  
+  <insert id="registrarAlumnoGrupo" parameterType="pojos.CuentaGrupo">
+        INSERT INTO alumno_has_grupo (Alumno_idAlumno,Grupo_idGrupo)
+        VALUES(#{Alumno_idAlumno},#{Grupo_idGrupo})        
+  </insert>
+ 
   <insert id="registrarAlumno" parameterType="pojos.Alumno">
         INSERT INTO alumno (idAlumno,nombre,apellidoPaterno,apellidoMaterno,Cuenta_nombreUsuario,Genero_idGenero)
         VALUES(#{idAlumno},#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{Cuenta_nombreUsuario},#{Genero_idGenero})        
