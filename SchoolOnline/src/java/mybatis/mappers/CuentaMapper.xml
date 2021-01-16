@@ -67,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM docente WHERE docente.Cuenta_nombreUsuario = #{Cuenta_nombreUsuario}
     </select>
     
+    
     <update id="modificarDocente" parameterType="pojos.Docente">
         UPDATE docente SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, gradoAcademico = #{gradoAcademico}, telefono = #{telefono}
         WHERE idDocente = #{idDocente}

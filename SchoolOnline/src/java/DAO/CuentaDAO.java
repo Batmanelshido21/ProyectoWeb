@@ -59,6 +59,19 @@ public class CuentaDAO {
         return false;
     }
     
+     public boolean registrarAlumnoNU(String nombreUsuario, CuentaGrupo cuentaG) {
+        SqlSession conexion = MyBatisUtil.getSession();
+        try{
+            cuentaG.setAlumno_idAlumno(conexion.selectOne("Cuenta.getAlumnoId",nombreUsuario));
+            conexion.insert("Cuenta.registrarAlumnoGrupo",cuentaG);
+            conexion.commit();
+                return true;
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+    
     public boolean registrarDocente(Cuenta cuenta, Docente docente){
         SqlSession conexion = MyBatisUtil.getSession();
         if(conexion != null){

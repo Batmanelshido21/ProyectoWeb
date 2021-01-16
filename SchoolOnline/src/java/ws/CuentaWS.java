@@ -199,6 +199,27 @@ public class CuentaWS {
         return mensajeR;
     }
     
+    @Path("RegistrarAlumnoNU")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public MensajeR registroUsuarioNU(
+            @FormParam("nombreUsuario") String nombreUsuario,
+            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo){
+        MensajeR mensajeR;
+        CuentaDAO cuentaD = new CuentaDAO();
+        CuentaGrupo cuentaG = new CuentaGrupo();
+        cuentaG.setGrupo_idGrupo(Grupo_idGrupo);
+        try{
+            cuentaD.registrarAlumnoNU(nombreUsuario,cuentaG);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            System.out.println(e);
+            mensajeR = new MensajeR(false);
+        }
+        
+        return mensajeR;
+    }
+    
     @Path("modificarDocente")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
