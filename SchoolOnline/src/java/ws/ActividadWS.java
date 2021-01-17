@@ -223,8 +223,7 @@ public class ActividadWS {
        
         return mensajeR;
     }
-    
-    @Path("registroActividadArchivo")
+   @Path("registroActividadArchivo")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public MensajeR registrarActividadArchivo(
@@ -233,30 +232,30 @@ public class ActividadWS {
             @FormParam("fechaCreada") Date fechaCreada,
             @FormParam("fechaEntrega") Date fechaEntrega,
             @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo,
-            @FormParam("archivo") String archivo,
-            @FormParam("idActividad") Integer idActividad){
+            @FormParam("archivo") String archivo){
+        
         Actividad actividad = new Actividad();
-        actividad.setIdActividad(idActividad);
         actividad.setNombre(nombre);
         actividad.setDescripcion(descripcion);
         actividad.setFechaCreada(fechaCreada);
         actividad.setFechaEntrega(fechaEntrega);
         actividad.setGrupo_idGrupo(Grupo_idGrupo);
         
+        ActividadDAO actividadD = new ActividadDAO();
+        int idActividad = actividadD.registrarActividad(actividad);
+        
         Archivo archivoO = new Archivo();
         archivoO.setActividad_idActividad(idActividad);
         archivoO.setArchivo(archivo);
         
        MensajeR mensajeR;
-       ActividadDAO actividadD = new ActividadDAO();
        
        try{
-           actividadD.registrarActividadArchivo(actividad, archivoO);
-           mensajeR = new MensajeR(true);
-       }catch(Exception e){
+           actividadD.registrarActividadArchivo(archivoO);
            mensajeR = new MensajeR(false);
+       }catch(Exception e){
+           mensajeR = new MensajeR(true);
        }
         return mensajeR;
     }
-        
 }
