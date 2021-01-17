@@ -18,6 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Grupo;
 import pojos.Mensaje;
 import pojos.MensajeR;
 
@@ -78,6 +79,23 @@ public class ForoWS {
        }
        
         return list;
+    }
+    
+    @Path("idForo/{idGrupo}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Grupo obtenerIdForo(
+            @PathParam("idGrupo")Integer idGrupo){
+        ForoDAO foroD = new ForoDAO();
+        Integer idGrupoR = null;
+        Grupo grupo = new Grupo();
+        try{
+          grupo = foroD.obtenerForoId(idGrupo);
+          grupo.setIdGrupo(idGrupo);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return grupo;
     }
 
 }

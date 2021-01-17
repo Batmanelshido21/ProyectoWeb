@@ -8,6 +8,7 @@ package DAO;
 import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.Grupo;
 import pojos.Mensaje;
 
 /**
@@ -49,5 +50,19 @@ public class ForoDAO {
             }
         }
         return list;
+    }
+
+    public Grupo obtenerForoId(Integer idGrupo) {
+        SqlSession conexion = MyBatisUtil.getSession();
+        Grupo grupo = new Grupo();
+        if(conexion != null){
+            try{
+                grupo=conexion.selectOne("Foro.getIdForo",idGrupo);
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return grupo;
     }
 }

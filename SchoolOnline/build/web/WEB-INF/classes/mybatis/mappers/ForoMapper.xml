@@ -17,5 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     mensaje.Cuenta_nombreUsuario
     FROM mensaje WHERE mensaje.Foro_idForo = #{Foro_idForo}
   </select>    
+  
+    <select id="getIdForo" resultType = "pojos.Grupo" parameterType="int">
+    SELECT
+    grupo.Foro_idForo
+    FROM grupo WHERE grupo.idGrupo = #{idGrupo}
+    </select>
 
 </mapper>
