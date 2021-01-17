@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtdmybatis-3-mapper.dtd">
+
+<mapper namespace="Actividad">
+    
+<insert id="registrarActividad" parameterType="pojos.Actividad">
+        INSERT INTO actividad (idActividad,nombre,descripcion,fechaCreada,fechaEntrega,Grupo_idGrupo)
+        VALUES(#{idActividad},#{nombre},#{descripcion},#{fechaCreada},#{fechaEntrega},#{Grupo_idGrupo})        
+</insert>
+
+<insert id="registrarActividadArchivo" parameterType="pojos.Archivo">
+        INSERT INTO archivo (archivo,Actividad_idActividad)
+        VALUES(#{archivo},#{Actividad_idActividad})        
+</insert>
+
+<insert id="registrarActividadEntrega" parameterType="pojos.ActividadEntrega">
+        INSERT INTO actividadEntrega (archivo,nombre,Actividad_idActividad,Alumno_idAlumno)
+        VALUES(#{archivo},#{nombre},#{Actividad_idActividad},#{Alumno_idAlumno})        
+</insert>
+
+<update id="calificarActividad" parameterType="pojos.ActividadEntrega">
+        UPDATE actividadEntrega SET calificacion = #{calificacion}
+        WHERE idActividadEntrega = #{idActividadEntrega}
+</update>
+
+<update id="modificarActividad" parameterType="pojos.Actividad">
+        UPDATE actividad SET nombre = #{nombre}, descripcion = #{descripcion}, fechaCreada = #{fechaCreada}, fechaEntrega = #{fechaEntrega}
+        WHERE idActividad = #{idActividad}
+</update>
+
+<update id="modificarArchivo" parameterType="pojos.Archivo">
+        UPDATE archivo SET archivo = #{archivo}
+        WHERE Actividad_idActividad = #{Actividad_idActividad}
+</update>
+
+<select id="getActividadesdGrupo" resultType = "pojos.ActividadEntrega" parameterType="int">
+    SELECT
+    actividadEntrega.idActividadEntrega,
+    actividadEntrega.archivo,
+    actividadEntrega.nombre
+    FROM actividadEntrega WHERE actividadEntrega.Actividad_idActividad = #{Actividad_idActividad}
+</select>
+
+<select id="getActividadesAlumno" resultType = "pojos.ActividadEntrega" parameterType="int">
+    SELECT
+    actividadEntrega.idActividadEntrega,
+    actividadEntrega.archivo,
+    actividadEntrega.nombre
+    FROM actividadEntrega WHERE actividadEntrega.Alumno_idAlumno = #{Alumno_idAlumno}
+</select>
+
+<select id="getActividadesEntrega" resultType = "pojos.ActividadEntrega" parameterType="int">
+    SELECT
+    actividadEntrega.idActividadEntrega,
+    actividadEntrega.archivo,
+    actividadEntrega.nombre
+    FROM actividadEntrega WHERE actividadEntrega.Actividad_idActividad = #{Actividad_idActividad}
+</select>
+    
+<select id="getActividadesGrupo" resultType = "pojos.Actividad" parameterType="int">
+    SELECT
+    actividad.idActividad,
+    actividad.nombre,
+    actividad.descripcion,
+    actividad.fechaCreada,
+    actividad.fechaEntrega,
+    actividad.Grupo_idGrupo
+    FROM actividad WHERE actividad.Grupo_idGrupo = #{idGrupo}
+</select>
+
+<select id="getActividad" resultType = "int" parameterType="String">
+    SELECT
+    actividad.idActividad
+    FROM actividad WHERE nombre = #{nombre}
+</select>
+</mapper>

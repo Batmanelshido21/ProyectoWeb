@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtdmybatis-3-mapper.dtd">
+
+<mapper namespace="Grupo">
+    
+ <insert id="registrarGrupo" parameterType="pojos.Grupo">
+        INSERT INTO grupo (nombre,CicloEscolar_idCicloEscolar,Foro_idForo,Docente_idDocente)
+        VALUES(#{nombre},#{CicloEscolar_idCicloEscolar},#{Foro_idForo},#{Docente_idDocente})        
+ </insert>
+ 
+ <insert id="registrarForo" parameterType="pojos.Foro">
+        INSERT INTO foro (nombre,idForo)
+        VALUES(#{nombre},#{idForo})        
+ </insert>
+ 
+ <update id="modificarGrupo" parameterType="pojos.Grupo">
+        UPDATE grupo SET nombre = #{nombre}
+        WHERE idGrupo = #{idGrupo}
+ </update>
+ 
+<select id="getGruposD" resultType="pojos.Grupo" parameterType="int">
+   SELECT
+   grupo.nombre,
+   grupo.idGrupo
+   FROM grupo WHERE grupo.Docente_idDocente = #{Docente_idDocente}
+</select>
+
+ <select id="getGrupoAlumno" resultType="int" parameterType="int">
+   SELECT
+   alumno_has_grupo.Grupo_idGrupo
+   FROM alumno_has_grupo WHERE alumno_has_grupo.Alumno_idAlumno = #{Alumno_idAlumno}
+</select>
+
+<select id="getActividadesGrupo" resultType="pojos.Actividad" parameterType="int">
+   SELECT
+   actividad.idActividad,
+   actividad.nombre,
+   actividad.descripcion,
+   actividad.fechaCreada,
+   actividad.fechaEntrega
+   FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo}
+</select>
+
+<select id="getForo" resultType="int" parameterType="String">
+   SELECT
+   foro.idForo
+   FROM foro WHERE foro.nombre = #{nombre}
+</select>
+
+<select id="getGrupoRegistrado" resultType="int" parameterType="int">
+   SELECT
+   grupo.idGrupo
+   FROM grupo WHERE grupo.Foro_idForo = #{Foro_idForo}
+</select>
+
+</mapper>
