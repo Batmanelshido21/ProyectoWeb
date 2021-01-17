@@ -2,17 +2,10 @@
 //window.location.href = 'html/Actividad.html?num=0&postal=28400';
 
 function Login() {
-  var rolAlumno = document.getElementById('alumno');
-  var rolDocente = document.getElementById('docente');
   var correo = document.getElementById('correo').value;
   var contrasena = document.getElementById('contrasena').value;
 
-  if (rolAlumno.checked == true)
-    LoginAlumno(correo, contrasena);
-  else if (rolDocente.checked == true)
-    LoginDocente(correo, contrasena);
-  else
-    LoginRepresentante(correo, contrasena);
+  LoginAlumno(correo, contrasena); 
 
   return false;
 }
@@ -41,7 +34,7 @@ function LoginAlumno(correo, contrasena) {
 
   var cuerpo = FormarCuerpoDePeticion(correo, contrasena);
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/LoginAlumno/', {
+  fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/Login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -50,52 +43,23 @@ function LoginAlumno(correo, contrasena) {
   })
     .then(response => response.json())
     .then(data => {
-      if (data.idAlumno != 0) {
-        var nombreUsuario = data.nombre;
-        window.location.href = 'html/Alumno_Inicio.html?nombre=' + nombreUsuario;
-      } else {
-        MostrarVentanaModal();
-      }
-    })
-}
 
-function LoginDocente(correo, contrasena) {
+      if (data.id != '') {
+        if(data.rol == 'Plantel'){
+          sessionStorage.setItem('clavePlantel', data.clave);
+          window.location.href = '../html/RepresentantePlantel_Inicio.html'
+        }else if (data.rol == 'Docente') {
+          sessionStorage.setItem('nombreDocente', data.nombre);
+          sessionStorage.setItem('idDocente', data.id);
+          sessionStorage.setItem('idPlantel', data.clave);
+          window.location.href = '../html/Docente_Inicio.html'
+        } else {
+         
+          sessionStorage.setItem('nombreAlumno', data.nombre);
+          sessionStorage.setItem('idAlumno', data.id);
+          window.location.href = '../html/Alumno_Inicio.html'
 
-  var cuerpo = FormarCuerpoDePeticion(correo, contrasena);
-
-  fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/LoginDocente/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: cuerpo
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.idDocente != 0) {
-        var nombreUsuario = data.nombre;
-        window.location.href = 'html/Docente_Inicio.html?nombre=' + nombreUsuario;
-      } else {
-        MostrarVentanaModal();
-      }
-    })
-}
-
-function LoginRepresentante(correo, contrasena) {
-
-  var cuerpo = FormarCuerpoDePeticion(correo, contrasena);
-
-  fetch('http://localhost:8084/SchoolOnline/webresources/plantel/LoginPlantel/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: cuerpo
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.clave != "0") {
-        window.location.href = 'html/RepresentantePlantel_Inicio.html';
+        }
       } else {
         MostrarVentanaModal();
       }

@@ -1,25 +1,26 @@
 var archivo;
+var idGrupo;
+
+window.onload = function(){
+  idGrupo = sessionStorage.getItem('idGrupo');
+  
+  console.log(idGrupo);
+}
+
 function registrarActividad(){
     var nombre=document.getElementById("nombre").value;
     var descripcion=document.getElementById("descripcion").value;
     var fechaCreada=document.getElementById("fechaCreada").value;
     var fechaEntrega=document.getElementById("fechaEntrega").value;
     console.log(archivo);
-    var Grupo_idGrupo=2;
-    var idActividad=34
 
-
-    if(EmpName == 'undefined'){
-      console.log("Ingresa archivo")
-    }else{
       var details = {
         nombre:nombre,
         descripcion:descripcion,
         fechaCreada:fechaCreada,
         fechaEntrega:fechaEntrega,
-        Grupo_idGrupo:Grupo_idGrupo,
-        archivo:archivo,
-        idActividad:idActividad
+        Grupo_idGrupo:idGrupo,
+        archivo:archivo
     };
 
     var formBody = [];
@@ -30,7 +31,7 @@ function registrarActividad(){
         }
         formBody = formBody.join("&");
         
-        fetch('http://localhost:8080/SchoolOnline/webresources/actividad/registroActividadArchivo', {
+        fetch('http://localhost:8084/SchoolOnline/webresources/actividad/registroActividadArchivo', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -41,7 +42,6 @@ function registrarActividad(){
         .then(data => {
             console.log(data);
         })
-    }
 }
 
 function convertToBase64() { 

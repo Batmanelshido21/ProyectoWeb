@@ -1,4 +1,14 @@
+var clavePlantel; 
+
+window.onload = function () {
+
+  clavePlantel = sessionStorage.getItem('clavePlantel');
+  
+  console.log("cla: " + clavePlantel);
+}
+
 function registrarDocente(){
+
     var nombre = document.getElementById("nombre").value;
     var apellidoPaterno = document.getElementById("apellidoPaterno").value;
     var apellidoMaterno = document.getElementById("apellidoMaterno").value;
@@ -8,7 +18,7 @@ function registrarDocente(){
     var telefono = document.getElementById("telefono").value;
     var Genero_idGenero = document.getElementById("genero").value;
     var nombreUsuario = nombre.substring(0,3)+apellidoPaterno.substring(0,3)+apellidoMaterno.substring(0,3);
-    var PlantelEducativo_clave ="30DPR1056Z";
+    var PlantelEducativo_clave = clavePlantel;
     
     var details ={
         correo:correo,
@@ -31,7 +41,7 @@ function registrarDocente(){
         }
         formBody = formBody.join("&");
         
-        fetch('http://localhost:8080/SchoolOnline/webresources/cuenta/RegistrarDocente', {
+        fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/RegistrarDocente', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -40,6 +50,11 @@ function registrarDocente(){
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+          var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+          myModal.show();
         })
+}
+
+function Regresar(){
+  window.location.href = '../html/RepresentantePlantel_Inicio.html'
 }

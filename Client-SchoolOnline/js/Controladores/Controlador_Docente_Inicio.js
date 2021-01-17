@@ -1,20 +1,18 @@
-var nombreU;
+var nombreDocente;
+var idDocente;
 
-window.onload = function(){
-    MostrarParams(); 
-    document.getElementById('ln').innerHTML=nombreU;
+window.onload = function () {
+    nombreDocente = sessionStorage.getItem('nombreDocente');
+    idDocente = sessionStorage.getItem('idDocente');
+
+    document.getElementById('ln').innerHTML = nombreDocente;
+  }
+  
+
+function DesplegarGrupos(){
+    window.location.href = '../html/Docente_Grupos.html';
 }
 
-function MostrarParams() {
-
-    var paramstr = window.location.search.substr(1);
-    var paramarr = paramstr.split("&");
-    var params = {};
-
-    for (var i = 0; i < paramarr.length; i++) {
-        var tmparr = paramarr[i].split("=");
-        params[tmparr[0]] = tmparr[1];
-    }
-
-    nombreU = params['nombre'];
+function RegistroDeGrupo(){
+    window.location.href = '../html/Registro_Grupo.html';
 }
