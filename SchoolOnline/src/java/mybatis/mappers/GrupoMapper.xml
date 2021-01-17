@@ -43,4 +43,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo}
 </select>
 
+<select id="getForo" resultType="int" parameterType="String">
+   SELECT
+   foro.idForo
+   FROM foro WHERE foro.nombre = #{nombre}
+</select>
+
+<select id="getGrupoRegistrado" resultType="int" parameterType="int">
+   SELECT
+   grupo.idGrupo
+   FROM grupo WHERE grupo.Foro_idForo = #{Foro_idForo}
+</select>
+
 </mapper>

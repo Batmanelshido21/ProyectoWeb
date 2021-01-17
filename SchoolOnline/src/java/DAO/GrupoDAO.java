@@ -52,15 +52,24 @@ public class GrupoDAO {
         return false;  
     }
     
-    public boolean crearGrupo(Foro foro, Grupo grupo){
+    public int crearGrupo(Foro foro, Grupo grupo){
          SqlSession conexion = MyBatisUtil.getSession();
-        
+         
+         int idForo = 0;
+         int idGrupo = 0; 
+       
         if(conexion != null){
             try{
-                conexion.insert("Grupo.registrarForo",foro);
+                conexion.insert("Grupo.registrarForo",foro);                
+                idForo = conexion.selectOne("Grupo.getForo", grupo.getNombre());
+                
+                grupo.setForo_idForo(idForo);
                 conexion.insert("Grupo.registrarGrupo",grupo);
+                
+                idGrupo = conexion.selectOne("Grupo.getGrupoRegistrado", idForo);
                 conexion.commit();
-                return true;
+                
+                return idGrupo;
             }
             catch(Exception e){
                 System.out.println(e);
@@ -68,8 +77,9 @@ public class GrupoDAO {
                 String j = conexion.toString();
                 conexion.close();
             }
-        }      
-        return false;
+        }
+        
+        return idGrupo;
     }
 
     public List<Actividad> getActividadesAlumno(Integer Alumno_idAlumno) {

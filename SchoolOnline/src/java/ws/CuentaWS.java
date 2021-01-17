@@ -157,7 +157,6 @@ public class CuentaWS {
         
     }
     
-    
     @Path("RegistrarAlumno")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -170,22 +169,24 @@ public class CuentaWS {
             @FormParam("apellidoMaterno") String apellidoMaterno,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
             @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave,
-            @FormParam("rol") String rol,
             @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo){
+        
         MensajeR mensajeR;
         Cuenta cuenta = new Cuenta();
         Alumno alumno = new Alumno();
+        
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setPlantelEducativo_clave(PlantelEducativo_clave);
         cuenta.setNombreUsuario(nombreUsuario);
-        cuenta.setRol(rol);
+        cuenta.setRol("Alumno");
         
         alumno.setNombre(nombre);
         alumno.setApellidoPaterno(apellidoPaterno);
         alumno.setApellidoMaterno(apellidoMaterno);
         alumno.setGenero_idGenero(Genero_idGenero);
         alumno.setCuenta_nombreUsuario(nombreUsuario);
+        
         CuentaGrupo cuentaG = new CuentaGrupo();
         
     
@@ -252,7 +253,6 @@ public class CuentaWS {
     }
     
     
-    
     @Path("RegistrarDocente")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -266,8 +266,8 @@ public class CuentaWS {
             @FormParam("gradoAcademico") String gradoAcademico,
             @FormParam("telefono") String telefono,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
-            @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave,
-            @FormParam("rol") String rol){
+            @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave){
+        
         Cuenta cuenta = new Cuenta();
         Docente docente = new Docente();
         
@@ -275,7 +275,7 @@ public class CuentaWS {
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setNombreUsuario(nombreUsuario);
-        cuenta.setRol(rol);
+        cuenta.setRol("Docente");
         
         docente.setNombre(nombre);
         docente.setApellidoPaterno(apellidoPaterno);
@@ -285,6 +285,7 @@ public class CuentaWS {
         docente.setGenero_idGenero(Genero_idGenero);
         docente.setCuenta_nombreUsuario(nombreUsuario);
         docente.setPlantelEducativo_clave(PlantelEducativo_clave);
+        
         MensajeR mensajeR;
         CuentaDAO cuentaD = new CuentaDAO();
         try{
@@ -295,5 +296,4 @@ public class CuentaWS {
         }
         return mensajeR;
     }
-    
 }

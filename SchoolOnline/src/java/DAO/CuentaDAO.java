@@ -117,42 +117,50 @@ public class CuentaDAO {
         } 
     }
 
-    public ObjetoRetorno login(Cuenta cuenta) {
+  public ObjetoRetorno login(Cuenta cuenta) {
+
         SqlSession conexion = MyBatisUtil.getSession();
         ObjetoRetorno objeto = new ObjetoRetorno();
         String nombreUsuario;
-        System.out.println("Entró aqui we");
-        if(conexion != null){
-            try{
-                System.out.println("Entró aqui we");
-                
-                cuenta.setNombreUsuario(conexion.selectOne("Cuenta.login",cuenta));
-                cuenta.setRol(conexion.selectOne("Cuenta.login2",cuenta));
-                cuenta.setPlantelEducativo_clave(conexion.selectOne("Cuenta.login3",cuenta));
-                System.out.println(cuenta.getNombreUsuario()+cuenta.getRol()+cuenta.getPlantelEducativo_clave());
-                
+
+        if (conexion != null) {
+            try {
+
+                cuenta.setNombreUsuario(conexion.selectOne("Cuenta.login", cuenta));
+                cuenta.setRol(conexion.selectOne("Cuenta.login2", cuenta));
+                cuenta.setPlantelEducativo_clave(conexion.selectOne("Cuenta.login3", cuenta));
+
                 objeto.setRol(cuenta.getRol());
-                nombreUsuario=cuenta.getNombreUsuario();
-                System.out.println("Entró aqui we");
-                if(cuenta.getRol().equalsIgnoreCase("plantel")){
-                    System.out.println("Entró a plantel");
-                    objeto.setClave(cuenta.getPlantelEducativo_clave());
+                nombreUsuario = cuenta.getNombreUsuario();
+
+                if (cuenta.getRol() != null) {
+                    
+                    if (cuenta.getRol().equalsIgnoreCase("Plantel")) {
+                        objeto.setClave(cuenta.getPlantelEducativo_clave());
+                    }
+                    if (cuenta.getRol().equalsIgnoreCase("Docente")) {
+                        objeto.setClave(cuenta.getPlantelEducativo_clave());
+                        objeto.setId(conexion.selectOne("Cuenta.getDocenteId", nombreUsuario));
+                        objeto.setNombre(conexion.selectOne("Cuenta.getDocenteNombre", nombreUsuario));
+                    }
+                    if (cuenta.getRol().equalsIgnoreCase("Alumno")) {
+                        objeto.setId(conexion.selectOne("Cuenta.getAlumnoId", nombreUsuario));
+                        objeto.setNombre(conexion.selectOne("Cuenta.getAlumnoNombre", nombreUsuario));
+                    }
+                    conexion.commit();
+                    return objeto;
+
+                } else {
+                    
+                    objeto.setId(0);
+
+                    return objeto;
                 }
-                if(cuenta.getRol().equalsIgnoreCase("docente")){
-                    objeto.setId(conexion.selectOne("Cuenta.getDocenteId",nombreUsuario));
-                    objeto.setNombre(conexion.selectOne("Cuenta.getDocenteNombre",nombreUsuario));
-                }
-                if(cuenta.getRol().equalsIgnoreCase("alumno")){
-                    objeto.setId(conexion.selectOne("Cuenta.getAlumnoId",nombreUsuario));
-                    objeto.setNombre(conexion.selectOne("Cuenta.getAlumnoNombre",nombreUsuario));
-                }
-                conexion.commit();
-                return objeto;
-            }finally{
+            } finally {
                 String j = conexion.toString();
                 conexion.close();
             }
-        }      
+        }
         return objeto;
     }
     

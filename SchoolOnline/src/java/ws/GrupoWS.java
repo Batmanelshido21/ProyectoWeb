@@ -96,32 +96,34 @@ public class GrupoWS {
     @Path("RegistrarGrupo")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public MensajeR crearGrupo(
-            @FormParam("Foro_idForo") Integer Foro_idForo,
-            @FormParam("nombreF") String nombreF,
+    public Grupo crearGrupo(
             @FormParam("nombre") String nombre,
             @FormParam("CicloEscolar_idCicloEscolar") Integer CicloEscolar_idCicloEscolar,
             @FormParam("Docente_idDocente") Integer Docente_idDocente){
         
+        int idGrupo = 0;
+        
         Grupo grupo = new Grupo();
+        
         grupo.setNombre(nombre);
         grupo.setCicloEscolar_idCicloEscolar(CicloEscolar_idCicloEscolar);
-        grupo.setForo_idForo(Foro_idForo);
         grupo.setDocente_idDocente(Docente_idDocente);
         
         Foro  foro = new Foro();
-        foro.setIdForo(Foro_idForo);
-        foro.setNombre(nombreF);
+        foro.setNombre(nombre);
        
         MensajeR mensajeR;
         GrupoDAO grupoD = new GrupoDAO();
+        
         try{
-            grupoD.crearGrupo(foro, grupo);
-            mensajeR = new MensajeR(true);
+            idGrupo = grupoD.crearGrupo(foro, grupo);
+            
+            grupo.setIdGrupo(idGrupo);
+  
         }catch(Exception e){
-            mensajeR = new MensajeR(false);
+            idGrupo = 0;
         }
-        return mensajeR;
+        return grupo;
     }
     
 }
