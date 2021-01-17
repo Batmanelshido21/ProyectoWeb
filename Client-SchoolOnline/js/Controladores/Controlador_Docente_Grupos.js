@@ -1,64 +1,59 @@
-var idGrupo;
+var idDocente;
 
-window.onload = function () {
-  idGrupo = sessionStorage.getItem('idGrupo');
-
-  console.log(idGrupo);
+window.onload = function(){
+    MostrarParams();
+    ObtenerGrupos(); 
 }
 
-function registrarAlumno(){
+function MostrarParams() {
 
-    var nombre = document.getElementById("nombre").value;
-    var apellidoPaterno = document.getElementById("apellidoPaterno").value;
-    var apellidoMaterno = document.getElementById("apellidoMaterno").value;
-    var correo = document.getElementById("correo").value;
-    var contrasena = document.getElementById("contrasena").value;
-    var Genero_idGenero = document.getElementById("genero").value;
-    var nombreUsuario = nombre.substring(0,3)+apellidoPaterno.substring(0,3)+apellidoMaterno.substring(0,3);
-    var idPlantel = sessionStorage.getItem('idPlantel');
+    var paramstr = window.location.search.substr(1);
+    var paramarr = paramstr.split("&");
+    var params = {};
 
-    var details ={
-        correo:correo,
-        contrasena:contrasena,
-        nombreUsuario:nombreUsuario,
-        nombre:nombre,
-        apellidoPaterno:apellidoPaterno,
-        apellidoMaterno:apellidoMaterno,
-        Genero_idGenero:Genero_idGenero,
-        PlantelEducativo_clave:idPlantel,
-        Grupo_idGrupo:idGrupo
-    };
-
-    var formBody = [];
-    for (var property in details) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
+    for (var i = 0; i < paramarr.length; i++) {
+        var tmparr = paramarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
     }
-    formBody = formBody.join("&");
-    
-    fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/RegistrarAlumno', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: formBody
-    })
-    .then(response => response.json())
-    .then(data => {
-      var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
-      myModal.show(); 
-    })
+
+    idDocente = params['idDocente'];
 }
 
-function limpiarCampos(){
-  document.getElementById("nombre").value = "";
-  document.getElementById("apellidoPaterno").value = "";
-  document.getElementById("apellidoMaterno").value = "";
-  document.getElementById("correo").value = "";
-  document.getElementById("contrasena").value = "";
-}
+function ObtenerGrupos() {
+  
+    fetch('http://localhost:8080/SchoolOnline/webresources/grupo/getGrupoDocente/1', {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
 
-function cancelar(){
-  window.location.href = '../html/Docente_Inicio.html'
-}
+        console.log(data);
+
+        var cuerpo = document.getElementById('cuerpo');
+          
+        for (var i = 0; i < data.length; i++) {
+                var tr = document.createElement('tr');
+
+                var button = document.createElement("input");
+                button.type = 'button';
+                button.id = data[i].idGrupo;
+                button.value = data[i].nombre;
+                button.style.border = "none";
+                button.style.backgroundColor = "transparent";
+                
+                var celda = document.createElement('td')
+                celda.appendChild(button);
+
+                tr.appendChild(celda);
+                cuerpo.appendChild(tr);
+          }
+      })
+  }
+
+  $(function() {
+    $(document).on('click', 'input[type="button"]', function(event) {
+       let id = this.id;
+       sessionStorage.setItem('idGrupo', id);
+       window.location.href = '../html/SolicitarActividad.html';
+     });
+   });
