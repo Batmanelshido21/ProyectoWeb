@@ -163,5 +163,23 @@ public class CuentaDAO {
         }
         return objeto;
     }
+
+     public Alumno obtenerNombreAlumno(int idAlumno) {
+        SqlSession conn = MyBatisUtil.getSession();
+        Alumno alumno = new Alumno();
+        
+        try {
+
+            alumno = conn.selectOne("Cuenta.getNombreAlumno", idAlumno);
+            
+            return alumno;
+        } catch (Exception ex) {
+
+        } finally {
+            conn.close();
+        }
+        
+        return alumno;
+    }
     
 }

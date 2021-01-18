@@ -4,20 +4,22 @@
         <title>Registro de bitacora</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/Formularios.css">
-        <script type="text/javascript" src="js/controllerBitacora.js"></script>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../css/EstilosPersonalizados/Formularios.css">
+        <script type="text/javascript" src="../js/Controladores/controllerBitacora.js"></script>
        
     </head>
 
-    <body>
-        <legend class="text-center header">Registro de bitacora</legend>
+    <body style="padding: 4em;">
+        <legend class="text-center header">Bitácora</legend>
+        <br>
+        <br>
         <div class="container registro de bitacora">
             <label for="fecha">Fecha:</label>
             <br>
             <input type="date" id="fecha" name="fecha"
-             value="2020-01-01"
-             min="2018-01-01" max="2020-12-31">
+             value="2021-01-01"
+             min="2021-01-01">
              <br>
              <br>
              <label for="archivo">Archivo:</label>
@@ -25,7 +27,9 @@
              <input id="archivo" type="file" onchange="convertToBase64();"  accept="application/pdf"/>
              <br>
              <br>
-             <button type="submit" onclick="registrarBitacora()" class="btn btn-primary btn-lg">Registrar</button>
+             <br>
+             <button onclick="RegresarAPrincipal()" class="btn btn-danger">Cancelar</button>
+             <button type="submit" onclick="Aceptar()" class="btn btn-primary">Aceptar</button>
         </div>
     </body>
 

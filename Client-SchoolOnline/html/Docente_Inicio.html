@@ -31,11 +31,10 @@
             <h6>ACTIVIDAD Y MATERIAL DE APOYO</h6>
         </div>
         <div class="div2">
-            <button class="Boton" onclick="DesplegarGrupos()">SOLICITAR ACTIVIDAD</button>
-            <button class="Boton">MODIFICAR CALIDFICACIÓN<Nav>DE ACTIVIDAD</Nav></button>
-            <button class="Boton">MODIFICAR ACTIVIDAD</button>
-            <button class="Boton">PUBLICAR MATERIAL<Nav>DE APOYO</Nav></button>
-            <button class="Boton">CALIFICAR ACTIVIDAD</button>
+            <button class="Boton" onclick="DesplegarGrupos(1)">SOLICITAR ACTIVIDAD</button>
+            <button class="Boton" onclick="DesplegarGrupos(4)">MODIFICAR CALIDFICACIÓN<Nav>DE ACTIVIDAD</Nav></button>
+            <button class="Boton" onclick="DesplegarGrupos(3)">MODIFICAR ACTIVIDAD</button>
+            <button class="Boton" onclick="DesplegarGrupos(4)">CALIFICAR ACTIVIDAD</button>
         </div>
     </div>
     <br>
@@ -46,8 +45,8 @@
                 <h6>BITÁCORA</h6>
             </div>
             <div class="div4">
-                <button class="Boton2">CREAR BITÁCORA</button>
-                <button class="Boton2">MODIFICAR BITÁCORA</button>
+                <button class="Boton2" onclick="RegistrarBitacora()">CREAR BITÁCORA</button>
+                <button class="Boton2" onclick="ModificarBitacora()">MODIFICAR BITÁCORA</button>
             </div>
         </div>
         <div class="DivImagenes">
@@ -56,8 +55,8 @@
             </div>
             <div class="div3">
                 <button class="Boton3" onclick="RegistroDeGrupo()">REGISTRAR GRUPO</button>
-                <button class="Boton3">MODIFICAR GRUPO</button> 
-                <button class="Boton3">AGREGAR ALUMNO</button> 
+                <button class="Boton3" onclick="DesplegarGrupos(2)">MODIFICAR GRUPO</button> 
+                <button class="Boton3" onclick="DesplegarGrupos(5)">AGREGAR ALUMNO </button> 
             </div>
         </div>
     </div>
@@ -68,9 +67,7 @@
             <h6>OTROS</h6>
         </div>
         <div class="div2">
-            <button class="Boton4">PARTICIPAR EN FORO</button>
-            <button class="Boton4">FINALIZAR CURSO</button>
-            <button class="Boton4">IMPRIMIR<Nav>CALIFICACIONES</Nav></button>
+            <button class="Boton4" onclick="DesplegarGrupos(6)">PARTICIPAR EN FORO</button>
         </div>
     </div>
 </body>

@@ -84,5 +84,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE cuenta SET contrasena = #{contrasena}
         WHERE correo = #{correo}
     </update>
+
+     <select id="getNombreAlumno" resultType="pojos.Alumno" parameterType="int">
+        SELECT
+        alumno.nombre
+        FROM alumno WHERE alumno.idAlumno = #{idAlumno}
+    </select>
   
 </mapper>

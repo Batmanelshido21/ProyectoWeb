@@ -8,7 +8,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../css/EstilosPersonalizados/Formularios.css">
-        <script type="text/javascript" src="../js/Controladores/controllerActividad.js"></script>
+        <script type="text/javascript" src="../js/Controladores/Controlador_Alumno_Entregar_Actividad.js"></script>
        
     </head>
 
@@ -17,22 +17,22 @@
         <div class="container solicitar actividad">
             <label for="nombre">Nombre de la actividad</label>
             <br>
-            <input id="nombre" name="nombre" type="text">
+            <input id="nombre" name="nombre" type="text" readonly>
             <br>
             <br>
             <label for="fechaCreada">Fecha de creación:</label>
             <br>
-            <input type="date" id="fechaCreada" name="fechaCreada" min="2018-01-01">
+            <input type="date" id="fechaCreada" name="fechaCreada" min="2021-01-01" readonly>
              <br>
              <br>
              <label for="fechaEntrega">Fecha de entrega:</label>
              <br>
-             <input type="date" id="fechaEntrega" name="fechaEntrega" min="2018-01-01">
+             <input type="date" id="fechaEntrega" name="fechaEntrega" min="2021-01-01" readonly>
              <br>
              <br>
              <div class="form-group">
                 <label for="descripcion">descripcion:</label>
-                <textarea class="form-control" rows="5" id="descripcion"></textarea>
+                <textarea class="form-control" rows="5" id="descripcion" readonly></textarea>
               </div>
             <br>
              <label for="archivo">Archivo:</label>
@@ -41,7 +41,7 @@
              <br>
              <br>
              <button onclick="RegresarAPrincipal()" class="btn btn-danger">Cancelar</button>
-             <button type="submit" onclick="registrarActividad()" class="btn btn-primary">Registrar</button>
+             <button type="submit" onclick="registrarActividad()" class="btn btn-primary">Entregar</button>
         </div>
     </body>
 
@@ -52,7 +52,7 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Éxito al registrar actividad</h5>
                 </div>
                 <div class="modal-body">
-                    Actividad registrada exitosamente
+                    Actividad entregada
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="RegresarAPrincipal()">Aceptar</button>

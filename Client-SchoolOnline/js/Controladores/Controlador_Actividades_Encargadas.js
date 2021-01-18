@@ -6,9 +6,9 @@ window.onload = function () {
 
 function ObtenerActividades() {
 
-    var idGrupoAlumno = sessionStorage.getItem('idGrupoAlumno');
+    var idGrupo = sessionStorage.getItem('idGrupo');
 
-    fetch('http://localhost:8084/SchoolOnline/webresources/grupo/getActividadesAlumnoId/' + idGrupoAlumno, {
+    fetch('http://localhost:8084/SchoolOnline/webresources/grupo/getActividadesAlumnoId/' + idGrupo, {
       method: 'GET',
     })
       .then(response => response.json())
@@ -52,13 +52,19 @@ function ObtenerActividades() {
     $(document).on('click', 'input[type="button"]', function(event) {
        let id = this.id;
        var actividad = actividades.find( a => a.idActividad == id);
-
-       sessionStorage.setItem('idActividad', id);
+       
+       sessionStorage.setItem('idAxtividadEncargada', id);
        sessionStorage.setItem('nombreActividad', actividad.nombre);
        sessionStorage.setItem('fechaCreada', actividad.fechaCreada);
        sessionStorage.setItem('fechaEntrega', actividad.fechaEntrega);
        sessionStorage.setItem('descripcion', actividad.descripcion);
 
-       window.location.href = '../html/Alumno_Entregar_Actividad.html';
+       var boton = sessionStorage.getItem('opcionBoton');
+
+       if(boton == '3'){
+        window.location.href = '../html/Docente_ModificarActividad.html';
+       }else{
+        window.location.href = '../html/Docente_ActividadesEntregadas.html';
+       }
      });
    });

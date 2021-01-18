@@ -125,5 +125,20 @@ public class GrupoWS {
         }
         return grupo;
     }
+
+     @Path("getGruposAlumno/{idAlumno}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Grupo> getGruposAlumno(
+            @PathParam("idAlumno") Integer idAlumno){
+       List<Grupo> list = null;
+       GrupoDAO grupoD = new GrupoDAO();
+       try{
+           list = grupoD.getGruposAlumno(idAlumno);
+       }catch(Exception e){
+           
+       }
+        return list;
+    }
     
 }

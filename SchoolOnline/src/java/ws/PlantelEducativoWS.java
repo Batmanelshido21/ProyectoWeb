@@ -85,7 +85,6 @@ public class PlantelEducativoWS {
     }
     
     
-    
     @Path("RegistrarPlantel")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,21 +106,24 @@ public class PlantelEducativoWS {
         plantel.setNivelEscolar(nivelEscolar);
         plantel.setZona(zona);
         plantel.setDireccion(direccion);
+        
         Cuenta cuenta = new Cuenta();
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setPlantelEducativo_clave(clave);
         cuenta.setNombreUsuario(nombreUsuario);
+        cuenta.setRol("Plantel");
+        
         MensajeR mensajeR;
         PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
         
         try{
             plantelD.registrarPlantelEducativo(plantel,cuenta);
-            mensajeR = new MensajeR(true);
+            mensajeR = new MensajeR(false);
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
-            mensajeR = new MensajeR(false);
+            mensajeR = new MensajeR(true);
         }
         
         return mensajeR;

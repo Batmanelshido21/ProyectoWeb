@@ -82,20 +82,35 @@ public class GrupoDAO {
         return idGrupo;
     }
 
-    public List<Actividad> getActividadesAlumno(Integer Alumno_idAlumno) {
+     public List<Actividad> getActividadesAlumno(Integer idGrupo) {
         SqlSession conexion = MyBatisUtil.getSession();
-        Integer Grupo_idGrupo;
+        
         List<Actividad> list = null;
-        try{
-            System.out.println("Antes de entrar al método");
-            Grupo_idGrupo = conexion.selectOne("Grupo.getGrupoAlumno",Alumno_idAlumno);
-            System.out.println(Grupo_idGrupo);
-            list = conexion.selectList("Grupo.getActividadesGrupo",Grupo_idGrupo);
-            System.out.println("Despues de entrar al método");
-        }catch(Exception e){
+        try {
+            list = conexion.selectList("Grupo.getActividadesGrupo",idGrupo);
+        } catch (Exception e) {
             System.out.println(e);
         }
         return list;
     }
-    
+
+     public List<Grupo> getGruposAlumno(Integer Alumno_idAlumno) {
+        SqlSession conexion = MyBatisUtil.getSession();
+        List<Integer> lista = null;
+        List<Grupo> listaGrupos = new ArrayList<Grupo>();
+        Grupo grupo;
+
+        try {
+            lista = conexion.selectList("Grupo.getGrupoAlumno", Alumno_idAlumno);
+
+            for (Integer g : lista) {
+                grupo = conexion.selectOne("Grupo.getGruposDeAlumno", g);
+                listaGrupos.add(grupo);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listaGrupos;
+    }
 }

@@ -55,7 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT
     actividadEntrega.idActividadEntrega,
     actividadEntrega.archivo,
-    actividadEntrega.nombre
+    actividadEntrega.nombre,
+    actividadEntrega.Alumno_idAlumno,
+    actividadEntrega.Actividad_idActividad,
+    actividadEntrega.calificacion
     FROM actividadEntrega WHERE actividadEntrega.Actividad_idActividad = #{Actividad_idActividad}
 </select>
     

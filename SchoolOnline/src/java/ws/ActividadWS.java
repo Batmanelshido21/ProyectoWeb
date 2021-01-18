@@ -105,9 +105,9 @@ public class ActividadWS {
         
         try{
             actividadD.calificarActividad(actividadE);
-            mensajeR = new MensajeR(true);
-        }catch(Exception e){
             mensajeR = new MensajeR(false);
+        }catch(Exception e){
+            mensajeR = new MensajeR(true);
         }
         return mensajeR;
     }
@@ -188,9 +188,9 @@ public class ActividadWS {
          MensajeR mensajeR;
          try{
              actividadD.entregarActividad(actividadE);
-             mensajeR = new MensajeR(true);
-         }catch(Exception e){
              mensajeR = new MensajeR(false);
+         }catch(Exception e){
+             mensajeR = new MensajeR(true);
          }
         
         return mensajeR;
@@ -216,9 +216,9 @@ public class ActividadWS {
         
         try{
             actividadD.registrarActividad(actividad);
-            mensajeR = new MensajeR(true);
-        }catch(Exception e){
             mensajeR = new MensajeR(false);
+        }catch(Exception e){
+            mensajeR = new MensajeR(true);
         }
        
         return mensajeR;

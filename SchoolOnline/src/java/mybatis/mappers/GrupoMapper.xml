@@ -39,7 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    actividad.nombre,
    actividad.descripcion,
    actividad.fechaCreada,
-   actividad.fechaEntrega
+   actividad.fechaEntrega,
+   actividad.Grupo_idGrupo
    FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo}
 </select>
 
@@ -53,6 +54,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    SELECT
    grupo.idGrupo
    FROM grupo WHERE grupo.Foro_idForo = #{Foro_idForo}
+</select>
+
+
+<select id="getGruposDeAlumno" resultType="pojos.Grupo" parameterType="int">
+   SELECT
+   grupo.nombre,
+   grupo.idGrupo
+   FROM grupo WHERE grupo.idGrupo = #{idGrupo}
 </select>
 
 </mapper>

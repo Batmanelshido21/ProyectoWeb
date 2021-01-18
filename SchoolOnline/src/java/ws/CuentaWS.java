@@ -50,17 +50,20 @@ public class CuentaWS {
     public CuentaWS() {
     }
     
-    @Path("Login")
+       @Path("Login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public ObjetoRetorno loginDeUsuario(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena){
+        
         Cuenta cuenta = new Cuenta();
         ObjetoRetorno objeto = new ObjetoRetorno();
         CuentaDAO cuentaD = new CuentaDAO();
+        
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
+        
         try{
             objeto = cuentaD.login(cuenta);
         }catch(Exception e){
@@ -295,5 +298,22 @@ public class CuentaWS {
             mensajeR = new MensajeR(false);
         }
         return mensajeR;
+    }
+
+     @Path("obtenerNombreAlumno/{idAlumno}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Alumno obtenerActividadesAlumno(
+            @PathParam("idAlumno") Integer idAlumno){
+       
+        CuentaDAO alumno = new CuentaDAO();
+        Alumno al = new Alumno();
+        
+        try{
+            al = alumno.obtenerNombreAlumno(idAlumno);
+        }catch(Exception e){
+            
+        }
+        return al;
     }
 }

@@ -1,5 +1,5 @@
 function volverLogin(){
-    window.location.href = '../index.html';
+    window.location.href = 'index.html';
 }
 
 function cambiarContraseña(){
