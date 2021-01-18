@@ -5,21 +5,38 @@
  */
 package ws;
 
+import DAO.ActividadDAO;
 import DAO.CuentaDAO;
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import pojos.ActividadEntrega;
 import pojos.Alumno;
 import pojos.Cuenta;
+import pojos.CuentaGrupo;
 import pojos.Docente;
 import pojos.MensajeR;
+import pojos.ObjetoRetorno;
 
 /**
  * REST Web Service
@@ -38,77 +55,114 @@ public class CuentaWS {
     public CuentaWS() {
     }
     
-    @Path("LoginAlumno")
+    @Path("Login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Alumno loginAlumno(
+    public ObjetoRetorno loginDeUsuario(
             @FormParam("correo") String correo,
             @FormParam("contrasena") String contrasena){
         
-        System.out.println("Correo: " + correo);
-        System.out.println("Contrasena: " + contrasena);
+        Cuenta cuenta = new Cuenta();
+        ObjetoRetorno objeto = new ObjetoRetorno();
+        CuentaDAO cuentaD = new CuentaDAO();
         
-       Cuenta cuenta = new Cuenta();
-       cuenta.setCorreo(correo);
-       cuenta.setContrasena(contrasena);
-       CuentaDAO cuentaD = new CuentaDAO();
-       Alumno alumno = new Alumno();
-       
-       try{
-           alumno = cuentaD.loginAlumno(cuenta);
-       }catch(Exception e){
-           alumno.setIdAlumno(0);
-       }
-       return alumno;
+        cuenta.setCorreo(correo);
+        cuenta.setContrasena(contrasena);
+        
+        try{
+            objeto = cuentaD.login(cuenta);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        return objeto;
+        
     }
+    
+    
+    @Path("modificarContrasena")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public MensajeR modificarContraseña(
+            @FormParam("correo") String correo,
+            @FormParam("contrasena") String contrasena){
+        MensajeR mensajeR;
+        CuentaDAO cuentaD = new CuentaDAO();
+        Cuenta cuenta = new Cuenta();
+        cuenta.setCorreo(correo);
+        cuenta.setContrasena(contrasena);
+        
+        try{
+            cuentaD.modificarContrasena(cuenta);
+            mensajeR = new MensajeR(true);
+        }catch(Exception e){
+            mensajeR = new MensajeR(false);
+        }
+        return mensajeR;
+        
+    }
+    
     
     @Path("recuperarContraseña")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Cuenta recuperarContraseña(
+    public MensajeR recuperarContraseña(
             @FormParam("correo") String correo){
         Cuenta cuenta = new Cuenta();
         cuenta.setCorreo(correo);
+        MensajeR mensajeR;
         
         SqlSession conexion = MyBatisUtil.getSession();
         if(conexion != null){
             try{
                 cuenta = conexion.selectOne("Cuenta.recuperarContraseña",cuenta);
                 conexion.commit();
-                return cuenta;
+                Properties propiedad = new Properties();
+                propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+                propiedad.setProperty("mail.smtp.starttls.enable", "true");
+                propiedad.setProperty("mail.smtp.port", "587");
+                propiedad.setProperty("mail.smtp.auth", "true");
+                
+                Session sesion = Session.getDefaultInstance(propiedad);
+                String correoEnvia = "onlineschool847@gmail.com";
+                String contrasena = "educacionenlinea234";
+                String destinatario = cuenta.getCorreo();
+                String asunto = "Recuperacion de contraseña";
+                String mensaje = "Tu contraseña es: "+cuenta.getContrasena();
+                    
+                MimeMessage mail = new MimeMessage(sesion);
+                try {
+                    mail.setFrom(new InternetAddress (correoEnvia));
+                    mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+                    mail.setSubject(asunto);
+                    mail.setText(mensaje);
+                    
+                    Transport transporte = sesion.getTransport("smtp");
+                    transporte.connect(correoEnvia,contrasena);
+                    transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+                    transporte.close();
+                    mensajeR = new MensajeR(true);
+                    return mensajeR;
+                } catch (AddressException ex) {
+                    mensajeR = new MensajeR(false);
+                    Logger.getLogger(CuentaWS.class.getName()).log(Level.SEVERE, null, ex);
+                    return mensajeR;
+                } catch (MessagingException ex) {
+                    mensajeR = new MensajeR(false);
+                    Logger.getLogger(CuentaWS.class.getName()).log(Level.SEVERE, null, ex);
+                    return mensajeR;
+                }
+ 
+            }catch(Exception e){
+                mensajeR = new MensajeR(false);
+                return mensajeR;
             }finally{
                 String j = conexion.toString();
                 conexion.close();
             }
         }      
-        return cuenta;
+        return null;
         
-    }
-    
-    
-    @Path("LoginDocente")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Docente loginDocente(
-            @FormParam("correo") String correo,
-            @FormParam("contrasena") String contrasena){
-        
-        System.out.println("Correo: " + correo);
-        System.out.println("Contrasena: " + contrasena);
-        
-       Cuenta cuenta = new Cuenta();
-       cuenta.setCorreo(correo);
-       cuenta.setContrasena(contrasena);
-       Docente docente = new Docente();
-       CuentaDAO cuentaD = new CuentaDAO();
-       
-       try{
-           docente = cuentaD.loginDocente(cuenta);
-       }catch(Exception e){
-           docente.setIdDocente(0);
-       }
-       
-       return docente;
     }
     
     
@@ -123,27 +177,34 @@ public class CuentaWS {
             @FormParam("apellidoPaterno") String apellidoPaterno,
             @FormParam("apellidoMaterno") String apellidoMaterno,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
-            @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave){
+            @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave,
+            @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo){
+        
         MensajeR mensajeR;
         Cuenta cuenta = new Cuenta();
         Alumno alumno = new Alumno();
+        
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setPlantelEducativo_clave(PlantelEducativo_clave);
         cuenta.setNombreUsuario(nombreUsuario);
+        cuenta.setRol("Alumno");
         
         alumno.setNombre(nombre);
         alumno.setApellidoPaterno(apellidoPaterno);
         alumno.setApellidoMaterno(apellidoMaterno);
         alumno.setGenero_idGenero(Genero_idGenero);
         alumno.setCuenta_nombreUsuario(nombreUsuario);
+        
+        CuentaGrupo cuentaG = new CuentaGrupo();
+        
     
         CuentaDAO cuentaD = new CuentaDAO();
         try{
-            cuentaD.registrarAlumno(cuenta, alumno);
+            cuentaD.registrarAlumno(cuenta, alumno,Grupo_idGrupo);
             mensajeR = new MensajeR(true);
         }catch(Exception e){
-             mensajeR = new MensajeR(true);
+             mensajeR = new MensajeR(false);
         }
         return mensajeR;
     }
@@ -195,6 +256,7 @@ public class CuentaWS {
             @FormParam("telefono") String telefono,
             @FormParam("Genero_idGenero") Integer Genero_idGenero,
             @FormParam("PlantelEducativo_clave")String PlantelEducativo_clave){
+        
         Cuenta cuenta = new Cuenta();
         Docente docente = new Docente();
         
@@ -202,6 +264,7 @@ public class CuentaWS {
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setNombreUsuario(nombreUsuario);
+        cuenta.setRol("Docente");
         
         docente.setNombre(nombre);
         docente.setApellidoPaterno(apellidoPaterno);
@@ -211,6 +274,7 @@ public class CuentaWS {
         docente.setGenero_idGenero(Genero_idGenero);
         docente.setCuenta_nombreUsuario(nombreUsuario);
         docente.setPlantelEducativo_clave(PlantelEducativo_clave);
+        
         MensajeR mensajeR;
         CuentaDAO cuentaD = new CuentaDAO();
         try{
@@ -222,4 +286,20 @@ public class CuentaWS {
         return mensajeR;
     }
     
+    @Path("obtenerNombreAlumno/{idAlumno}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Alumno obtenerActividadesAlumno(
+            @PathParam("idAlumno") Integer idAlumno){
+       
+        CuentaDAO alumno = new CuentaDAO();
+        Alumno al = new Alumno();
+        
+        try{
+            al = alumno.obtenerNombreAlumno(idAlumno);
+        }catch(Exception e){
+            
+        }
+        return al;
+    }
 }

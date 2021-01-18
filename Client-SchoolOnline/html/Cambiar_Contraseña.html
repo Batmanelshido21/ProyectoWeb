@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cambiar contraseña</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="../JQuery/JQuery-3.5.1.js"></script>
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <script src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/Controladores/Cambiar_Contraseña.js"></script>
+        <link rel="stylesheet" href="../css/EstilosPersonalizados/Alumno_Actividades.css" type="text/css" />
+    </head>
+
+    <body class="text-center" style="padding: 2em;">
+        <header >
+            <h1>Recuperación de contraseña</h1>
+        </header>
+        <div class="form-group">
+            <legend class="text-center header">En los siguientes campos ingrese su nueva contraseña</legend>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="contrasena">Nueva contraseña</label>
+            <input type="password" class="form-control" id="contrasena" placeholder="Contrasena" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="contrasena2">Repetir contraseña</label>
+            <input type="password" class="form-control" id="contrasena2" placeholder="Contrasena" required>
+        </div>
+        <br>
+        <br>
+        <div class="d-flex justify-content-between Contenido position-absolute bottom-0 start-0">
+            <button onclick="cambiarContraseña()" type="submit" class="btn btn-outline-success Boton">Recuperar</button>
+            <button onclick="volverLogin()" class="btn btn-outline-danger Boton">Cancelar</button>
+        </div>
+    </body>
+</html>

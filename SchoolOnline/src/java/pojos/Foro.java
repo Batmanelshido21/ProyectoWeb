@@ -39,3 +39,4 @@ public class Foro {
         this.nombre = nombre;
     }
 }
+

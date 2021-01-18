@@ -13,6 +13,8 @@ public class Cuenta {
     
     private String nombreUsuario;
     
+    private String rol;
+    
     private String correo;
     
     private String contrasena;
@@ -22,8 +24,9 @@ public class Cuenta {
     public Cuenta() {
     }
 
-    public Cuenta(String nombreUsuario, String correo, String contrasena, String PlantelEducativo_clave) {
+    public Cuenta(String nombreUsuario, String rol, String correo, String contrasena, String PlantelEducativo_clave) {
         this.nombreUsuario = nombreUsuario;
+        this.rol = rol;
         this.correo = correo;
         this.contrasena = contrasena;
         this.PlantelEducativo_clave = PlantelEducativo_clave;
@@ -35,6 +38,14 @@ public class Cuenta {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public String getCorreo() {
@@ -59,5 +70,5 @@ public class Cuenta {
 
     public void setPlantelEducativo_clave(String PlantelEducativo_clave) {
         this.PlantelEducativo_clave = PlantelEducativo_clave;
-    }
+    }   
 }

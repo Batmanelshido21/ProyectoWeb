@@ -43,23 +43,6 @@ public class ActividadWS {
     public ActividadWS() {
     }
     
-    @Path("actividadesActividad/{Actividad_idActividad}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ActividadEntrega> obtenerActividadesGrupo(
-            @PathParam("Actividad_idActividad") Integer Actividad_idActividad){
-        List<ActividadEntrega> list = null;
-        ActividadDAO actividadD = new ActividadDAO();
-        
-       try{
-        list = actividadD.obtenerActividadesGrupo(Actividad_idActividad);
-       }catch(Exception e){
-           
-       }
-        return list;
-        
-    }
-    
     @Path("actividadesAlumno/{idAlumno}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,7 +57,36 @@ public class ActividadWS {
             
         }
         return list;
-        
+    }
+    
+    @Path("obtenerActividadesEntrega/{Actividad_idActividad}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ActividadEntrega> obtenerActividadesEntrega(
+            @PathParam("Actividad_idActividad") Integer Actividad_idActividad){
+        List<ActividadEntrega> list = null;
+        ActividadDAO actividadD = new ActividadDAO();
+         try{
+            list = actividadD.getActividadesEntrega(Actividad_idActividad);
+        }catch(Exception e){
+            
+        }
+        return list; 
+    }
+    
+    @Path("obtenerActividadesGrupo/{idGrupo}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Actividad> obtenerActividadesGrupo(
+            @PathParam("idGrupo") Integer idGrupo){
+        List<Actividad> list = null;
+     ActividadDAO actividadD = new ActividadDAO();
+         try{
+            list = actividadD.getActividadesGrupo(idGrupo);
+        }catch(Exception e){
+            
+        }
+        return list; 
     }
 
     @Path("calificarActividad")
@@ -91,9 +103,9 @@ public class ActividadWS {
         
         try{
             actividadD.calificarActividad(actividadE);
-            mensajeR = new MensajeR(true);
-        }catch(Exception e){
             mensajeR = new MensajeR(false);
+        }catch(Exception e){
+            mensajeR = new MensajeR(true);
         }
         return mensajeR;
     }
@@ -174,9 +186,9 @@ public class ActividadWS {
          MensajeR mensajeR;
          try{
              actividadD.entregarActividad(actividadE);
-             mensajeR = new MensajeR(true);
-         }catch(Exception e){
              mensajeR = new MensajeR(false);
+         }catch(Exception e){
+             mensajeR = new MensajeR(true);
          }
         
         return mensajeR;
@@ -202,9 +214,9 @@ public class ActividadWS {
         
         try{
             actividadD.registrarActividad(actividad);
-            mensajeR = new MensajeR(true);
-        }catch(Exception e){
             mensajeR = new MensajeR(false);
+        }catch(Exception e){
+            mensajeR = new MensajeR(true);
         }
        
         return mensajeR;
@@ -219,30 +231,46 @@ public class ActividadWS {
             @FormParam("fechaCreada") Date fechaCreada,
             @FormParam("fechaEntrega") Date fechaEntrega,
             @FormParam("Grupo_idGrupo") Integer Grupo_idGrupo,
-            @FormParam("archivo") String archivo,
-            @FormParam("idActividad") Integer idActividad){
+            @FormParam("archivo") String archivo){
+        
         Actividad actividad = new Actividad();
-        actividad.setIdActividad(idActividad);
         actividad.setNombre(nombre);
         actividad.setDescripcion(descripcion);
         actividad.setFechaCreada(fechaCreada);
         actividad.setFechaEntrega(fechaEntrega);
         actividad.setGrupo_idGrupo(Grupo_idGrupo);
         
+        ActividadDAO actividadD = new ActividadDAO();
+        int idActividad = actividadD.registrarActividad(actividad);
+        
         Archivo archivoO = new Archivo();
         archivoO.setActividad_idActividad(idActividad);
         archivoO.setArchivo(archivo);
         
        MensajeR mensajeR;
-       ActividadDAO actividadD = new ActividadDAO();
        
        try{
-           actividadD.registrarActividadArchivo(actividad, archivoO);
-           mensajeR = new MensajeR(true);
-       }catch(Exception e){
+           actividadD.registrarActividadArchivo(archivoO);
            mensajeR = new MensajeR(false);
+       }catch(Exception e){
+           mensajeR = new MensajeR(true);
        }
         return mensajeR;
     }
+    
+    @Path("obtenerArchivoActividad")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Archivo obtenerArchivo(
+            @FormParam("idActividad") Integer idActividad){
+        Archivo archivo = new Archivo();
+        ActividadDAO actividadD = new ActividadDAO();
+        try{
+            archivo.setArchivo(actividadD.obtenerArchivo(idActividad));
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return archivo;
         
+    }
 }

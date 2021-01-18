@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Registro de Docente</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="../js/bootstrap.min.js"></script>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../css/EstilosPersonalizados/Formularios.css">
+        <script type="text/javascript" src="../js/Controladores/Controlador_Actualizar_Docente.js"></script>
+       
+    </head>
+
+    <body style="padding: 3em;">
+        <legend class="text-center header">Actualizar información de docente</legend>
+        <br>
+        <br>
+        <br>
+        <div class="container login-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="nombre" name="nombre" type="text" placeholder="Nombre de docente" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="apellidoPaterno" name="apellidoPaterno" type="text" placeholder="Apellido paterno" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="apellidoMaterno" name="apellidoMaterno" type="text" placeholder="Apellido materno" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-phone-square bigicon"></i></span>
+                        <div class="col-md-6">
+                            <select id="gradoAcademico" name="gradoAcademico" class="mdb-select md-form">
+                                <option value="" disabled selected>Grado academico</option>
+                                <option value="Licenciatura">Licenciatura</option>
+                                <option value="Maestria">Maestria</option>
+                                <option value="Doctorado">Doctorado</option>
+                              </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-envelope-o bigicon"></i></span>
+                        <div class="col-md-6">
+                            <input id="telefono" name="telefono" type="text" placeholder="Telefono" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="form-group">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-outline-danger" onclick="Regresar()">Cancelar</button>
+                <button type="submit" onclick="ActualizarDatos()" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </body>
+
+    <div class="modal" id="staticBackdrop" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Éxito</h5>
+            </div>
+            <div class="modal-body">
+              Información actualizada exitosamente
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="Regresar()">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</html>

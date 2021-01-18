@@ -9,7 +9,9 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojos.Alumno;
 import pojos.Cuenta;
+import pojos.CuentaGrupo;
 import pojos.Docente;
+import pojos.ObjetoRetorno;
 
 /**
  *
@@ -20,63 +22,24 @@ public class CuentaDAO {
     public CuentaDAO() {
     }
 
-    public Alumno loginAlumno(Cuenta cuenta) {
-        Alumno alumno = new Alumno();
-        String Cuenta_nombreUsuario;
+    public boolean registrarAlumno(Cuenta cuenta, Alumno alumno, Integer Grupo_idGrupo) {
         SqlSession conexion = MyBatisUtil.getSession();
+        CuentaGrupo cuentaG = new CuentaGrupo();
+        cuentaG.setGrupo_idGrupo(Grupo_idGrupo);
         if (conexion != null) {
             try {
-                Cuenta_nombreUsuario = conexion.selectOne("Cuenta.login", cuenta);
-
-                if (Cuenta_nombreUsuario == null) {
-                    alumno.setIdAlumno(0);
-                    return alumno;
-                } else {
-                    alumno = conexion.selectOne("Cuenta.getAlumno", Cuenta_nombreUsuario);
-                    if (alumno != null) {
-                        conexion.commit();
-                        return alumno;
-                    } else {
-                        alumno.setIdAlumno(0);
-                        return alumno;
-                    }
-                }
+                conexion.insert("Cuenta.registrarCuenta", cuenta);
+                conexion.insert("Cuenta.registrarAlumno", alumno);
+                cuentaG.setAlumno_idAlumno(conexion.selectOne("Cuenta.getAlumnoId", cuenta.getNombreUsuario()));
+                conexion.insert("Cuenta.registrarAlumnoGrupo", cuentaG);
+                conexion.commit();
+                return true;
             } finally {
                 String j = conexion.toString();
                 conexion.close();
             }
         }
-        return alumno;
-    }
-
-    public Docente loginDocente(Cuenta cuenta) {
-        Docente docente = new Docente();
-        String Cuenta_nombreUsuario;
-        SqlSession conexion = MyBatisUtil.getSession();
-        if (conexion != null) {
-            try {
-                Cuenta_nombreUsuario = conexion.selectOne("Cuenta.login", cuenta);
-
-                if (Cuenta_nombreUsuario == null) {
-                    docente.setIdDocente(0);
-                    return docente;
-                } else {
-                    docente = conexion.selectOne("Cuenta.getDocente", Cuenta_nombreUsuario);
-
-                    if (docente != null) {
-                        conexion.commit();
-                        return docente;
-                    } else {
-                        docente.setIdDocente(0);
-                        return docente;
-                    }
-                }
-            } finally {
-                String j = conexion.toString();
-                conexion.close();
-            }
-        }
-        return docente;
+        return false;
     }
 
     public boolean registrarAlumno(Cuenta cuenta, Alumno alumno) {
@@ -126,6 +89,85 @@ public class CuentaDAO {
         }
 
         return false;
+    }
+
+    public void modificarContrasena(Cuenta cuenta) {
+        SqlSession conn = MyBatisUtil.getSession();
+
+        try {
+            conn.update("Cuenta.modificarContrasena", cuenta);
+            conn.commit();
+        } catch (Exception ex) {
+
+        } finally {
+            conn.close();
+        }
+    }
+
+    public ObjetoRetorno login(Cuenta cuenta) {
+
+        SqlSession conexion = MyBatisUtil.getSession();
+        ObjetoRetorno objeto = new ObjetoRetorno();
+        String nombreUsuario;
+
+        if (conexion != null) {
+            try {
+
+                cuenta.setNombreUsuario(conexion.selectOne("Cuenta.login", cuenta));
+                cuenta.setRol(conexion.selectOne("Cuenta.login2", cuenta));
+                cuenta.setPlantelEducativo_clave(conexion.selectOne("Cuenta.login3", cuenta));
+
+                objeto.setRol(cuenta.getRol());
+                nombreUsuario = cuenta.getNombreUsuario();
+                objeto.setNombreUsuario(nombreUsuario);
+
+                if (cuenta.getRol() != null) {
+                    
+                    if (cuenta.getRol().equalsIgnoreCase("Plantel")) {
+                        objeto.setClave(cuenta.getPlantelEducativo_clave());
+                    }
+                    if (cuenta.getRol().equalsIgnoreCase("Docente")) {
+                        objeto.setClave(cuenta.getPlantelEducativo_clave());
+                        objeto.setId(conexion.selectOne("Cuenta.getDocenteId", nombreUsuario));
+                        objeto.setNombre(conexion.selectOne("Cuenta.getDocenteNombre", nombreUsuario));
+                    }
+                    if (cuenta.getRol().equalsIgnoreCase("Alumno")) {
+                        objeto.setId(conexion.selectOne("Cuenta.getAlumnoId", nombreUsuario));
+                        objeto.setNombre(conexion.selectOne("Cuenta.getAlumnoNombre", nombreUsuario));
+                    }
+                    conexion.commit();
+                    return objeto;
+
+                } else {
+                    
+                    objeto.setId(0);
+
+                    return objeto;
+                }
+            } finally {
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return objeto;
+    }
+    
+     public Alumno obtenerNombreAlumno(int idAlumno) {
+        SqlSession conn = MyBatisUtil.getSession();
+        Alumno alumno = new Alumno();
+        
+        try {
+
+            alumno = conn.selectOne("Cuenta.getNombreAlumno", idAlumno);
+            
+            return alumno;
+        } catch (Exception ex) {
+
+        } finally {
+            conn.close();
+        }
+        
+        return alumno;
     }
 
 }

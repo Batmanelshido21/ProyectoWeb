@@ -61,3 +61,4 @@ public class Materia {
         this.GradoAcademico_idGradoAcademico = GradoAcademico_idGradoAcademico;
     }
 }
+

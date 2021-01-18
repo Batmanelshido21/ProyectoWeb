@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <title>Registro de grupo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../JQuery/JQuery-3.5.1.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/EstilosPersonalizados/Alumno_Actividades.css" type="text/css" />
+    <script type="text/javascript" src="../js/Controladores/Controlador_RegistroGrupo.js"></script>
+    </head>
+
+
+    <body class="text-center" style="padding: 2em;">
+        <div class="container registrar grupo">
+            <header >
+                <h1>Registro de grupo</h1>
+            </header>
+            <br>
+            <br>
+            <br>
+                <label for="nombre">Nombre del grupo</label>
+                <br>
+                <br>
+                <input id="nombre" name="nombre" type="text" required>
+                <br>
+                <br>
+                <button type="submit" onclick="registrarGrupo()" class="btn btn-primary btn-lg">Registrar</button>
+        </div>
+    </body>
+
+    <div class="modal" id="staticBackdrop" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Éxito al registrar grupo</h5>
+            </div>
+            <div class="modal-body">
+              Grupo registrado exitosamente
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="Regresar()">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</html>

@@ -78,7 +78,7 @@ public class PlantelEducativoDAO {
         if (conexion != null) {
             try {
                 conexion.insert("Plantel.registrarPlantel", plantel);
-                conexion.insert("Plantel.registrarCuenta", cuenta);
+                conexion.insert("Cuenta.registrarCuenta", cuenta);
                 conexion.commit();
                 return true;
             } finally {
@@ -104,5 +104,21 @@ public class PlantelEducativoDAO {
 
         return false;
     }
+    
+    public PlantelEducativo obtenerPlantel(String clave) {
+        SqlSession conn = MyBatisUtil.getSession();
+        
+        PlantelEducativo plantel = new PlantelEducativo();
 
+        try {
+            plantel = conn.selectOne("Plantel.getPlantel", clave);
+            return plantel;
+        } catch (Exception ex) {
+            
+        } finally {
+            conn.close();
+        }
+
+        return plantel;
+    }
 }

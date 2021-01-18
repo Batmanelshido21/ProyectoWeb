@@ -11,8 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  </insert>
  
  <insert id="registrarForo" parameterType="pojos.Foro">
-        INSERT INTO foro (nombre,idForo)
-        VALUES(#{nombre},#{idForo})        
+        INSERT INTO foro (nombre)
+        VALUES(#{nombre})        
  </insert>
  
  <update id="modificarGrupo" parameterType="pojos.Grupo">
@@ -27,5 +27,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    FROM grupo WHERE grupo.Docente_idDocente = #{Docente_idDocente}
 </select>
 
- 
+<select id="getForo" resultType="int" parameterType="String">
+   SELECT
+   foro.idForo
+   FROM foro WHERE foro.nombre = #{nombre}
+</select>
+
+ <select id="getGrupoAlumno" resultType="int" parameterType="int">
+   SELECT
+   alumno_has_grupo.Grupo_idGrupo
+   FROM alumno_has_grupo WHERE alumno_has_grupo.Alumno_idAlumno = #{Alumno_idAlumno}
+</select>
+
+<select id="getActividadesGrupo" resultType="pojos.Actividad" parameterType="int">
+   SELECT
+   actividad.idActividad,
+   actividad.nombre,
+   actividad.descripcion,
+   actividad.fechaCreada,
+   actividad.fechaEntrega,
+   actividad.Grupo_idGrupo
+   FROM actividad WHERE actividad.Grupo_idGrupo = #{Grupo_idGrupo}
+</select>
+
+<select id="getGrupoRegistrado" resultType="int" parameterType="int">
+   SELECT
+   grupo.idGrupo
+   FROM grupo WHERE grupo.Foro_idForo = #{Foro_idForo}
+</select>
+
+<select id="getGruposDeAlumno" resultType="pojos.Grupo" parameterType="int">
+   SELECT
+   grupo.nombre,
+   grupo.idGrupo
+   FROM grupo WHERE grupo.idGrupo = #{idGrupo}
+</select>
+
 </mapper>

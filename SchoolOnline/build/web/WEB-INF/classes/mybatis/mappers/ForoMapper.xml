@@ -5,17 +5,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="Foro">
 
-  <insert id="enviarMensaje" parameterType="pojos.Mensaje">
+    <insert id="enviarMensaje" parameterType="pojos.Mensaje">
         INSERT INTO mensaje (mensaje,Foro_idForo,Cuenta_nombreUsuario)
         VALUES(#{mensaje},#{Foro_idForo},#{Cuenta_nombreUsuario})        
-  </insert>
+    </insert>
       
   
-  <select id="getMensajesForo" resultType = "pojos.Mensaje" parameterType="int">
-    SELECT
-    mensaje.mensaje,
-    mensaje.Cuenta_nombreUsuario
-    FROM mensaje WHERE mensaje.Foro_idForo = #{Foro_idForo}
-  </select>    
+    <select id="getMensajesForo" resultType = "pojos.Mensaje" parameterType="int">
+        SELECT
+        mensaje.mensaje,
+        mensaje.Cuenta_nombreUsuario
+        FROM mensaje WHERE mensaje.Foro_idForo = #{Foro_idForo}
+    </select>
+  
+    <select id="getIdForo" resultType = "pojos.Grupo" parameterType="int">
+        SELECT
+        grupo.Foro_idForo
+        FROM grupo WHERE grupo.idGrupo = #{idGrupo}
+    </select>
+    
 
 </mapper>

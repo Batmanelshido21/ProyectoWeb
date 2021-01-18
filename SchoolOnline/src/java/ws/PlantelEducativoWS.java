@@ -56,27 +56,6 @@ public class PlantelEducativoWS {
         return list; 
     }
     
-    @Path("LoginPlantel")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public PlantelEducativo loginAlumno(
-            @FormParam("correo") String correo,
-            @FormParam("contrasena") String contrasena){
-       Cuenta cuenta = new Cuenta();
-       cuenta.setCorreo(correo);
-       cuenta.setContrasena(contrasena);
-       PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
-       PlantelEducativo plantel = new PlantelEducativo();
-       
-       try{
-           plantel = plantelD.loginPlantel(cuenta);
-       }catch(Exception e){
-           
-       }
-       return plantel;
-    }
-    
-    
     @Path("modificarPlantel")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -127,24 +106,43 @@ public class PlantelEducativoWS {
         plantel.setNivelEscolar(nivelEscolar);
         plantel.setZona(zona);
         plantel.setDireccion(direccion);
+        
         Cuenta cuenta = new Cuenta();
         cuenta.setCorreo(correo);
         cuenta.setContrasena(contrasena);
         cuenta.setPlantelEducativo_clave(clave);
         cuenta.setNombreUsuario(nombreUsuario);
+        cuenta.setRol("Plantel");
+        
         MensajeR mensajeR;
         PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
         
         try{
             plantelD.registrarPlantelEducativo(plantel,cuenta);
-            mensajeR = new MensajeR(true);
+            mensajeR = new MensajeR(false);
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
-            mensajeR = new MensajeR(false);
+            mensajeR = new MensajeR(true);
         }
         
         return mensajeR;
     }
-
+    
+    @Path("getPlantel/{clave}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public PlantelEducativo getPlantel(
+            @PathParam("clave") String clave){
+        
+        PlantelEducativo plantel = new PlantelEducativo();
+        PlantelEducativoDAO plantelD = new PlantelEducativoDAO();
+        
+        try{
+            plantel = plantelD.obtenerPlantel(clave);
+        }catch(Exception e){
+            
+        }
+        return plantel; 
+    }
 }
