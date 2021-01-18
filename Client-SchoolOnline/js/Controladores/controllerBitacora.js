@@ -45,7 +45,7 @@ function registrarBitacora() {
   }
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/bitacora/registrarBitacora', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/bitacora/registrarBitacora', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -79,7 +79,7 @@ function ModificarBitacora(archivo) {
   }
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/bitacora/modificarBitacora', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/bitacora/modificarBitacora', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

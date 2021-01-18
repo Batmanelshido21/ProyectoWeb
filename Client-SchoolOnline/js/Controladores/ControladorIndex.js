@@ -34,7 +34,7 @@ function LoginAlumno(correo, contrasena) {
 
   var cuerpo = FormarCuerpoDePeticion(correo, contrasena);
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/Login', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/cuenta/Login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

@@ -8,7 +8,7 @@ function ObtenerActividades() {
 
     var idGrupo = sessionStorage.getItem('idGrupo');
 
-    fetch('http://localhost:8084/SchoolOnline/webresources/grupo/getActividadesAlumnoId/' + idGrupo, {
+    fetch('http://localhost:8080/SchoolOnline/webresources/grupo/getActividadesAlumnoId/' + idGrupo, {
       method: 'GET',
     })
       .then(response => response.json())

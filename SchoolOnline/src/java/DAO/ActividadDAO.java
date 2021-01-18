@@ -178,4 +178,18 @@ public class ActividadDAO {
         }
         return list;
     }
+    
+    public String obtenerArchivo(Integer idActividad) {
+       SqlSession conexion = MyBatisUtil.getSession();
+       String archivo = null;
+        if(conexion != null){
+            try{
+                archivo = conexion.selectOne("Actividad.getArchivo",idActividad);
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return archivo;
+    }
 }

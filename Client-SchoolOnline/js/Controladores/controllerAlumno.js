@@ -37,7 +37,7 @@ function registrarAlumno(){
     }
     formBody = formBody.join("&");
     
-    fetch('http://localhost:8084/SchoolOnline/webresources/cuenta/RegistrarAlumno', {
+    fetch('http://localhost:8080/SchoolOnline/webresources/cuenta/RegistrarAlumno', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

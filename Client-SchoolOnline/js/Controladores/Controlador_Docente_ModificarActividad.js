@@ -43,7 +43,7 @@ function ModificarConArchivo() {
     }
     formBody = formBody.join("&");
 
-    fetch('http://localhost:8084/SchoolOnline/webresources/actividad/modificarActividadArchivo', {
+    fetch('http://localhost:8080/SchoolOnline/webresources/actividad/modificarActividadArchivo', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -85,7 +85,7 @@ function ModificarSinArchivo() {
     }
     formBody = formBody.join("&");
 
-    fetch('http://localhost:8084/SchoolOnline/webresources/actividad/modificarActividad', {
+    fetch('http://localhost:8080/SchoolOnline/webresources/actividad/modificarActividad', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

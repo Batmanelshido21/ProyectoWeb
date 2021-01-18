@@ -40,7 +40,7 @@ function RegistrarConArchivo() {
   }
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/actividad/registroActividadArchivo', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/actividad/registroActividadArchivo', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -82,7 +82,7 @@ function RegistrarSinArchivo() {
   }
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/actividad/registroActividad', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/actividad/registroActividad', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

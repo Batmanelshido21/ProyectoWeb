@@ -5,7 +5,7 @@ window.onload = function () {
 function ObtenerGrupos() {
   var idAlumno = sessionStorage.getItem('idAlumno');
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/grupo/getGruposAlumno/' + idAlumno, {
+  fetch('http://localhost:8080/SchoolOnline/webresources/grupo/getGruposAlumno/' + idAlumno, {
     method: 'GET',
   })
     .then(response => response.json())

@@ -8,7 +8,7 @@ window.onload = function () {
     
     idDocente = sessionStorage.getItem('idDocente');
   
-    fetch('http://localhost:8084/SchoolOnline/webresources/bitacora/getBitacoras/' + idDocente, {
+    fetch('http://localhost:8080/SchoolOnline/webresources/bitacora/getBitacoras/' + idDocente, {
       method: 'GET',
     })
       .then(response => response.json())

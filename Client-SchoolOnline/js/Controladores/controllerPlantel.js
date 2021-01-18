@@ -42,7 +42,7 @@ function registrarPlantel(clave, sector, nivelEscolar, zona, direccion, correo, 
 
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/plantel/RegistrarPlantel', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/plantel/RegistrarPlantel', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

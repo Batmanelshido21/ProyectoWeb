@@ -24,7 +24,7 @@ function registrarGrupo() {
   }
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/grupo/RegistrarGrupo', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/grupo/RegistrarGrupo', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

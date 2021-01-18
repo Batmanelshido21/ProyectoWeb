@@ -1,4 +1,4 @@
-
+var archivo;
 window.onload = function () {
     EstablecerDatos();
 }
@@ -9,7 +9,16 @@ function EstablecerDatos(){
     document.getElementById("fechaCreada").value = sessionStorage.getItem('fechaCreada');
     document.getElementById("fechaEntrega").value = sessionStorage.getItem('fechaEntrega');
     document.getElementById("descripcion").value = sessionStorage.getItem('descripcion');
+    archivo = sessionStorage.getItem("archivo");
+    console.log(archivo);
 
+}
+
+function descargarArchivo(){
+   let a = document.createElement("a");
+   a.href = archivo;
+   a.download = "documentName.pdf"
+   a.click();
 }
 
 
@@ -33,7 +42,7 @@ function CalificarActividad() {
     }
     formBody = formBody.join("&");
   
-    fetch('http://localhost:8084/SchoolOnline/webresources/actividad/calificarActividad', {
+    fetch('http://localhost:8080/SchoolOnline/webresources/actividad/calificarActividad', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

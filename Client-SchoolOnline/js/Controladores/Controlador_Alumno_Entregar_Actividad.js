@@ -1,5 +1,4 @@
-var archivo = "";
-
+var archivo;
 window.onload = function () {
   EstablecerDatos();
 }
@@ -10,6 +9,44 @@ function registrarActividad() {
   } else {
     alert("Debe seleccionar un archivo para registrar su respuesta a esta actividad");
   }
+}
+
+function descargarMaterialApoyo(){
+
+  var idActividad = sessionStorage.getItem('idActividad');;
+  console.log(idActividad);
+  var details = {
+    idActividad:idActividad
+  };
+
+
+  var formBody = [];
+  for (var property in details) {
+    var encodedKey = encodeURIComponent(property);
+    var encodedValue = encodeURIComponent(details[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
+
+  fetch('http://localhost:8080/SchoolOnline/webresources/actividad/obtenerArchivoActividad', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: formBody
+  })
+    .then(response => response.json())
+    .then(data => {
+      archivo=data.archivo;
+      descargarArchivo();
+    })
+}
+
+function descargarArchivo(){
+  let a = document.createElement("a");
+  a.href = archivo;
+  a.download = "documentName.pdf"
+  a.click();
 }
 
 function RegistrarActividad() {
@@ -33,7 +70,7 @@ function RegistrarActividad() {
   }
   formBody = formBody.join("&");
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/actividad/EntregarActividad', {
+  fetch('http://localhost:8080/SchoolOnline/webresources/actividad/EntregarActividad', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

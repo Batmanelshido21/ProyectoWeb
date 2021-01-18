@@ -258,4 +258,20 @@ public class ActividadWS {
        }
         return mensajeR;
     }
+    
+    @Path("obtenerArchivoActividad")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Archivo obtenerArchivo(
+            @FormParam("idActividad") Integer idActividad){
+        Archivo archivo = new Archivo();
+        ActividadDAO actividadD = new ActividadDAO();
+        try{
+            archivo.setArchivo(actividadD.obtenerArchivo(idActividad));
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return archivo;
+        
+    }
 }

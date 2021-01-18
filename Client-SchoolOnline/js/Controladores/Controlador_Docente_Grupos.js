@@ -9,7 +9,7 @@ window.onload = function () {
 
 function ObtenerGrupos() {
 
-  fetch('http://localhost:8084/SchoolOnline/webresources/grupo/getGrupoDocente/' + idDocente, {
+  fetch('http://localhost:8080/SchoolOnline/webresources/grupo/getGrupoDocente/' + idDocente, {
     method: 'GET',
   })
     .then(response => response.json())

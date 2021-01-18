@@ -20,9 +20,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -300,7 +302,7 @@ public class CuentaWS {
         return mensajeR;
     }
 
-     @Path("obtenerNombreAlumno/{idAlumno}")
+    @Path("obtenerNombreAlumno/{idAlumno}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Alumno obtenerActividadesAlumno(

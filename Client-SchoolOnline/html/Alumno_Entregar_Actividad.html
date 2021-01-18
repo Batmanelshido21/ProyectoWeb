@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <title>Solicitar actividad</title>
+        <title>Entregar actividad</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="../js/bootstrap.min.js"></script>
@@ -13,7 +13,7 @@
     </head>
 
     <body style="padding: 2em;">
-        <legend class="text-center header">Solicitar actividad</legend>
+        <legend class="text-center header">Entregar actividad</legend>
         <div class="container solicitar actividad">
             <label for="nombre">Nombre de la actividad</label>
             <br>
@@ -38,6 +38,11 @@
              <label for="archivo">Archivo:</label>
              <br>
              <input id="archivo" type="file" onchange="convertToBase64();"  accept="application/pdf"/>
+             <br>
+             <br>
+             <label for="descarga">Material de apoyo:</label>
+             <br>
+             <button id ="descarga"type="submit" onclick="descargarMaterialApoyo()" class="btn btn-primary">Descargar</button>
              <br>
              <br>
              <button onclick="RegresarAPrincipal()" class="btn btn-danger">Cancelar</button>

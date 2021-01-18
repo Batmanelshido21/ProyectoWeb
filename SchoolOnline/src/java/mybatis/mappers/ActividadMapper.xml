@@ -78,4 +78,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     actividad.idActividad
     FROM actividad WHERE nombre = #{nombre}
 </select>
+
+<select id="getArchivo" resultType = "String" parameterType="int">
+    SELECT
+    archivo.archivo
+    FROM archivo WHERE archivo.Actividad_idActividad = #{idActividad}
+</select>
 </mapper>
